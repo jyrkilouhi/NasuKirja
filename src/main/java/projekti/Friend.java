@@ -16,10 +16,13 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 public class Friend extends AbstractPersistable<Long> {
     
     private LocalDate asktime;
-//    @OneToOne
-//    private Account askedby;
-//    @OneToOne
-//    private Account askedfrom;
+    
+    @OneToOne
+    private Account askedby;
+    
+    @OneToOne
+    private Account askedfrom;
+    
     private boolean status;
     
 }
