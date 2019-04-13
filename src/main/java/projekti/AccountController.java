@@ -27,10 +27,7 @@ public class AccountController {
     }
 
     @PostMapping("/accounts")
-    public String register(
-            @Valid @ModelAttribute Account account,
-            BindingResult bindingResult,
-            Model model) {
+    public String register(@Valid @ModelAttribute Account account, BindingResult bindingResult, Model model) {
         
         if(bindingResult.hasErrors()) {
             return "accountform";

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='NasuKirja - Etsi')"> Title </head>
+    <body>
+        <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
+
+        <main>
+            <section th:replace="fragments/layout :: pageText(pageText='Etsi NasuKirjan käyttäjiä')" class="container">
+            </section>
+            
+            <section class="container"> 
+                <ul>
+                    <li th:each="user:${userlist}">
+                        <a th:href="@{'/kayttajat/' + ${user.profilename}}" th:text="${user.realname}">User realname</a>
+                    </li>
+                </ul>   
+            </section>
+
+            <section class="container">                
+                <form th:action="@{/kayttajat}"  method="POST">                    
+                    <div class="form-group">
+                        <label for="findname">Etsi käyttäjä nimen perusteella: </label>
+                        <input type="text" name="findname" class="form-control"/>
+                    </div>
+                                      
+                    <button type="submit" class="btn btn-primary">Submit!</button>
+                </form>
+            </section>
+        </main>        
+        
+    </body>
+</html>

@@ -1,41 +1,45 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head(title='Account')"> Title </head>
+    <head th:replace="fragments/layout :: head(title='NasuKirja - Uusi Käyttäjä')"> Title </head>
     <body>
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
 
         <main>
-            <section class="container">
-                <p>&nbsp;</p>
-                <h2>NasuKirja2.0</h2>
-                <p>Luo uusi käyttäjätili NasuKirjaan</p>
+            <section th:replace="fragments/layout :: pageText(pageText='Luo uusi käyttäjä NasuKirjaan')" class="container">
             </section>
 
             <section class="container">
+                
                 <form action="#" th:action="@{/accounts}" th:object="${account}" method="POST">
+                    
                     <div class="form-group">
                         <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua): </label>
-                        <input type="text" name="realname" class="form-control"/>
+                        <input type="text" th:field="*{realname}" name="realname" class="form-control"/>
                         <section th:if="${#fields.hasErrors('realname')}" th:errors="*{realname}" class="text-danger">Virheviesti</section>
                     </div>
+                    
                     <div class="form-group">
                         <label for="userName">Käyttäjänimi (Nimi, jolla kirjoittaudut NasuKirjaan): </label>
-                        <input type="text" name="username" class="form-control"/>
+                        <input type="text" th:field="*{username}" name="username" class="form-control"/>
                         <section th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Virheviesti</section>
                         <section th:if="${UserNameError}" th:text="${UserNameError}" class="text-danger">Virheviesti</section>
                     </div>
+                    
                     <div class="form-group">
                         <label for="password">Salasana (vähintään 8 merkkiä): </label>
-                        <input type="password" name="password" class="form-control"/>
+                        <input type="password" th:field="*{password}" name="password" class="form-control"/>
                         <section th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Virheviesti</section>
                     </div>
+                    
                     <div class="form-group">
                         <label for="profileName">Profiilinimi (määrittelee polun jonka perusteella seinäsi löytyy): </label>
-                        <input type="text" name="profilename" class="form-control"/>
+                        <input type="text" th:field="*{profilename}" name="profilename" class="form-control"/>
                         <section th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}" class="text-danger">Virheviesti</section>
                         <section th:if="${ProfileNameError}" th:text="${ProfileNameError}" class="text-danger">Virheviesti</section>
                     </div>
+                    
                     <button type="submit" class="btn btn-primary">Submit!</button>
+                    
                 </form>
             </section>
         </main>        

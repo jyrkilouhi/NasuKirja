@@ -1,18 +1,15 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head(title='Main Page')"> Title </head>
+    <head th:replace="fragments/layout :: head(title='NasuKirja - Pääsivu')"> Title </head>
     <body>
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
-
         <main>
-            <section class="container">
-                <p>&nbsp;</p>
-                <h2>NasuKirja2.0</h2>
-                <p>Tervetuloa NasuKirjaan!</p>
+            <section th:replace="fragments/layout :: pageText(pageText='Tervetuloa NasuKirjaan!')" class="container">
             </section>
-
-        </main>        
-        
+            <section class="container"> 
+                Käyttäjiä yhteensä: <span th:text="${userNumber}"> Users </span>
+            </section>
+        </main>                
     </body>
 </html>
 
