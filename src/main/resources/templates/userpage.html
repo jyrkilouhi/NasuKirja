@@ -1,6 +1,6 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head th:replace="fragments/layout :: head(title='NasuKirja - Profiili')"> Title </head>
+    <head th:replace="fragments/layout :: head(title='NasuKirja - ' + ${user.realname})"> Title </head>
     <body>
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
 

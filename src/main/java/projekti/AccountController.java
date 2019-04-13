@@ -3,6 +3,8 @@ package projekti;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,7 +24,8 @@ public class AccountController {
 
 
     @GetMapping("/accounts")
-    public String view(@ModelAttribute Account account) {
+    public String view(@ModelAttribute Account account, Model model) {
+        model.addAttribute("loggedUser", authenticationName());
         return "accountform";
     }
 
@@ -46,6 +49,11 @@ public class AccountController {
         account.setPassword(passwordEncoder.encode(textPassword));
         accountRepository.save(account);
         return "redirect:/";
+    }
+    
+    private String authenticationName() {
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         return auth.getName();
     }
     
 }

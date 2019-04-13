@@ -2,6 +2,8 @@ package projekti;
 
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,14 +28,21 @@ public class UsersController {
     
     @PostMapping("/kayttajat")
     public String find(Model model, String findname) {
+        model.addAttribute("loggedUser", authenticationName());
         model.addAttribute("userlist", accountRepository.findByRealnameContaining(findname));
         return "userform";
     }
     
     @GetMapping("/kayttajat/{profilename}")
     public String view(Model model, @PathVariable String profilename) {
+        model.addAttribute("loggedUser", authenticationName());
         model.addAttribute("user", accountRepository.findByProfilename(profilename));
         return "userpage";
+    }
+    
+    private String authenticationName() {
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         return auth.getName();
     }
     
 }

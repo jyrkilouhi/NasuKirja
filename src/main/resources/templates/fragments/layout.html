@@ -18,28 +18,28 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
                     
-                    <li class="nav-item">
+                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/omasivu}">Oma sivu</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/kayttajat}">Kaverit</a>
+                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/kaverit}">Kaverit</a>
                     </li>
                     
-                    <li class="nav-item">
+                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/kayttajat}">Käyttäjät</a>
                     </li>
                     
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/accounts}">Luo uusi tili</a>
+                    <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/accounts}">Liity NasuKirjaan</a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" th:href="@{/login}">Login</a>
+                    <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/login}">Kirjoittaudu sisään</a>
                     </li>
 
-                   <li class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}">Logout</a>
+                   <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/logout}">Kirjoittaudu ulos</a>
                     </li>
                 </ul>
                 </div>
