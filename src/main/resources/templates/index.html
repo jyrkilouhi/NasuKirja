@@ -1,13 +1,18 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8" />
-        <title>Hello world</title>
-    </head>
+    <head th:replace="fragments/layout :: head(title='Main Page')"> Title </head>
     <body>
+        <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
 
-        <h1 th:text="${'Hello ' + message}">Hello world</h1>
+        <main>
+            <section class="container">
+                <p>&nbsp;</p>
+                <h2>NasuKirja2.0</h2>
+                <p>Tervetuloa NasuKirjaan!</p>
+            </section>
 
-
+        </main>        
+        
     </body>
 </html>
+
