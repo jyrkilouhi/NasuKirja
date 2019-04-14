@@ -22,44 +22,28 @@ public class UserPageController {
     @Autowired
     private FriendsRepository friendRepository;
     
+    @Autowired
+    private UserPageService userPageService;
+    
     @GetMapping("/kayttajat")
     public String view(Model model) {
-        model.addAttribute("loggedUser", authenticationName());
+        model = userPageService.addAuthenticationName(model);
         return "userform";
     }
     
     @PostMapping("/kayttajat")
     public String find(Model model, String findname) {
-        model.addAttribute("loggedUser", authenticationName());
-        List <Account> foundUsers = accountRepository.findByRealnameContaining(findname);
-        if(foundUsers.size() == 0) {
-            model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " ei löydy yhtään käyttäjää");
-            return "userform";                
-        }
-        if(foundUsers.size() > 50) {
-            model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " löytyi " + foundUsers.size() + " käyttäjää. Tarkenna hakua.");
-            return "userform";                
-        }        
-        model.addAttribute("userlist", foundUsers);
+        model = userPageService.findUsers(model, findname);
         return "userform";
     }
     
     @GetMapping("/kayttajat/{profilename}")
     public String view(Model model, @PathVariable String profilename) {
-        model.addAttribute("loggedUser", authenticationName());
-        Account user = accountRepository.findByProfilename(profilename);
-        if(user != null) {
-            model.addAttribute("user", user);
-            return "userpage";
-        } else {
-            model.addAttribute("FindUserError", "Antamaasi profiilia " + profilename + " ei löydy");
-            return "userform";            
-        }
-    }
-    
-    private String authenticationName() {
-         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         return auth.getName();
-    }
-    
+        if(!userPageService.isProfile(profilename)) {
+            model = userPageService.profileError(model, profilename);  
+            return "userform";
+        } 
+        model = userPageService.findProfile(model, profilename);
+        return "userform";
+    }      
 }
