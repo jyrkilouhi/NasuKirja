@@ -36,14 +36,13 @@ public class UserPageService {
         return model;
     }
     
-    public Boolean isProfile(String profilename) {
-        Account user = accountRepository.findByProfilename(profilename);
-        return (user != null);         
-    }
     
     public Model profileError(Model model, String profilename) {
         model = addAuthenticationName(model);
-        model.addAttribute("FindUserError", "Antamaasi profiilia " + profilename + " ei löydy");               
+        model.addAttribute("FindUserError", "NasuKirjasta ei löydy profiilia " + profilename);  
+        Account errorUser = new Account();
+        errorUser.setRealname("User not found");
+        model.addAttribute("user", errorUser);
         return model;
     } 
     

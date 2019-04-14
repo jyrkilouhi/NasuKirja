@@ -3,8 +3,8 @@
     <head th:replace="fragments/layout :: head(title='NasuKirja - ' + ${user.realname})"> Title </head>
     <body>
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
-
-        <main>
+        
+        <main th:unless="${FindUserError}">
             <section class="container">
                 <p> </p>
                 <h2 th:text = ${user.realname}>UserName</h2>
@@ -14,7 +14,11 @@
 
             </section>
 
-        </main>        
+        </main>  
         
+        <section class="container">
+            <p> </p>
+            <p th:if="${FindUserError}" th:text="${FindUserError}" class="text-danger"> Virheviesti</p>
+        </section>
     </body>
 </html>

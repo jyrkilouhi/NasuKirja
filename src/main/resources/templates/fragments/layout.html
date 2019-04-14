@@ -19,12 +19,13 @@
                 <ul class="navbar-nav">                   
                     <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/omasivu}">Oma sivu</a>
-                    </li>                 
-                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
-                        <a class="nav-link" th:href="@{/kayttajat}">Etsi käyttäjiä</a>
-                    </li>                    
+                    </li>                                    
                 </ul>
-
+                    
+                <form th:if="${loggedUser != 'anonymousUser'}" th:action="@{/kayttajat}"  method="POST" class="form-inline ml-auto">                    
+                    <input name="findname" class="form-control mr-sm-2" type="search" placeholder="Haku"/>                                      
+                </form>
+                    
                 <ul class="navbar-nav ml-auto">               
                     <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/accounts}">Liity NasuKirjaan</a>

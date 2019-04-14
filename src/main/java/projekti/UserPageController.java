@@ -28,22 +28,18 @@ public class UserPageController {
     @GetMapping("/kayttajat")
     public String view(Model model) {
         model = userPageService.addAuthenticationName(model);
-        return "userform";
+        return "listusers";
     }
     
     @PostMapping("/kayttajat")
     public String find(Model model, String findname) {
         model = userPageService.findUsers(model, findname);
-        return "userform";
+        return "listusers";
     }
     
     @GetMapping("/kayttajat/{profilename}")
     public String view(Model model, @PathVariable String profilename) {
-        if(!userPageService.isProfile(profilename)) {
-            model = userPageService.profileError(model, profilename);  
-            return "userform";
-        } 
         model = userPageService.findProfile(model, profilename);
-        return "userform";
+        return "userpage";
     }      
 }
