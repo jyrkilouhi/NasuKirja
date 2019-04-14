@@ -19,8 +19,9 @@
             <section class="container">                
                 <form th:action="@{/kayttajat}"  method="POST">                    
                     <div class="form-group">
-                        <label for="findname">Etsi käyttäjä nimen perusteella: </label>
+                        <label for="findname">Etsi käyttäjän nimen perusteella: </label>
                         <input type="text" name="findname" class="form-control"/>
+                        <section th:if="${FindUserError}" th:text="${FindUserError}" class="text-danger">Virheviesti</section>
                     </div>
                                       
                     <button type="submit" class="btn btn-primary">Submit!</button>

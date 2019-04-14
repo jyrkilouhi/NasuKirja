@@ -10,36 +10,30 @@
     </head>
     <body>
         <header th:fragment="header">
-            <nav class="navbar navbar-expand-sm bg-light navbar-light">
-                <a class="navbar-brand" href="/">NasuKirja2.0</a>
+            <nav class="navbar navbar-expand-md navbar-dark bg-primary">
+                <a class="navbar-brand abs" href="/">NasuKirja2.0</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                    
+                <ul class="navbar-nav">                   
                     <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/omasivu}">Oma sivu</a>
-                    </li>
+                    </li>                 
+                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
+                        <a class="nav-link" th:href="@{/kayttajat}">Etsi käyttäjiä</a>
+                    </li>                    
+                </ul>
 
-                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
-                        <a class="nav-link" th:href="@{/kaverit}">Kaverit</a>
-                    </li>
-                    
-                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
-                        <a class="nav-link" th:href="@{/kayttajat}">Käyttäjät</a>
-                    </li>
-                    
+                <ul class="navbar-nav ml-auto">               
                     <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/accounts}">Liity NasuKirjaan</a>
-                    </li>
-
+                    </li>                                       
                     <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Kirjoittaudu sisään</a>
                     </li>
-
                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
-                        <a class="nav-link" th:href="@{/logout}">Kirjoittaudu ulos</a>
+                        <a class="nav-link" th:href="@{/logout}" th:text = "'Kirjoittaudu ulos (' +${loggedUser} +')'" >Kirjoittaudu ulos</a>
                     </li>
                 </ul>
                 </div>
