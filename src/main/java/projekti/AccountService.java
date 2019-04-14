@@ -4,17 +4,21 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 @Service
-public class UserPageService {
+public class AccountService {
     
     @Autowired
     private AccountRepository accountRepository;
     
     @Autowired
     private FriendsRepository friendRepository;
+    
+    @Autowired
+    PasswordEncoder passwordEncoder;
 
     public Model addAuthenticationName(Model model) {
          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -22,10 +26,16 @@ public class UserPageService {
          return model;
     }    
     
+    public Account loggedInAccount() {
+         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+         Account account = accountRepository.findByUsername(auth.getName());
+         return account;
+    } 
+    
     public Model findUsers(Model model, String findname) {
         model = addAuthenticationName(model);
         List <Account> foundUsers = accountRepository.findByRealnameContaining(findname);
-        if(foundUsers.size() == 0) {
+        if(foundUsers.isEmpty()) {
             model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " ei löydy yhtään käyttäjää");             
         }
         if(foundUsers.size() > 50) {
@@ -57,4 +67,25 @@ public class UserPageService {
         return model;
     }
     
+    public Boolean accountIsOk(Account account) {
+        if(accountRepository.findByUsername(account.getUsername()) != null) return false;
+        if(accountRepository.findByProfilename(account.getProfilename()) != null) return false;      
+        return true;
+    }
+    
+    public Model accountError(Model model, Account account) {
+        if(accountRepository.findByUsername(account.getUsername()) != null) {
+            model.addAttribute("UserNameError", "Käyttäjänimi on jo varattu");      
+        }
+        if(accountRepository.findByProfilename(account.getProfilename()) != null) {
+            model.addAttribute("ProfileNameError", "Antamasi profiili on jo käytössä");        
+        }  
+        return model;
+    }
+    
+    public void saveNewAccount(Account account) {
+        String textPassword = account.getPassword();
+        account.setPassword(passwordEncoder.encode(textPassword));
+        accountRepository.save(account);        
+    }
 }

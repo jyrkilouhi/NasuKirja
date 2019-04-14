@@ -69,7 +69,7 @@ public class FluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest 
     } 
     
     @Test
-    public void shouldSeeLoginPageOnAccessingMessages() {
+    public void shouldSeeLoginPageOnAccessingKayttajat() {
         goTo("http://localhost:" + port + "/kayttajat");
         assertThat(find(By.name("username"))).isNotNull();
         assertThat(find(By.name("password"))).isNotNull();

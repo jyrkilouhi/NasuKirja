@@ -11,16 +11,16 @@
     <body>
         <header th:fragment="header">
             <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-                <a class="navbar-brand abs" href="/">NasuKirja2.0</a>
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <div th:if="${loggedUser == 'anonymousUser'}" >
+                    <a class="navbar-brand abs" href="/">NasuKirja2.0</a>
+                </div>
+                <div th:if="${loggedUser != 'anonymousUser'}" >
+                    <a class="navbar-brand abs" th:href="@{'/kayttajat/' + ${loggedUser}}">NasuKirja2.0</a>
+                </div>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
                         <span class="navbar-toggler-icon"></span>
-                    </button>
+                </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">                   
-                    <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
-                        <a class="nav-link" th:href="@{/omasivu}">Oma sivu</a>
-                    </li>                                    
-                </ul>
                     
                 <form th:if="${loggedUser != 'anonymousUser'}" th:action="@{/kayttajat}"  method="POST" class="form-inline ml-auto">                    
                     <input name="findname" class="form-control mr-sm-2" type="search" placeholder="Haku"/>                                      

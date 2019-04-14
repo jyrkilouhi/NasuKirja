@@ -1,7 +1,7 @@
-
 package projekti;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -15,7 +15,8 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Friend extends AbstractPersistable<Long> {
     
-    private LocalDate asktime;
+    private LocalTime asktime;
+    private LocalDate askdate;
     
     @OneToOne
     private Account askedby;

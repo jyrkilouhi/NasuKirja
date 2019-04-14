@@ -3,21 +3,57 @@
     <head th:replace="fragments/layout :: head(title='NasuKirja - ' + ${user.realname})"> Title </head>
     <body>
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
-        
+        <p></p>        
         <main th:unless="${FindUserError}">
+
             <section class="container">
-                <p> </p>
-                <h2 th:text = ${user.realname}>UserName</h2>
+                <div class="row">
+                    <h2 class="col-sm" th:text = ${user.realname}>UserName</h2>
+                    <section class="col-sm" th:unless="${IsFriend}"> 
+                        <section th:unless="${IsAskedForFriend}">
+                            <form th:unless="${IsMyPage}" th:action="@{'/kayttajat/' + ${user.profilename}}"  method="POST">                    
+                                <button type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
+                            </form>                        
+                        </section>
+                    </section>
+                </div>
             </section>
             
             <section class="container"> 
+                <div class="row">
+                    <div class="col-lg">
+                        <div th:if="${IsMyPage}">
+                            <h5 th:if="${FriendRequest}">Kaveripyynnöt</h5>
+                            <div th:each="user : ${FriendRequests}">
+                                <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a>
+                                <span th:text="${user.asktime}">aika</span>
+                                <span th:text="${user.askdate}">päivä</span>
+                                <form th:action="@{'/kayttajat/approve/' + ${user.askedby.profilename}}"  method="POST">                
+                                    <button type="submit" value ="Submit" name="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button>                                    
+                                    <button type="submit" value ="Reject" name="reject" class="btn btn-danger btn-sm mr-1">Hylkää</button>
+                                </form>  
+                            </div>
+                            <p th:if="${FriendRequest}"></p>
+                        </div>
 
+                        <h5>Kaverit</h5>
+                        <div th:each="user : ${Friends}">
+                            <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a>
+                        </div>
+                    </div>      
+                    
+                    <div class="col-lg">
+                        <h5>Seinä</h5>
+                    </div>       
+                    <div class="col-lg">
+                        <h5>Kuvat</h5>
+                    </div> 
+                </div>
             </section>
 
         </main>  
         
         <section class="container">
-            <p> </p>
             <p th:if="${FindUserError}" th:text="${FindUserError}" class="text-danger"> Virheviesti</p>
         </section>
     </body>
