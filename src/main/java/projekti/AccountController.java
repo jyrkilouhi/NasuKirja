@@ -24,7 +24,7 @@ public class AccountController {
         if(bindingResult.hasErrors()) {
             return "accountform";
         }
-        if(!accountService.accountIsOk(account)) {
+        if(!accountService.accountIsOkToBeAdded(account)) {
             model = accountService.accountError(model, account);
             return "accountform";               
         }     

@@ -44,8 +44,7 @@ public class AccountService {
             model.addAttribute("userlist", foundUsers);
         }
         return model;
-    }
-    
+    }    
     
     public Model profileError(Model model, String profilename) {
         model = addAuthenticationName(model);
@@ -67,7 +66,7 @@ public class AccountService {
         return model;
     }
     
-    public Boolean accountIsOk(Account account) {
+    public Boolean accountIsOkToBeAdded(Account account) {
         if(accountRepository.findByUsername(account.getUsername()) != null) return false;
         if(accountRepository.findByProfilename(account.getProfilename()) != null) return false;      
         return true;

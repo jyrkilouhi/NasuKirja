@@ -1,18 +1,19 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/layout :: head(title='NasuKirja - ' + ${user.realname})"> Title </head>
-    <body>
+    <body class="font-weight-light">
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
         <p></p>        
         <main th:unless="${FindUserError}">
 
             <section class="container">
                 <div class="row">
-                    <h2 class="col-sm" th:text = ${user.realname}>UserName</h2>
-                    <section class="col-sm" th:unless="${IsFriend}"> 
+                    <h2 class="col-md">ProfilePicture</h2>
+                    <h2 class="col-md" th:text = ${user.realname}>UserName</h2>
+                    <section class="col-md" th:unless="${IsFriend}"> 
                         <section th:unless="${IsAskedForFriend}">
                             <form th:unless="${IsMyPage}" th:action="@{'/kayttajat/' + ${user.profilename}}"  method="POST">                    
-                                <button type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
+                                <button name="Kaveriksi" type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
                             </form>                        
                         </section>
                     </section>
@@ -21,9 +22,9 @@
             
             <section class="container"> 
                 <div class="row">
-                    <div class="col-lg">
-                        <div th:if="${IsMyPage}">
-                            <h5 th:if="${FriendRequest}">Kaveripyynnöt</h5>
+                    <div class="col-md">
+                        <div th:if="${IsMyPage}" >
+                            <h5 th:if="${!FriendRequests.empty}" class=" mt-2 mb-0">Kaveripyynnöt</h5>
                             <div th:each="user : ${FriendRequests}">
                                 <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a>
                                 <span th:text="${user.asktime}">aika</span>
@@ -33,20 +34,19 @@
                                     <button type="submit" value ="Reject" name="reject" class="btn btn-danger btn-sm mr-1">Hylkää</button>
                                 </form>  
                             </div>
-                            <p th:if="${FriendRequest}"></p>
                         </div>
 
-                        <h5>Kaverit</h5>
+                        <h5 class=" mt-2 mb-0">Kaverit</h5>
                         <div th:each="user : ${Friends}">
                             <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a>
                         </div>
                     </div>      
                     
-                    <div class="col-lg">
-                        <h5>Seinä</h5>
+                    <div class="col-md">
+                        <h5 class=" mt-2 mb-0">Seinä</h5>
                     </div>       
-                    <div class="col-lg">
-                        <h5>Kuvat</h5>
+                    <div class="col-md">
+                        <h5 class=" mt-2 mb-0">Kuvat</h5>
                     </div> 
                 </div>
             </section>
