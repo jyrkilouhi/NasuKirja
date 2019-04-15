@@ -1,5 +1,8 @@
 package projekti;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.List;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
@@ -46,19 +49,149 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
     
     @Test
     public void canCreateFriendRequest() {
+        Account fromAccount = accountRepository.findByProfilename("test301");
+        Account byAccount = accountRepository.findByProfilename("test302");
+        Friend testFriend = friendRepository.findByAskedbyAndAskedfrom(byAccount, fromAccount);
+        if(testFriend != null) friendRepository.delete(testFriend);
+
         int friendsBefore = friendRepository.findAll().size();
+        
+        goTo("http://localhost:" + port + "/kayttajat/test301");
+        enterDetailsAndSubmit("test302", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test301");
+        find(By.name("Kaveriksi")).click();
+        assertTrue(friendRepository.findAll().size() == friendsBefore + 1);
+    }
+    
+    @Test
+    public void canApproveFriendRequest() {
+        Account fromAccount = accountRepository.findByProfilename("test301");
+        Account byAccount = accountRepository.findByProfilename("test302");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
         goTo("http://localhost:" + port + "/kayttajat/test301");
         enterDetailsAndSubmit("test302", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test301");
         find(By.name("Kaveriksi")).submit();
-        assertTrue(friendRepository.findAll().size() == friendsBefore + 1);
-        Account fromAccount = accountRepository.findByProfilename("test301");
-        Account byAccount = accountRepository.findByProfilename("test302");
-        Friend testFriend = friendRepository.findByAskedbyAndAskedfrom(byAccount, fromAccount);
-        friendRepository.delete(testFriend);
+        
+        goTo("http://localhost:" + port + "/logout");
+        goTo("http://localhost:" + port + "/login");
+        enterDetailsAndSubmit("test301", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test301");
+        find(By.name("submit")).click();
+        
+        assertTrue(friendRepository.findByAskedfromAndStatus(fromAccount, true).size() == 1);
     }
     
- 
+    @Test
+    public void canRejectFriendRequest() {
+        Account fromAccount = accountRepository.findByProfilename("test303");
+        Account byAccount = accountRepository.findByProfilename("test304");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
+        goTo("http://localhost:" + port + "/kayttajat/test303");
+        enterDetailsAndSubmit("test304", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test303");
+        find(By.name("Kaveriksi")).submit();
+        
+        goTo("http://localhost:" + port + "/logout");
+        goTo("http://localhost:" + port + "/login");
+        enterDetailsAndSubmit("test303", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test303");
+        find(By.name("reject")).click();
+        
+        int friendsCount = friendRepository.findByAskedfromAndStatus(fromAccount, false).size() 
+                + friendRepository.findByAskedfromAndStatus(fromAccount, true).size();
+        
+        assertTrue(friendsCount == 0);
+    }
+    
+    @Test
+    public void canSeeFriends() {
+        Account fromAccount = accountRepository.findByProfilename("test305");
+        Account byAccount = accountRepository.findByProfilename("test301");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
+        Friend newFriends = new Friend();
+        newFriends.setAskdate(LocalDate.now());
+        newFriends.setAsktime(LocalTime.now());
+        newFriends.setAskedby(byAccount);
+        newFriends.setAskedfrom(fromAccount);
+        newFriends.setStatus(true);
+        friendRepository.save(newFriends);
+        
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        enterDetailsAndSubmit("test305", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        assertThat(pageSource()).contains("301");
+    }
+    
+    @Test
+    public void canSeeReverseFriends() {
+        Account fromAccount = accountRepository.findByProfilename("test301");
+        Account byAccount = accountRepository.findByProfilename("test305");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
+        Friend newFriends = new Friend();
+        newFriends.setAskdate(LocalDate.now());
+        newFriends.setAsktime(LocalTime.now());
+        newFriends.setAskedby(byAccount);
+        newFriends.setAskedfrom(fromAccount);
+        newFriends.setStatus(true);
+        friendRepository.save(newFriends);
+        
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        enterDetailsAndSubmit("test305", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        assertThat(pageSource()).contains("301");
+    }
+    
+    @Test
+    public void cannotSeeFriends() {
+        Account fromAccount = accountRepository.findByProfilename("test305");
+        Account byAccount = accountRepository.findByProfilename("test301");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        enterDetailsAndSubmit("test305", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test305");
+        assertThat(pageSource()).doesNotContain("301");
+    }
     
     private void enterDetailsAndSubmit(String username, String password) {
         find(By.name("username")).fill().with(username);
