@@ -121,7 +121,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
     }
     
     @Test
-    public void canSeeFriends() {
+    public void canSeeOneFriend() {
         Account fromAccount = accountRepository.findByProfilename("test305");
         Account byAccount = accountRepository.findByProfilename("test301");
         List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
@@ -145,10 +145,11 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         enterDetailsAndSubmit("test305", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test305");
         assertThat(pageSource()).contains("301");
+        friendRepository.delete(newFriends);
     }
     
     @Test
-    public void canSeeReverseFriends() {
+    public void canSeeOneReverseFriend() {
         Account fromAccount = accountRepository.findByProfilename("test301");
         Account byAccount = accountRepository.findByProfilename("test305");
         List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
@@ -172,13 +173,50 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         enterDetailsAndSubmit("test305", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test305");
         assertThat(pageSource()).contains("301");
+        friendRepository.delete(newFriends);
     }
     
     @Test
-    public void cannotSeeFriends() {
+    public void canSeeTwoFriends() {
+        Account fromAccount = accountRepository.findByProfilename("test304");
+        Account byAccount1 = accountRepository.findByProfilename("test301");
+        Account byAccount2 = accountRepository.findByProfilename("test302");
+        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, true);
+        for(Friend testFriend : testFriends) {
+            friendRepository.delete(testFriend);
+        }
+        
+        Friend newFriends = new Friend();
+        newFriends.setAskdate(LocalDate.now());
+        newFriends.setAsktime(LocalTime.now());
+        newFriends.setAskedby(byAccount1);
+        newFriends.setAskedfrom(fromAccount);
+        newFriends.setStatus(true);
+        friendRepository.save(newFriends);
+        
+        newFriends = new Friend();
+        newFriends.setAskdate(LocalDate.now());
+        newFriends.setAsktime(LocalTime.now());
+        newFriends.setAskedby(byAccount2);
+        newFriends.setAskedfrom(fromAccount);
+        newFriends.setStatus(true);
+        friendRepository.save(newFriends);
+        
+        goTo("http://localhost:" + port + "/kayttajat/test304");
+        enterDetailsAndSubmit("test304", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test304");
+        assertThat(pageSource()).contains("301").contains("302");
+    }
+    
+    @Test
+    public void cannotSeeAnyFriends() {
         Account fromAccount = accountRepository.findByProfilename("test305");
         Account byAccount = accountRepository.findByProfilename("test301");
-        List <Friend> testFriends = friendRepository.findByAskedfromAndStatus(fromAccount, false);
+        List <Friend> testFriends = friendRepository.findByAskedbyAndStatus(fromAccount, false);
         for(Friend testFriend : testFriends) {
             friendRepository.delete(testFriend);
         }
@@ -201,7 +239,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
     
     private Account testUser(int id) {
         Account test = new Account();
-        test.setRealname("FriendFluent Testaaja (" + id +")");
+        test.setRealname("FriendFluent Testaaja (test" + id +")");
         test.setUsername("test" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 

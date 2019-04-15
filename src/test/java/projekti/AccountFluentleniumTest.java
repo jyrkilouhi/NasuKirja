@@ -171,7 +171,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     
     private Account testUser(int id) {
         Account test = new Account();
-        test.setRealname("AccountFluent Testaaja (" + id +")");
+        test.setRealname("AccountFluent Testaaja (test" + id +")");
         test.setUsername("test" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 

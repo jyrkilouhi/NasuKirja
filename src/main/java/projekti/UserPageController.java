@@ -21,17 +21,12 @@ public class UserPageController {
     }
     
     @GetMapping("/kayttajat")
-    public String viewAllUsers(Model model) {
-        model = accountService.addAuthenticationName(model);
-        return "listusers";
-    }
-    
-    @PostMapping("/kayttajat")
-    public String findUsers(Model model, String findname) {
+    public String viewAllUsers(Model model, String findname) {
+        if(findname == null) findname="";
         model = accountService.findUsers(model, findname);
         return "listusers";
     }
-    
+       
     @GetMapping("/kayttajat/{profilename}")
     public String viewOneUser(Model model, @PathVariable String profilename) {
         model = accountService.findProfile(model, profilename);

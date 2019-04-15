@@ -22,7 +22,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     
-                <form th:if="${loggedUser != 'anonymousUser'}" th:action="@{/kayttajat}"  method="POST" class="form-inline ml-auto">                    
+                <form th:if="${loggedUser != 'anonymousUser'}" th:action="@{/kayttajat}"  method="GET" class="form-inline ml-auto">                    
                     <input name="findname" class="form-control mr-sm-2" type="search" placeholder="Haku"/>                                      
                 </form>
                     
