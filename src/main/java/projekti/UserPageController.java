@@ -17,9 +17,7 @@ public class UserPageController {
     @GetMapping("/omasivu")
     public String viewOwnPage(Model model) {
         Account loggedAccount = accountService.loggedInAccount();
-        model = accountService.findProfile(model, loggedAccount.getProfilename());
-        model = friendService.addFriendListAndStatus(model, loggedAccount.getProfilename());
-        return "userpage";
+        return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }
     
     @GetMapping("/kayttajat")
@@ -44,9 +42,7 @@ public class UserPageController {
     @PostMapping("/kayttajat/{profilename}")
     public String askForFriend(Model model, @PathVariable String profilename) {
         friendService.askForFriend(profilename);
-        model = accountService.findProfile(model, profilename);
-        model = friendService.addFriendListAndStatus(model, profilename);
-        return "userpage";
+        return "redirect:/kayttajat/" + profilename;
     }
 
     @PostMapping("/kayttajat/approve/{profilename}")
@@ -56,9 +52,7 @@ public class UserPageController {
         if(submit != null) friendService.makeFriend(profilename);
         if(reject != null) friendService.rejectFriend(profilename);
         Account loggedAccount = accountService.loggedInAccount();
-        model = accountService.findProfile(model, loggedAccount.getProfilename());
-        model = friendService.addFriendListAndStatus(model, loggedAccount.getProfilename());
-        return "userpage";
+        return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }
 
 }
