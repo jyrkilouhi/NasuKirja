@@ -8,9 +8,9 @@
 
             <section class="container">
                 <div class="row">
-                    <h2 class="col-md">ProfilePicture</h2>
-                    <h2 class="col-md" th:text = ${user.realname}>UserName</h2>
-                    <section class="col-md" th:unless="${IsFriend}"> 
+                    <h2 class="col-lg">ProfilePicture</h2>
+                    <h2 class="col-lg" th:text = ${user.realname}>UserName</h2>
+                    <section class="col-lg" th:unless="${IsFriend}"> 
                         <section th:unless="${IsAskedForFriend}">
                             <form th:unless="${IsMyPage}" th:action="@{'/kayttajat/' + ${user.profilename}}"  method="POST">                    
                                 <button name="Kaveriksi" type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
@@ -22,7 +22,7 @@
             
             <section class="container"> 
                 <div class="row">
-                    <div class="col-md">
+                    <div class="col-lg">
                         <div th:if="${IsMyPage}" >
                             <h5 th:if="${!FriendRequests.empty}" class=" mt-2 mb-0">Kaveripyynnöt</h5>
                             <div th:each="user : ${FriendRequests}">
@@ -42,10 +42,10 @@
                         </div>
                     </div>      
                     
-                    <div class="col-md">
+                    <div class="col-lg">
                         <h5 class=" mt-2 mb-0">Seinä</h5>
                     </div>       
-                    <div class="col-md">
+                    <div class="col-lg">
                         <h5 class=" mt-2 mb-0">Kuvat</h5>
                     </div> 
                 </div>
