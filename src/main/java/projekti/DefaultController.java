@@ -9,19 +9,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
 public class DefaultController {
-    
+       
     @Autowired
-    private AccountRepository accountRepository;
+    private AccountService accountService;
 
     @GetMapping("/")
-    public String helloWorld(Model model) {
-        model.addAttribute("loggedUser", authenticationName());        
-        model.addAttribute("userNumber", accountRepository.findAll().size());
+    public String viewRootPage(Model model) {
+        model = accountService.addAuthenticationName(model);      
+        model.addAttribute("numberOfAccounts", accountService.numberOfAccounts());
         return "index";
     }
     
-    private String authenticationName() {
-         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         return auth.getName();
+    @GetMapping("/omasivu")
+    public String viewMyPage(Model model) {
+        Account loggedAccount = accountService.loggedInAccount();
+        return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }
+    
 }

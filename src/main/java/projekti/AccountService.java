@@ -15,10 +15,14 @@ public class AccountService {
     private AccountRepository accountRepository;
     
     @Autowired
-    private FriendsRepository friendRepository;
+    private FriendService friendService;
     
     @Autowired
     PasswordEncoder passwordEncoder;
+    
+    public long numberOfAccounts() {
+        return accountRepository.count();
+    }
 
     public Model addAuthenticationName(Model model) {
          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -85,6 +89,6 @@ public class AccountService {
     public void saveNewAccount(Account account) {
         String textPassword = account.getPassword();
         account.setPassword(passwordEncoder.encode(textPassword));
-        accountRepository.save(account);        
+        accountRepository.save(account);   
     }
 }

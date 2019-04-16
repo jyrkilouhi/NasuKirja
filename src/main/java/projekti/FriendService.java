@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -18,6 +19,9 @@ public class FriendService {
     
     @Autowired
     private FriendsRepository friendRepository;
+    
+    @Autowired
+    PasswordEncoder passwordEncoder;
     
     public Boolean areFriends(Account account1, Account account2) {
         Friend friend1 = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
@@ -42,7 +46,7 @@ public class FriendService {
         if(loggedAccount.getProfilename().contentEquals(profilename)) return;
         Friend friendRequest = new Friend();
         friendRequest.setAskedby(loggedAccount);
-        friendRequest.setAskedfrom(askedAccount); 
+        friendRequest.setAskedfrom(askedAccount);
         friendRequest.setStatus(false);
         friendRequest.setAsktime(LocalTime.now());
         friendRequest.setAskdate(LocalDate.now());

@@ -14,27 +14,19 @@ public class UserPageController {
     @Autowired
     private FriendService friendService;
     
-    @GetMapping("/omasivu")
-    public String viewOwnPage(Model model) {
-        Account loggedAccount = accountService.loggedInAccount();
-        return "redirect:/kayttajat/" + loggedAccount.getProfilename();
-    }
-    
-    @GetMapping("/kayttajat")
-    public String viewAllUsers(Model model, String findname) {
-        if(findname == null) findname="";
-        model = accountService.findUsers(model, findname);
-        return "listusers";
-    }
-       
+    @Autowired
+    private WallService wallService;
+           
+           
     @GetMapping("/kayttajat/{profilename}")
     public String viewOneUser(Model model, @PathVariable String profilename) {
         model = accountService.findProfile(model, profilename);
         model = friendService.addFriendListAndStatus(model, profilename);
+        model = wallService.addWallMessages(model, profilename);
         return "userpage";
     }   
     
-    @PostMapping("/kayttajat/{profilename}")
+    @PostMapping("/kayttajat/request/{profilename}")
     public String askForFriend(Model model, @PathVariable String profilename) {
         friendService.askForFriend(profilename);
         return "redirect:/kayttajat/" + profilename;
@@ -48,6 +40,12 @@ public class UserPageController {
         if(reject != null) friendService.rejectFriend(profilename);
         Account loggedAccount = accountService.loggedInAccount();
         return "redirect:/kayttajat/" + loggedAccount.getProfilename();
+    }
+    
+    @PostMapping("/kayttajat/wall/{profilename}")
+    public String writeToWall(Model model, @PathVariable String profilename, @RequestParam String newWallMessage) {
+        wallService.newWallMessage(profilename, newWallMessage);
+        return "redirect:/kayttajat/" + profilename;
     }
 
 }
