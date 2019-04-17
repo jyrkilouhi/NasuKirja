@@ -2,26 +2,40 @@ package projekti;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.openqa.selenium.Cookie;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.ResultActions;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+
 
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+
 @AutoConfigureMockMvc
 public class FriendMockMvcTest  {
       
     @Autowired
     private MockMvc mockMvc;
+    
     
     @Autowired
     private AccountRepository accountRepository;
@@ -41,13 +55,21 @@ public class FriendMockMvcTest  {
     private int[] testUsersId = new int[10];
     
     @Before
-    public void initTestUser() {
+    public void initTestUsers() {
         for(int id = 0; id <= 5; id++) {
             if(accountRepository.findByProfilename("test" + (id + 101)) == null) {
                 Account test = createTestUser(id + 101);
-                testUsersId[id] = id+101;
                 accountRepository.save(test);
             }
+            testUsersId[id] = id+101;
+        }
+    }
+    
+    @After
+    public void removeTestUsers() {
+        for(int id = 0; id <= 5; id++) {
+            Account test = accountRepository.findByProfilename("test" + (id + 101));
+            accountRepository.delete(test);
         }
     }
     
@@ -179,6 +201,6 @@ public class FriendMockMvcTest  {
         friendRepository.save(test);
         assertTrue("Method areFriends found friends", friendService.areFriends(account2, account1));   
         friendRepository.delete(test);
-    }
+    } 
     
 }

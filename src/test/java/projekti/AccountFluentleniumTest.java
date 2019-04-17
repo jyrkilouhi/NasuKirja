@@ -10,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import org.junit.After;
 import org.junit.Before;
 
 @RunWith(SpringRunner.class)
@@ -37,6 +38,15 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
             idForNextTestUser++;
         }
     }
+    
+    @After
+    public void undo() {            
+        Account test = accountRepository.findByProfilename("test201");
+        if( test != null) {
+            accountRepository.delete(test);
+        }
+    }
+    
     
     @Test
     public void anyoneCanOpenAccounts() throws Exception {
@@ -106,7 +116,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     }
     
     @Test
-    public void cannotCreateAccountWithouProfilename() {
+    public void cannotCreateAccountWithoutProfilename() {
         int accountsBefore = accountRepository.findAll().size();
         goTo("http://localhost:" + port + "/accounts");
         Account testAccount = testUser(idForNextTestUser);

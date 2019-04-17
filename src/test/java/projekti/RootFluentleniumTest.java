@@ -8,6 +8,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import org.junit.After;
 import org.junit.Before;
 
 @RunWith(SpringRunner.class)
@@ -28,6 +29,14 @@ public class RootFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
         if(accountRepository.findByProfilename("test200") == null) {
             Account test = testUser(200);
             accountRepository.save(test);
+        }
+    }
+    
+    @After
+    public void undo() {            
+        Account test = accountRepository.findByProfilename("test200");
+        if( test != null) {
+            accountRepository.delete(test);
         }
     }
     

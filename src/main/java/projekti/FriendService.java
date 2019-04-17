@@ -24,6 +24,7 @@ public class FriendService {
     PasswordEncoder passwordEncoder;
     
     public Boolean areFriends(Account account1, Account account2) {
+        if((account1 == null) || (account2 == null)) return false;
         Friend friend1 = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
         if(friend1 != null) return (friend1.isStatus() == true);
         Friend friend2 = friendRepository.findByAskedbyAndAskedfrom(account2, account1);
@@ -32,6 +33,7 @@ public class FriendService {
     } 
     
     public Boolean isAskedToBeFriend(Account account1, Account account2) {
+        if((account1 == null) || (account2 == null)) return false;
         Friend friend = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
         if(friend != null) return (friend.isStatus() == false);
         return false;
@@ -40,10 +42,11 @@ public class FriendService {
     public void askForFriend(String profilename) {
         Account loggedAccount = accountService.loggedInAccount();
         Account askedAccount = accountRepository.findByProfilename(profilename);
-        if(askedAccount == null) return;
+        if((askedAccount == null) || (loggedAccount == null)) return;
         if(areFriends(loggedAccount, askedAccount)) return;
         if(isAskedToBeFriend(loggedAccount, askedAccount)) return;
         if(loggedAccount.getProfilename().contentEquals(profilename)) return;
+        
         Friend friendRequest = new Friend();
         friendRequest.setAskedby(loggedAccount);
         friendRequest.setAskedfrom(askedAccount);
@@ -56,7 +59,7 @@ public class FriendService {
     public Model addFriendListAndStatus(Model model, String profilename) {
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = accountRepository.findByProfilename(profilename);
-        if(profileAccount == null) return model;
+        if(profileAccount == null || loggedAccount == null) return model;
         if(areFriends(loggedAccount, profileAccount)) {
             model.addAttribute("IsFriend", "True");              
         }
@@ -82,7 +85,7 @@ public class FriendService {
     public void makeFriend(String profilename) {
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = accountRepository.findByProfilename(profilename);
-        if(profileAccount == null) return;        
+        if(profileAccount == null || loggedAccount == null) return;        
         if(areFriends(loggedAccount, profileAccount)) return;
         if(loggedAccount.getProfilename().contentEquals(profilename)) return;
         if(!isAskedToBeFriend(profileAccount, loggedAccount)) return;
@@ -98,7 +101,7 @@ public class FriendService {
     public void rejectFriend(String profilename) {
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = accountRepository.findByProfilename(profilename);
-        if(profileAccount == null) return;   
+        if(profileAccount == null || loggedAccount == null) return;   
         if(areFriends(loggedAccount, profileAccount)) return;
         if(loggedAccount.getProfilename().contentEquals(profilename)) return;
         if(!isAskedToBeFriend(profileAccount, loggedAccount)) return;

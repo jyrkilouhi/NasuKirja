@@ -13,6 +13,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import org.junit.After;
 import org.junit.Before;
 
 @RunWith(SpringRunner.class)
@@ -39,7 +40,15 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
                 accountRepository.save(test);
             }
         }
-    }    
+    }  
+    
+    @After
+    public void undo() {       
+        for(int id = 301 ; id <= 305; id++ ) {
+            Account test = accountRepository.findByProfilename("test" + id);
+            accountRepository.delete(test);
+        }
+    }  
     
     @Test
     public void cannotOpenKayttajaTest301twithoutAccount() throws Exception {
@@ -61,6 +70,8 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         goTo("http://localhost:" + port + "/kayttajat/test301");
         find(By.name("Kaveriksi")).click();
         assertTrue(friendRepository.findAll().size() == friendsBefore + 1);
+        testFriend = friendRepository.findByAskedbyAndAskedfrom(byAccount, fromAccount);
+        if(testFriend != null) friendRepository.delete(testFriend);
     }
     
     @Test
@@ -88,6 +99,8 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         find(By.name("submit")).click();
         
         assertTrue(friendRepository.findByAskedfromAndStatus(fromAccount, true).size() == 1);
+        Friend testFriend = friendRepository.findByAskedbyAndAskedfrom(byAccount, fromAccount);
+        if(testFriend != null) friendRepository.delete(testFriend);
     }
     
     @Test
@@ -190,26 +203,28 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
             friendRepository.delete(testFriend);
         }
         
-        Friend newFriends = new Friend();
-        newFriends.setAskdate(LocalDate.now());
-        newFriends.setAsktime(LocalTime.now());
-        newFriends.setAskedby(byAccount1);
-        newFriends.setAskedfrom(fromAccount);
-        newFriends.setStatus(true);
-        friendRepository.save(newFriends);
+        Friend newFriends1 = new Friend();
+        newFriends1.setAskdate(LocalDate.now());
+        newFriends1.setAsktime(LocalTime.now());
+        newFriends1.setAskedby(byAccount1);
+        newFriends1.setAskedfrom(fromAccount);
+        newFriends1.setStatus(true);
+        friendRepository.save(newFriends1);
         
-        newFriends = new Friend();
-        newFriends.setAskdate(LocalDate.now());
-        newFriends.setAsktime(LocalTime.now());
-        newFriends.setAskedby(byAccount2);
-        newFriends.setAskedfrom(fromAccount);
-        newFriends.setStatus(true);
-        friendRepository.save(newFriends);
+        Friend newFriends2 = new Friend();
+        newFriends2.setAskdate(LocalDate.now());
+        newFriends2.setAsktime(LocalTime.now());
+        newFriends2.setAskedby(byAccount2);
+        newFriends2.setAskedfrom(fromAccount);
+        newFriends2.setStatus(true);
+        friendRepository.save(newFriends2);
         
         goTo("http://localhost:" + port + "/kayttajat/test304");
         enterDetailsAndSubmit("test304", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test304");
         assertThat(pageSource()).contains("301").contains("302");
+        friendRepository.delete(newFriends1);
+        friendRepository.delete(newFriends2);
     }
     
     @Test

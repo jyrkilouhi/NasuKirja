@@ -1,5 +1,6 @@
 package projekti;
 
+import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -45,6 +46,14 @@ public class AccountMockMvcTest  {
         }
     }
     
+    @After
+    public void undo() {            
+        Account test = accountRepository.findByProfilename("test1");
+        if( test != null) {
+            accountRepository.delete(test);
+        }
+    }
+    
     private Account createTestUser(int id) {
         Account test = new Account();
         test.setRealname("AccountMock Testaaja (test" + id + ")");
@@ -58,25 +67,33 @@ public class AccountMockMvcTest  {
     @Test
     public void canAddOneTestAccount() {
         int accountsBefore = accountRepository.findAll().size();
+        Account test = new Account();
         if(accountRepository.findByProfilename("test" + idForNextTestUser) == null) {
-            Account test = createTestUser(idForNextTestUser);
+            test = createTestUser(idForNextTestUser);
             idForNextTestUser++;
             accountRepository.save(test);
         }
         assertTrue("One account can be added", accountRepository.findAll().size() == accountsBefore + 1);   
+        accountRepository.delete(test);      
     }
     
     @Test
     public void canAddManyTestAccounts() {
+        int[] id = new int[5];
         for(int counter = 0; counter < 3; counter++) {
             while(accountRepository.findByProfilename("test" + idForNextTestUser) != null) {
                 idForNextTestUser++;
             }
             Account test = createTestUser(idForNextTestUser);
+            id[counter] = idForNextTestUser;
             idForLastAddedUser = idForNextTestUser;
             accountRepository.save(test);
         }
-        assertTrue("Many accounts can be added", accountRepository.findByProfilename("test" + idForLastAddedUser) != null);   
+        assertTrue("Many accounts can be added", accountRepository.findByProfilename("test" + idForLastAddedUser) != null); 
+        for(int counter = 0; counter < 3; counter++) {
+            Account test = accountRepository.findByProfilename("test" + id[counter] );
+            accountRepository.delete(test);
+        }
     }
     
     @Test

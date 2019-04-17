@@ -6,11 +6,11 @@
         <p></p>        
         <main th:unless="${FindUserError}">
 
-            <section class="container">
-                <div class="row" >
-                    <h2 class="col-lg-3 border rounded" style="background-color: AliceBlue">ProfilePicture</h2>
-                    <h2 class="col-lg-6" th:text = ${user.realname}>UserName</h2>
-                    <section class="col-lg-3 border rounded" th:unless="${IsFriend}" style="background-color: AliceBlue"> 
+            <section class="container-fluid">
+                <div class="row mx-1" >
+                    <h2 class="col-md-3">ProfilePicture</h2>
+                    <h2 class="col-md-6" th:text = ${user.realname}>UserName</h2>
+                    <section class="col-xl-3" th:unless="${IsFriend}"> 
                         <section th:unless="${IsAskedForFriend}">
                             <form th:unless="${IsMyPage}" th:action="@{'/kayttajat/request/' + ${user.profilename}}"  method="POST">                    
                                 <button name="Kaveriksi" type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
@@ -20,9 +20,9 @@
                 </div>
             </section>
             
-            <section class="container"> 
-                <div class="row">
-                    <div class="col-lg-3 border rounded" style="background-color: AliceBlue" >
+            <section class="container-fluid"> 
+                <div class="row mx-1">
+                    <div class="col-md-3 border rounded" style="background-color: AliceBlue" >
                         <div th:if="${IsMyPage}" >
                             <h5 th:if="${!FriendRequests.empty}" class=" mt-2 mb-0">Kaveripyynnöt</h5>
                             <div th:each="user : ${FriendRequests}">
@@ -42,7 +42,7 @@
                         </div>
                     </div>      
                     
-                    <div class="col-lg-6">
+                    <div class="col-md-6">
                         <h5 class=" mt-2 mb-0">Seinä</h5>
                         <form th:if="${IsMyPage} or ${IsFriend}" th:action="@{'/kayttajat/wall/' + ${user.profilename}}"  method="POST">    
                             <div class="form-group">                          
@@ -51,15 +51,14 @@
                             </div>
                         </form>
                         <div th:each="wall : ${WallMessages}">
-                            <p>
+                            <p class="mt-2 border rounded " style="background-color: AliceBlue">
                                 <a th:href="@{'/kayttajat/' + ${wall.messager.profilename}}"><span th:text="${wall.messager.realname}">kirjailija</span> </a> 
                                 <span th:text="${#temporals.format(wall.time, 'dd.MM.yyyy HH:mm')}">aika</span> </br>
                                 <span th:text="${wall.message}">Viesti</span> 
                             </p>
-                            <p></p>
                         </div>
                     </div>       
-                    <div class="col-lg-3 border rounded" style="background-color: AliceBlue">
+                    <div class="col-md-3 border rounded" style="background-color: AliceBlue">
                         <h5 class=" mt-2 mb-0">Kuvat</h5>
                     </div> 
                 </div>
