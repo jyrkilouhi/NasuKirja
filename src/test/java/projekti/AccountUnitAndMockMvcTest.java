@@ -1,5 +1,6 @@
 package projekti;
 
+import java.util.List;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -13,6 +14,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -104,9 +106,37 @@ public class AccountUnitAndMockMvcTest  {
     } 
 
     @Test
-    @WithMockUser(username = "test1", password = "test12345")
+    @WithMockUser(username = "test1")
     public void statusOkforOmasivu() throws Exception {
         mockMvc.perform(get("/omasivu")).andExpect(redirectedUrl("/kayttajat/test1")).andExpect(status().isFound());
+    } 
+    
+    @Test
+    @WithMockUser(username = "test1")
+    public void statusOkforKayttajaTest1Page() throws Exception {
+        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
+    } 
+    
+    @Test
+    @WithMockUser(username = "test2")
+    public void statusOkforKayttajaTest1PageWithOtherAccount() throws Exception {
+        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
+    } 
+    
+    @Test
+    @WithMockUser(username = "test1")
+    public void getCorrectModelFromOwnPage() throws Exception {
+        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
+        String modelText = result.getModelAndView().getModel().get("IsMyPage").toString();
+        assertTrue("Return correct model for ownPage", modelText != null); 
+    } 
+    
+    @Test
+    @WithMockUser(username = "test2")
+    public void modelForKayttajaTest1PageWithOtherAccount() throws Exception {
+        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
+        List<String> models= (List)result.getModelAndView().getModel().get("IsMyPage");
+        assertTrue("Model should not include IsMyPage" , models == null);
     } 
     
     @Test
