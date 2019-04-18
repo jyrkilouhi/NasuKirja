@@ -1,6 +1,5 @@
 package projekti;
 
-import java.util.List;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -11,18 +10,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountUnitAndMockMvcTest  {
+public class AccountMockMvcTest  {
       
     @Autowired
     private MockMvc mockMvc;
@@ -104,40 +100,7 @@ public class AccountUnitAndMockMvcTest  {
     public void statusOkforAccountPage() throws Exception {
         mockMvc.perform(get("/accounts")).andExpect(status().isOk());
     } 
-    
-    @Test
-    @WithMockUser(username = "test1", password = "test12345")
-    public void statusOkforOmasivu() throws Exception {
-        mockMvc.perform(get("/omasivu")).andExpect(redirectedUrl("/kayttajat/test1")).andExpect(status().isFound());
-    } 
-    
-    @Test
-    @WithMockUser(username = "test1", password = "test12345")
-    public void statusOkforKayttajaTest1PageWithOwn() throws Exception {
-        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
-    } 
-
-    @Test
-    @WithMockUser(username = "test2", password = "test12345")
-    public void statusOkforKayttajaTest1PageWithOtherAccount() throws Exception {
-        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
-    }     
-    @Test
-    @WithMockUser(username = "test1", password = "test1234")
-    public void modelOkforKayttajaTest1Page() throws Exception {
-        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
-        String message = result.getModelAndView().getModel().get("IsMyPage").toString();
-        assertTrue("Model includes IsMyPage" , message != null);
-    } 
-    
-    @Test
-    @WithMockUser(username = "test2", password = "test1234")
-    public void modelForKayttajaTest1PageWithOtherAccount() throws Exception {
-        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
-        List<String> models= (List)result.getModelAndView().getModel().get("IsMyPage");
-        assertTrue("Model should not include IsMyPage" , models == null);
-    } 
-    
+        
     @Test
     public void testForMethodAccountIsOkForExistingAccount() {
         Account account = accountRepository.findByProfilename("test" + idForLastAddedUser);
