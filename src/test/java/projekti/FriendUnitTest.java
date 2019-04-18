@@ -17,19 +17,11 @@ import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
-@AutoConfigureMockMvc
-public class FriendUnitAndMockMvcTest  {
+public class FriendUnitTest  {
       
-    @Autowired
-    private MockMvc mockMvc;
-    
-    
+   
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private AccountService accountService;
     
     @Autowired
     private FriendsRepository friendRepository;
@@ -63,8 +55,8 @@ public class FriendUnitAndMockMvcTest  {
     
     private Account createTestUser(int id) {
         Account test = new Account();
-        test.setRealname("FriendMock Testaaja (test" + id + ")");
-        test.setUsername("test" + id);
+        test.setRealname("Friend Unit Testaaja (test" + id + ")");
+        test.setUsername("testi" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 
         
@@ -137,7 +129,7 @@ public class FriendUnitAndMockMvcTest  {
     public void noRequestTestForServiceMethod_isAskedToBeFriend() {
         Account account1 = accountRepository.findByProfilename("test" + testUsersId[0]);
         Account account2 = accountRepository.findByProfilename("test" + testUsersId[3]);
-        assertFalse("Method isAskedToBeFriend shoul not found request", friendService.isAskedToBeFriend(account1, account2));   
+        assertFalse("Method isAskedToBeFriend should not found request", friendService.isAskedToBeFriend(account1, account2));   
     }
     
     @Test

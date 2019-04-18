@@ -33,11 +33,15 @@ public class UserPageController {
     }
 
     @PostMapping("/kayttajat/approve/{profilename}")
-    public String approveForFriend(Model model, @PathVariable String profilename, 
-            @RequestParam(required=false, value="submit") String submit,
-            @RequestParam(required=false, value="reject") String reject) {
-        if(submit != null) friendService.makeFriend(profilename);
-        if(reject != null) friendService.rejectFriend(profilename);
+    public String approveForFriend(Model model, @PathVariable String profilename) {
+        friendService.makeFriend(profilename);
+        Account loggedAccount = accountService.loggedInAccount();
+        return "redirect:/kayttajat/" + loggedAccount.getProfilename();
+    }
+    
+    @PostMapping("/kayttajat/reject/{profilename}")
+    public String rejectFriendRequest(Model model, @PathVariable String profilename) {
+        friendService.rejectFriend(profilename);
         Account loggedAccount = accountService.loggedInAccount();
         return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }

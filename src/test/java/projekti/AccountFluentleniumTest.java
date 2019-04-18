@@ -76,21 +76,21 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     @Test
     public void noAuthOnWrongPassword() {
         goTo("http://localhost:" + port + "/kayttajat");
-        enterDetailsAndSubmit("test201", "v123");
+        enterDetailsAndSubmit("testi201", "v123");
         assertThat(pageSource()).doesNotContain("NasuKirja");
     }
 
     @Test
     public void authSuccessfulOnCorrectPasswordToKayttajat() {
         goTo("http://localhost:" + port + "/kayttajat");
-        enterDetailsAndSubmit("test201", "test12345");
+        enterDetailsAndSubmit("testi201", "test12345");
         assertThat(pageSource()).contains("NasuKirja");
     }
     
     @Test
     public void authSuccessfulOnCorrectPasswordToKayttajaTest201() {
         goTo("http://localhost:" + port + "/kayttajat/test201");
-        enterDetailsAndSubmit("test201", "test12345");
+        enterDetailsAndSubmit("testi201", "test12345");
         assertThat(pageSource()).contains("NasuKirja");
     }
     
@@ -130,7 +130,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
         int accountsBefore = accountRepository.findAll().size();
         goTo("http://localhost:" + port + "/accounts");
         Account testAccount = testUser(idForNextTestUser);
-        testAccount.setUsername("test201");
+        testAccount.setUsername("testi201");
         enterAccountDetailsAndSubmit(testAccount, "test12345");
         assertTrue(accountRepository.findAll().size() == accountsBefore );
     }
@@ -182,7 +182,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     private Account testUser(int id) {
         Account test = new Account();
         test.setRealname("AccountFluent Testaaja (test" + id +")");
-        test.setUsername("test" + id);
+        test.setUsername("testi" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 
         

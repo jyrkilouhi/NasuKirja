@@ -26,7 +26,12 @@ public class AccountService {
 
     public Model addAuthenticationName(Model model) {
          Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-         model.addAttribute("loggedUser", auth.getName());
+         String name = auth.getName();
+         Account account = accountRepository.findByUsername(name);
+         if(account != null) {
+             name = account.getProfilename();
+         }
+         model.addAttribute("loggedUser", name);
          return model;
     }    
     

@@ -1,6 +1,5 @@
 package projekti;
 
-import java.util.List;
 import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
@@ -8,25 +7,14 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.MvcResult;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@AutoConfigureMockMvc
-public class AccountUnitAndMockMvcTest  {
-      
-    @Autowired
-    private MockMvc mockMvc;
-    
+public class AccountUnitTest  {
+       
     @Autowired
     private AccountRepository accountRepository;
 
@@ -38,9 +26,11 @@ public class AccountUnitAndMockMvcTest  {
     
     private int idForNextTestUser = 1;
     private int idForLastAddedUser = 1;
+    private int accountsBeforeTest = 0;
     
     @Before
     public void init() {
+        accountsBeforeTest = accountRepository.findAll().size();
         if(accountRepository.findByProfilename("test1") == null) {
             Account test = createTestUser(1);
             accountRepository.save(test);
@@ -56,12 +46,13 @@ public class AccountUnitAndMockMvcTest  {
         if( test != null) {
             accountRepository.delete(test);
         }
+        assertTrue("Number of Accounts illegal", accountRepository.findAll().size() == accountsBeforeTest);
     }
     
     private Account createTestUser(int id) {
         Account test = new Account();
-        test.setRealname("AccountMock Testaaja (test" + id + ")");
-        test.setUsername("test" + id);
+        test.setRealname("Account Unit Testaaja (test" + id + ")");
+        test.setUsername("testi" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 
         
@@ -99,45 +90,6 @@ public class AccountUnitAndMockMvcTest  {
             accountRepository.delete(test);
         }
     }
-    
-    @Test
-    public void statusOkforAccountPage() throws Exception {
-        mockMvc.perform(get("/accounts")).andExpect(status().isOk());
-    } 
-
-    @Test
-    @WithMockUser(username = "test1")
-    public void statusOkforOmasivu() throws Exception {
-        mockMvc.perform(get("/omasivu")).andExpect(redirectedUrl("/kayttajat/test1")).andExpect(status().isFound());
-    } 
-    
-    @Test
-    @WithMockUser(username = "test1")
-    public void statusOkforKayttajaTest1Page() throws Exception {
-        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
-    } 
-    
-    @Test
-    @WithMockUser(username = "test2")
-    public void statusOkforKayttajaTest1PageWithOtherAccount() throws Exception {
-        mockMvc.perform(get("/kayttajat/test1")).andExpect(status().isOk());
-    } 
-    
-    @Test
-    @WithMockUser(username = "test1")
-    public void getCorrectModelFromOwnPage() throws Exception {
-        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
-        String modelText = result.getModelAndView().getModel().get("IsMyPage").toString();
-        assertTrue("Return correct model for ownPage", modelText != null); 
-    } 
-    
-    @Test
-    @WithMockUser(username = "test2")
-    public void modelForKayttajaTest1PageWithOtherAccount() throws Exception {
-        MvcResult result = mockMvc.perform(get("/kayttajat/test1")).andReturn();
-        List<String> models= (List)result.getModelAndView().getModel().get("IsMyPage");
-        assertTrue("Model should not include IsMyPage" , models == null);
-    } 
     
     @Test
     public void testForMethodAccountIsOkForExistingAccount() {

@@ -3,7 +3,6 @@ package projekti;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
-import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -66,7 +65,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         int friendsBefore = friendRepository.findAll().size();
         
         goTo("http://localhost:" + port + "/kayttajat/test301");
-        enterDetailsAndSubmit("test302", "test12345");
+        enterDetailsAndSubmit("testi302", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test301");
         find(By.name("Kaveriksi")).click();
         assertTrue(friendRepository.findAll().size() == friendsBefore + 1);
@@ -88,13 +87,13 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         }
         
         goTo("http://localhost:" + port + "/kayttajat/test301");
-        enterDetailsAndSubmit("test302", "test12345");
+        enterDetailsAndSubmit("testi302", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test301");
         find(By.name("Kaveriksi")).submit();
         
         goTo("http://localhost:" + port + "/logout");
         goTo("http://localhost:" + port + "/login");
-        enterDetailsAndSubmit("test301", "test12345");
+        enterDetailsAndSubmit("testi301", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test301");
         find(By.name("submit")).click();
         
@@ -117,13 +116,13 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         }
         
         goTo("http://localhost:" + port + "/kayttajat/test303");
-        enterDetailsAndSubmit("test304", "test12345");
+        enterDetailsAndSubmit("testi304", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test303");
         find(By.name("Kaveriksi")).submit();
         
         goTo("http://localhost:" + port + "/logout");
         goTo("http://localhost:" + port + "/login");
-        enterDetailsAndSubmit("test303", "test12345");
+        enterDetailsAndSubmit("testi303", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test303");
         find(By.name("reject")).click();
         
@@ -155,7 +154,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         friendRepository.save(newFriends);
         
         goTo("http://localhost:" + port + "/kayttajat/test305");
-        enterDetailsAndSubmit("test305", "test12345");
+        enterDetailsAndSubmit("testi305", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test305");
         assertThat(pageSource()).contains("301");
         friendRepository.delete(newFriends);
@@ -183,7 +182,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         friendRepository.save(newFriends);
         
         goTo("http://localhost:" + port + "/kayttajat/test305");
-        enterDetailsAndSubmit("test305", "test12345");
+        enterDetailsAndSubmit("testi305", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test305");
         assertThat(pageSource()).contains("301");
         friendRepository.delete(newFriends);
@@ -220,7 +219,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         friendRepository.save(newFriends2);
         
         goTo("http://localhost:" + port + "/kayttajat/test304");
-        enterDetailsAndSubmit("test304", "test12345");
+        enterDetailsAndSubmit("testi304", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test304");
         assertThat(pageSource()).contains("301").contains("302");
         friendRepository.delete(newFriends1);
@@ -241,7 +240,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
         }
         
         goTo("http://localhost:" + port + "/kayttajat/test305");
-        enterDetailsAndSubmit("test305", "test12345");
+        enterDetailsAndSubmit("testi305", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test305");
         assertThat(pageSource()).doesNotContain("301");
     }
@@ -255,7 +254,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
     private Account testUser(int id) {
         Account test = new Account();
         test.setRealname("FriendFluent Testaaja (test" + id +")");
-        test.setUsername("test" + id);
+        test.setUsername("testi" + id);
         test.setProfilename("test" + id);
         test.setPassword(passwordEncoder.encode("test12345")); 
         

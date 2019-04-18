@@ -29,10 +29,14 @@
                                 <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a> </br>
                                 <span th:text="${user.asktime}">aika</span>
                                 <span th:text="${user.askdate}">päivä</span>
-                                <form th:action="@{'/kayttajat/approve/' + ${user.askedby.profilename}}"  method="POST">                
-                                    <button type="submit" value ="Submit" name="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button>                                    
-                                    <button type="submit" value ="Reject" name="reject" class="btn btn-danger btn-sm mr-1">Hylkää</button>
-                                </form>  
+                                <span class="input-group">
+                                    <form th:action="@{'/kayttajat/approve/' + ${user.askedby.profilename}}"  method="POST">                
+                                        <button type="submit" value ="Submit" name="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button>                                    
+                                    </form>  
+                                    <form th:action="@{'/kayttajat/reject/' + ${user.askedby.profilename}}"  method="POST">                                                 
+                                        <button type="submit" value ="Reject" name="reject" class="btn btn-danger btn-sm mr-1">Hylkää</button>
+                                    </form>
+                                </span>
                             </div>
                         </div>
 
