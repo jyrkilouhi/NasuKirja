@@ -10,15 +10,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class AccountMockMvcTest  {
+public class AccountUnitAndMockMvcTest  {
       
     @Autowired
     private MockMvc mockMvc;
@@ -100,7 +102,13 @@ public class AccountMockMvcTest  {
     public void statusOkforAccountPage() throws Exception {
         mockMvc.perform(get("/accounts")).andExpect(status().isOk());
     } 
-        
+
+    @Test
+    @WithMockUser(username = "test1", password = "test12345")
+    public void statusOkforOmasivu() throws Exception {
+        mockMvc.perform(get("/omasivu")).andExpect(redirectedUrl("/kayttajat/test1")).andExpect(status().isFound());
+    } 
+    
     @Test
     public void testForMethodAccountIsOkForExistingAccount() {
         Account account = accountRepository.findByProfilename("test" + idForLastAddedUser);

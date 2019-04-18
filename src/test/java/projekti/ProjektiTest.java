@@ -6,6 +6,6 @@ public class ProjektiTest {
 
     @Test
     public void noTests() {
-        // projektia varten ei ole automaattisia testejä, mutta omia testejä on
+        // projektia varten ei ole automaattisia testejä
     }
 }
