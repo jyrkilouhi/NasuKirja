@@ -4,7 +4,6 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
 import org.junit.After;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -30,14 +29,10 @@ public class FriendMockMvcTest  {
       
     @Autowired
     private MockMvc mockMvc;
-    
-    
+        
     @Autowired
     private AccountRepository accountRepository;
-
-    @Autowired
-    private AccountService accountService;
-    
+   
     @Autowired
     private FriendsRepository friendRepository;
 
