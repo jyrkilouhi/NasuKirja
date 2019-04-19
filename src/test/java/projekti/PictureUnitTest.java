@@ -16,35 +16,32 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class WallUnitTest  {
+public class PictureUnitTest  {
       
     @Autowired
-    private WallRepository wallRepository;
+    private PictureRepository pictureRepository;
     
     @Autowired
     private AccountRepository accountRepository;
     
     @Autowired
     private FriendsRepository friendRepository;
-
-    @Autowired
-    private FriendService friendService;
     
     @Autowired
     PasswordEncoder passwordEncoder;
     
     @Before
     public void initTestUsersAndFriends() {
-        createTestUsers(400, 405);
-        createFriends(400, 401);
-        createFriends(401, 402);
+        createTestUsers(800, 805);
+        createFriends(800, 801);
+        createFriends(801, 802);
     }
     
     @After
     public void removeTestUsersAndFriends() {
-        deleteFriends(400, 401);
-        deleteFriends(401, 402);
-        for(int id = 400; id <= 405; id++) {
+        deleteFriends(800, 801);
+        deleteFriends(801, 802);
+        for(int id = 800; id <= 805; id++) {
             Account test = accountRepository.findByProfilename("test" + id );
             accountRepository.delete(test);
         }
@@ -54,7 +51,7 @@ public class WallUnitTest  {
         for(int id = alku; id <= loppu; id++) {
             if(accountRepository.findByProfilename("test" + id) == null) {
                 Account test = new Account();
-                test.setRealname("Wall Unit Testaaja (test" + id + ")");
+                test.setRealname("Picture Unit Testaaja (test" + id + ")");
                 test.setUsername("testi" + id);
                 test.setProfilename("test" + id);
                 test.setPassword(passwordEncoder.encode("test12345")); 
@@ -83,34 +80,31 @@ public class WallUnitTest  {
         if(test != null) friendRepository.delete(test);
     }
     
-    private Wall createWall(String message, int ownerId, int messagerId) {
-        Wall wall = new Wall();
-        wall.setTime(LocalDateTime.now());
-        wall.setMessage(message);
+    private Picture createPicture(String message, int ownerId) {
+        Picture picture = new Picture();
+        picture.setText(message);
         Account owner = accountRepository.findByProfilename("test" + ownerId);
-        Account messager = accountRepository.findByProfilename("test" + messagerId);
-        wall.setMessager(messager);
-        wall.setOwner(owner);
-        return wall;
+        picture.setOwner(owner);
+        return picture;
     }
     
     @Test
-    public void canWriteToWall() {
-        int messagesBefore = wallRepository.findAll().size();
-        Wall test = createWall("Testi Tesi testi" , 400, 400);
-        wallRepository.save(test);
-        assertTrue("Message to wall can be added", wallRepository.findAll().size() == messagesBefore + 1); 
-        wallRepository.delete(test);
+    public void canSavePicture() {
+        int picturesBefore = pictureRepository.findAll().size();
+        Picture picture = createPicture("Testi Tesi testi" , 800);
+        pictureRepository.save(picture);
+        assertTrue("Picture can be added", pictureRepository.findAll().size() == messagesBefore + 1); 
+        pictureRepository.delete(picture);
     }
 
     @Test
-    public void canFindMessageFromOwnWall() {
-        Wall test = createWall("Testi Tesi testi" , 400, 401);
-        wallRepository.save(test);
-        Account owner = accountRepository.findByProfilename("test" + 400);
-        List <Wall> found = wallRepository.findByOwner(owner);
-        assertTrue("Can found Message added to wall", found.size() == 1); 
-        wallRepository.delete(test);
+    public void canFindSavedPicture() {
+        Picture picture = createPicture("Testi Tesi testi" , 800);
+        pictureRepository.save(picture);
+        Account owner = accountRepository.findByProfilename("test" + 800);
+        List <Picture> found = pictureRepository.findByOwner(owner);
+        assertTrue("Can found  added picture", found.size() == 1); 
+        pictureRepository.delete(picture);
     }
     
 }

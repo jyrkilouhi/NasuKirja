@@ -46,7 +46,7 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     public void removeTestUsersAndFriends() {
         deleteFriends(600, 601);
         deleteFriends(601, 602);
-        for(int id = 600; id <= 605; id++) {
+        for(int id = 600; id <= 606; id++) {
             Account test = accountRepository.findByProfilename("test" + id );
             accountRepository.delete(test);
         }
