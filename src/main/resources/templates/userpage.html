@@ -5,26 +5,19 @@
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
         <p></p>        
         <main th:unless="${FindUserError}">
-
-            <section class="container-fluid">
-                <div class="row mx-1" >
-                    <h2 class="col-md-3">ProfilePicture</h2>
-                    <h2 class="col-md-6" th:text = ${user.realname}>UserName</h2>
-                    <section class="col-xl-3" th:unless="${IsFriend}"> 
-                        <section th:unless="${IsAskedForFriend}">
-                            <form th:unless="${IsMyPage}" th:action="@{'/kayttajat/request/' + ${user.profilename}}"  method="POST">                    
-                                <button name="Kaveriksi" type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
-                            </form>                        
-                        </section>
-                    </section>
-                </div>
-            </section>
-            
+          
             <section class="container-fluid"> 
                 <div class="row mx-1">
                     <div class="col-md-3 border rounded" style="background-color: AliceBlue" >
+                        <h2 th:text = ${user.realname}>UserName</h2>
+                        <img th:if="${HaveProfilePicture}" th:src="@{'/picture/' + ${user.profilePicture.id}}" class="img-fluid"></img>
+                        <section th:unless="${IsAskedForFriend} or ${IsFriend} or ${IsMyPage}">
+                            <form th:action="@{'/kayttajat/request/' + ${user.profilename}}"  method="POST">                    
+                                <button name="Kaveriksi" type="submit" class="btn btn-primary">Pyydä kaveriksi</button>                                    
+                            </form>                        
+                        </section>
                         <div th:if="${IsMyPage}" >
-                            <h5 th:if="${!FriendRequests.empty}" class=" mt-2 mb-0">Kaveripyynnöt</h5>
+                            <h4 th:if="${!FriendRequests.empty}" class=" mt-2 mb-0">Kaveripyynnöt</h4>
                             <div th:each="user : ${FriendRequests}">
                                 <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a> </br>
                                 <span th:text="${user.asktime}">aika</span>
@@ -40,18 +33,18 @@
                             </div>
                         </div>
 
-                        <h5 class=" mt-2 mb-0">Kaverit</h5>
+                        <h4 class=" mt-2 mb-0">Kaverit</h4>
                         <div th:each="user : ${Friends}">
                             <a th:href="@{'/kayttajat/' + ${user.askedby.profilename}}" th:text="${user.askedby.realname}">Kaveri</a>
                         </div>
                     </div>      
                     
-                    <div class="col-md-6">
-                        <h5 class=" mt-2 mb-0">Seinä</h5>
+                    <div class="col-md-5">
+                        <h4 class=" mt-2 mb-0">Viestiseinä</h4>
                         <form th:if="${IsMyPage} or ${IsFriend}" th:action="@{'/kayttajat/wall/' + ${user.profilename}}"  method="POST">    
                             <div class="form-group">                          
-                                <textarea class="form-control" name="newWallMessage" placeholder="Kirjoita seinälle" rows="3"></textarea>  
-                                <button type="submit" value ="Submit" name="sendMessage" class="btn btn-success btn-sm mr-1 mt-2 bg-primary">Lähetä</button>  
+                                <textarea class="form-control" name="newWallMessage" placeholder="Kirjoita viesti" rows="3"></textarea>  
+                                <button type="submit" value ="Submit" name="sendMessage" class="btn btn-success btn-sm mr-1 mt-2 bg-primary">Lähetä viesti seinälle</button>  
                             </div>
                         </form>
                         <div th:each="wall : ${WallMessages}">
@@ -62,8 +55,31 @@
                             </p>
                         </div>
                     </div>       
-                    <div class="col-md-3 border rounded" style="background-color: AliceBlue">
-                        <h5 class=" mt-2 mb-0">Kuvat</h5>
+                    <div class="col-md-4 border rounded" style="background-color: AliceBlue">
+                        <h4 class=" mt-2 mb-0">Kuva-albumi</h4>
+                        <form th:if="${IsMyPage} and ${canAddPicture}" th:action="@{/kayttajat/sendpicture/}"  method="POST" enctype="multipart/form-data">    
+                            <div class="form-group"> 
+                                <input type="file" name="file"/>
+                                <input type="text" name="newPictureMessage" class="form-control" placeholder="Kuvaus"/>
+                                <button type="submit" value ="Submit" name="sendPicture" class="btn btn-success btn-sm mr-1 mt-2 bg-primary">Lähetä uusi kuva</button>  
+                            </div>
+                        </form>
+                        <div th:each="picture : ${Pictures}">
+                            <div class="mt-2 border rounded " style="background-color: White">
+                                <div th:if="${IsMyPage}" class="input-group mb-1">  
+                                    <form th:action="@{'/picture/setprofile/' + ${picture.id}}"  method="POST">                                                 
+                                        <button  type="submit" value ="Toprofile" name="toprofile" class="btn btn-success btn-sm mr-1">Aseta alla oleva kuva profiili kuvaksi</button>
+                                    </form>
+                                    <form th:action="@{'/picture/remove/' + ${picture.id}}"  method="POST">                                                 
+                                        <button  type="submit" value ="Remove" name="remove" class="btn btn-danger btn-sm mr-1">Poista kuva</button>
+                                    </form>
+                                </div>
+                                <figure class="img-fluid">
+                                    <img th:src="@{'/picture/' + ${picture.id}}" class="img-fluid"> </image>
+                                    <figcaption th:text="${picture.text}">Kuvaus</figcaption> 
+                                </figure>
+                            </div>
+                        </div>
                     </div> 
                 </div>
             </section>

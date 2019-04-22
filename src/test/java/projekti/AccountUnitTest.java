@@ -69,6 +69,7 @@ public class AccountUnitTest  {
             accountRepository.save(test);
         }
         assertTrue("One account can be added", accountRepository.findAll().size() == accountsBefore + 1);   
+        assertTrue("Can count number of accounts", accountService.numberOfAccounts() == accountsBefore + 1);
         accountRepository.delete(test);      
     }
     

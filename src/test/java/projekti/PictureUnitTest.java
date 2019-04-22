@@ -90,10 +90,10 @@ public class PictureUnitTest  {
     
     @Test
     public void canSavePicture() {
-        int picturesBefore = pictureRepository.findAll().size();
+        long picturesBefore = pictureRepository.count();
         Picture picture = createPicture("Testi Tesi testi" , 800);
         pictureRepository.save(picture);
-        assertTrue("Picture can be added", pictureRepository.findAll().size() == messagesBefore + 1); 
+        assertTrue("Picture can be added", pictureRepository.count() == picturesBefore + 1); 
         pictureRepository.delete(picture);
     }
 
