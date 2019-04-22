@@ -36,8 +36,7 @@ public class WallService {
             newWallMessage.setOwner(profileAccount);
             newWallMessage.setTime(LocalDateTime.now());
             wallRepository.save(newWallMessage);
-        }
-        
+        }        
     }
     
     public Model addWallMessages(Model model, String profilename) {    

@@ -69,6 +69,9 @@ public class AccountService {
         Account user = accountRepository.findByProfilename(profilename);
         if(user != null) {
             model.addAttribute("user", user);
+            if(user.getProfilePicture() != null) {
+                model.addAttribute("HaveProfilePicture", true);
+            }
         } else {
             model = profileError(model, profilename);         
         }        

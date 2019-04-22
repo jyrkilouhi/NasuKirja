@@ -1,6 +1,7 @@
 package projekti;
 
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class Account extends AbstractPersistable<Long> {
     @Size(min = 5, max = 50)    
     private String profilename;
     
-    //private Picture profilePicture;
+    @OneToOne
+    private Picture profilePicture;
     
 }

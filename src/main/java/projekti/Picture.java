@@ -1,7 +1,8 @@
 package projekti;
 
-import java.time.LocalDateTime;
+import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -18,6 +19,7 @@ public class Picture extends AbstractPersistable<Long> {
     private String text; 
     
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte[] content;
     
     @OneToOne
