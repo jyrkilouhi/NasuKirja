@@ -82,9 +82,6 @@ public class UserPageController {
         pictureService.setProfilePicture(id);
         Account loggedAccount = accountService.loggedInAccount();
         return "redirect:/kayttajat/" + loggedAccount.getProfilename();
-    }
-    
-    
-    
+    }  
 
 }

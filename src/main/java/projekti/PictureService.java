@@ -42,7 +42,7 @@ public class PictureService {
         if(loggedAccount == picture.get().getOwner()) { 
             // TODO: poista kommentit ja tykkäykset!!
             if(loggedAccount.getProfilePicture() != null) {
-                if(loggedAccount.getProfilePicture().getId() == id) {
+                if((long)loggedAccount.getProfilePicture().getId() == id) {
                     loggedAccount.setProfilePicture(null);
                     accountRepository.save(loggedAccount);
                 }
