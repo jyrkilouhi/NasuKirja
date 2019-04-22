@@ -42,8 +42,9 @@ public class AccountService {
     } 
     
     public Model findUsers(Model model, String findname) {
+        List <Account> foundUsers;
         model = addAuthenticationName(model);
-        List <Account> foundUsers = accountRepository.findByRealnameContaining(findname);
+        foundUsers = accountRepository.findByRealnameContaining(findname);
         if(foundUsers.isEmpty()) {
             model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " ei löydy yhtään käyttäjää");             
         }

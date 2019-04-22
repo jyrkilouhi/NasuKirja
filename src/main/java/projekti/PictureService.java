@@ -21,10 +21,10 @@ public class PictureService {
 
     
     public void newPicture(String message, MultipartFile file) throws IOException {
+        if (file.getSize() == 0) return;
         Account loggedAccount = accountService.loggedInAccount();
         if(loggedAccount == null) return;
         if(pictureRepository.findByOwner(loggedAccount).size() >= 10) return;
-        System.out.println("NEW PICTURE TYPE " + file.getContentType());
         if( !file.getContentType().contains("gif") && !file.getContentType().contains("jpeg") && !file.getContentType().contains("png")) return;
      
         Picture newPicture = new Picture();
@@ -41,9 +41,11 @@ public class PictureService {
         if(loggedAccount == null) return;
         if(loggedAccount == picture.get().getOwner()) { 
             // TODO: poista kommentit ja tykkäykset!!
-            if(loggedAccount.getProfilePicture().getId() == id) {
-                loggedAccount.setProfilePicture(null);
-                accountRepository.save(loggedAccount);
+            if(loggedAccount.getProfilePicture() != null) {
+                if(loggedAccount.getProfilePicture().getId() == id) {
+                    loggedAccount.setProfilePicture(null);
+                    accountRepository.save(loggedAccount);
+                }
             }
             pictureRepository.deleteById(id);
         }

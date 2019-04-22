@@ -57,7 +57,7 @@
                     </div>       
                     <div class="col-md-4 border rounded" style="background-color: AliceBlue">
                         <h4 class=" mt-2 mb-0">Kuva-albumi</h4>
-                        <form th:if="${IsMyPage} and ${canAddPicture}" th:action="@{/kayttajat/sendpicture/}"  method="POST" enctype="multipart/form-data">    
+                        <form th:if="${IsMyPage} and ${canAddPicture}" th:action="@{/picture/sendpicture/}"  method="POST" enctype="multipart/form-data">    
                             <div class="form-group"> 
                                 <input type="file" name="file"/>
                                 <input type="text" name="newPictureMessage" class="form-control" placeholder="Kuvaus"/>

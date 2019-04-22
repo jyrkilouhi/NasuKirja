@@ -57,7 +57,7 @@ public class UserPageController {
         return "redirect:/kayttajat/" + profilename;
     }
     
-    @PostMapping("/kayttajat/sendpicture")
+    @PostMapping("/picture/sendpicture")
     public String sendNewPicture(Model model,  @RequestParam String newPictureMessage, @RequestParam("file") MultipartFile newPictureFile) throws IOException {
         pictureService.newPicture(newPictureMessage, newPictureFile);
         Account loggedAccount = accountService.loggedInAccount();

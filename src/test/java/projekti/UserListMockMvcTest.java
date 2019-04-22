@@ -61,6 +61,7 @@ public class UserListMockMvcTest  {
         test.setRealname("Userlist MockMvc Testaaja (test" + id + ")");
         test.setUsername("testi" + id);
         test.setProfilename("test" + id);
+        test.setProfilePicture(null) ;
         test.setPassword(passwordEncoder.encode("test12345")); 
         
         return test;
@@ -68,8 +69,8 @@ public class UserListMockMvcTest  {
        
     @Test
     @WithMockUser(username = "testi201")
-    public void loggedUserCanSeeFriendList() throws Exception {
-        mockMvc.perform(get("/kayttajat")).andExpect(status().isOk());
+    public void loggedUserCanSeeUserList() throws Exception {
+        mockMvc.perform(get("/kayttajat").param("findname"," ")).andExpect(status().isOk());
     } 
     
     @Test

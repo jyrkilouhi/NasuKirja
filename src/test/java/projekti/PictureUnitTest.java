@@ -23,24 +23,18 @@ public class PictureUnitTest  {
     
     @Autowired
     private AccountRepository accountRepository;
-    
-    @Autowired
-    private FriendsRepository friendRepository;
-    
+       
     @Autowired
     PasswordEncoder passwordEncoder;
     
     @Before
     public void initTestUsersAndFriends() {
         createTestUsers(800, 805);
-        createFriends(800, 801);
-        createFriends(801, 802);
+
     }
     
     @After
     public void removeTestUsersAndFriends() {
-        deleteFriends(800, 801);
-        deleteFriends(801, 802);
         for(int id = 800; id <= 805; id++) {
             Account test = accountRepository.findByProfilename("test" + id );
             accountRepository.delete(test);
@@ -59,27 +53,7 @@ public class PictureUnitTest  {
             }
         }
     }
-    
-    private void createFriends(int id1, int id2) {
-        Friend test = new Friend();
-        test.setAskdate(LocalDate.now());
-        test.setAsktime(LocalTime.now());
-        Account account1 = accountRepository.findByProfilename("test" + id1);
-        test.setAskedby(account1);
-        Account account2 = accountRepository.findByProfilename("test" + id2);
-        test.setAskedfrom(account2);
-        test.setStatus(true);
-        friendRepository.save(test);
-    }
-    
-        
-    private void deleteFriends(int id1, int id2) {
-        Account account1 = accountRepository.findByProfilename("test" + id1);
-        Account account2 = accountRepository.findByProfilename("test" + id2);
-        Friend test = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
-        if(test != null) friendRepository.delete(test);
-    }
-    
+       
     private Picture createPicture(String message, int ownerId) {
         Picture picture = new Picture();
         picture.setText(message);
