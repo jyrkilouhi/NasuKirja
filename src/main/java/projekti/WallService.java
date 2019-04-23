@@ -72,7 +72,8 @@ public class WallService {
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = message.getOwner();
         if(profileAccount == null || loggedAccount == null) return;
-        if( friendService.areFriends(loggedAccount, profileAccount)) { 
+        if( friendService.areFriends(loggedAccount, profileAccount) || 
+                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
             if(likeRepository.findByLoverAndWall(loggedAccount, message).size() == 0) {
                 Love newLike = new Love();
                 newLike.setWall(message);
@@ -80,6 +81,10 @@ public class WallService {
                 likeRepository.save(newLike);
             }
         }
+    }
+    
+    public void commentWallMessage(long id, String commentText) {
+        
     }
     
 }

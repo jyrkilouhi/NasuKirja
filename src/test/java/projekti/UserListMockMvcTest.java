@@ -65,13 +65,7 @@ public class UserListMockMvcTest  {
         
         return test;
     }
-       
-    @Test
-    @WithMockUser(username = "testi201")
-    public void loggedUserCanSeeUserList() throws Exception {
-        mockMvc.perform(get("/kayttajat").param("findname"," ")).andExpect(status().isOk());
-    } 
-    
+          
     @Test
     @WithMockUser(username = "testi201")
     public void loggedUserCanFindTestUsers() throws Exception {

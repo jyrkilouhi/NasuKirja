@@ -63,6 +63,11 @@ public class UserPageController {
         return "redirect:/kayttajat/" + profilename;
     }
     
+    @PostMapping("/kayttajat/wall/comment/{id}/{profilename}")
+    public String commentWall(Model model, @PathVariable String profilename, @PathVariable long id, @RequestParam String newWallComment) {
+        wallService.commentWallMessage(id, newWallComment);
+        return "redirect:/kayttajat/" + profilename;
+    }
     
     @PostMapping("/picture/sendpicture")
     public String sendNewPicture(Model model,  @RequestParam String newPictureMessage, @RequestParam("file") MultipartFile newPictureFile) throws IOException {
@@ -94,6 +99,12 @@ public class UserPageController {
     @PostMapping("/picture/like/{id}/{profilename}")
     public String LikePicture(Model model, @PathVariable long id, @PathVariable String profilename) {
         pictureService.likePicture(id);
+        return "redirect:/kayttajat/" + profilename;
+    }  
+    
+    @PostMapping("/picture/comment/{id}/{profilename}")
+    public String commentPicture(Model model, @PathVariable long id, @PathVariable String profilename, @RequestParam String newPictureComment) {
+        pictureService.commentPicture(id, newPictureComment);
         return "redirect:/kayttajat/" + profilename;
     }  
     

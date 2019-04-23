@@ -52,6 +52,7 @@ public class PictureService {
             for(Love love : loves) {
                 likeRepository.delete(love);
             }
+            // TODO muista lisätä kommentien poisto
             if(loggedAccount.getProfilePicture() != null) {
                 if(loggedAccount.getProfilePicture().getId() == id) {
                     loggedAccount.setProfilePicture(null);
@@ -109,7 +110,8 @@ public class PictureService {
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = picture.getOwner();
         if(profileAccount == null || loggedAccount == null) return;
-        if( friendService.areFriends(loggedAccount, profileAccount)) { 
+        if( friendService.areFriends(loggedAccount, profileAccount) || 
+                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
             if(likeRepository.findByLoverAndPicture(loggedAccount, picture).size() == 0) {
                 Love newLike = new Love();
                 newLike.setPicture(picture);
@@ -117,6 +119,24 @@ public class PictureService {
                 likeRepository.save(newLike);
             }
         }        
+    }
+    
+    public void commentPicture(long id, String commentText) {
+        Picture picture = pictureRepository.getOne(id);
+        if(picture == null) return;
+        Account loggedAccount = accountService.loggedInAccount();
+        Account profileAccount = picture.getOwner();
+        if(profileAccount == null || loggedAccount == null) return;
+        if( friendService.areFriends(loggedAccount, profileAccount) || 
+                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
+            if(likeRepository.findByLoverAndPicture(loggedAccount, picture).size() == 0) {
+                Love newLike = new Love();
+                newLike.setPicture(picture);
+                newLike.setLover(loggedAccount);
+                likeRepository.save(newLike);
+            }
+        }  
+        
     }
     
 }
