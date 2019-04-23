@@ -34,7 +34,7 @@ public class PictureService {
         pictureRepository.save(newPicture);      
     }
     
-    public void deletePicture(Long id) {
+    public void deletePicture(long id) {
         Optional<Picture> picture = pictureRepository.findById(id);
         if( ! picture.isPresent() ) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -42,7 +42,7 @@ public class PictureService {
         if(loggedAccount == picture.get().getOwner()) { 
             // TODO: poista kommentit ja tykkäykset!!
             if(loggedAccount.getProfilePicture() != null) {
-                if((long)loggedAccount.getProfilePicture().getId() == id) {
+                if(loggedAccount.getProfilePicture().getId() == id) {
                     loggedAccount.setProfilePicture(null);
                     accountRepository.save(loggedAccount);
                 }
@@ -51,7 +51,7 @@ public class PictureService {
         }
     }
         
-    public void setProfilePicture(Long id) {
+    public void setProfilePicture(long id) {
         Optional<Picture> picture = pictureRepository.findById(id);
         if( ! picture.isPresent() ) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -72,11 +72,15 @@ public class PictureService {
         return model;
     }
     
-    public byte[] getOnePicture(Long id) {
+    public byte[] getOnePicture(long id) {
         if(pictureRepository.existsById(id)) {
             return pictureRepository.findById(id).get().getContent();
         }
         return "Error".getBytes();
+    }
+    
+    public void likePicture(long id) {
+        
     }
     
 }

@@ -48,11 +48,19 @@
                             </div>
                         </form>
                         <div th:each="wall : ${WallMessages}">
-                            <p class="mt-2 border rounded " style="background-color: AliceBlue">
+                            <div class="mt-2 border rounded " style="background-color: AliceBlue">
                                 <a th:href="@{'/kayttajat/' + ${wall.messager.profilename}}"><span th:text="${wall.messager.realname}">kirjailija</span> </a> 
                                 <span th:text="${#temporals.format(wall.time, 'dd.MM.yyyy HH:mm')}">aika</span> </br>
                                 <span th:text="${wall.message}">Viesti</span> 
-                            </p>
+                                <div class="input-group mb-1">  
+                                    <form th:if="${IsFriend} and not ${wall.hasLiked}" th:action="@{'/kayttajat/wall/like/' + ${wall.id} + '/' + ${user.profilename}}"  method="POST">                                                 
+                                        <button  type="submit" value ="LikeWall" name="likewall" class="btn btn-success btn-sm mr-1 bg-primary">Tykkää</button>
+                                    </form>
+                                    <form>
+                                        <button  th:text="${wall.likes} + ' tykkää tästä'" type="submit" class="btn btn-success btn-sm mr-1"> 3 tykkää</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
                     </div>       
                     <div class="col-md-4 border rounded" style="background-color: AliceBlue">

@@ -56,6 +56,13 @@ public class UserPageController {
         wallService.newWallMessage(profilename, newWallMessage);
         return "redirect:/kayttajat/" + profilename;
     }
+
+    @PostMapping("/kayttajat/wall/like/{id}/{profilename}")
+    public String likeWall(Model model, @PathVariable String profilename, @PathVariable long id) {
+        wallService.likeWallMessage(id);
+        return "redirect:/kayttajat/" + profilename;
+    }
+    
     
     @PostMapping("/picture/sendpicture")
     public String sendNewPicture(Model model,  @RequestParam String newPictureMessage, @RequestParam("file") MultipartFile newPictureFile) throws IOException {
@@ -66,22 +73,28 @@ public class UserPageController {
     
     @GetMapping(path = "/picture/{id}", produces = "image/gif")
     @ResponseBody
-    public byte[] get(@PathVariable Long id) {
+    public byte[] get(@PathVariable long id) {
         return pictureService.getOnePicture(id);
     } 
     
     @PostMapping("/picture/remove/{id}")
-    public String removePicture(Model model, @PathVariable Long id) {
+    public String removePicture(Model model, @PathVariable long id) {
         pictureService.deletePicture(id);
         Account loggedAccount = accountService.loggedInAccount();
         return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }
     
     @PostMapping("/picture/setprofile/{id}")
-    public String setProfilePicture(Model model, @PathVariable Long id) {
+    public String setProfilePicture(Model model, @PathVariable long id) {
         pictureService.setProfilePicture(id);
         Account loggedAccount = accountService.loggedInAccount();
         return "redirect:/kayttajat/" + loggedAccount.getProfilename();
     }  
 
+    @PostMapping("/picture/like/{id}/{profilename}")
+    public String LikePicture(Model model, @PathVariable long id, @PathVariable String profilename) {
+        pictureService.likePicture(id);
+        return "redirect:/kayttajat/" + profilename;
+    }  
+    
 }
