@@ -50,6 +50,7 @@
                         <div th:each="wall : ${WallMessages}">
                             <div class="mt-2 border rounded " style="background-color: AliceBlue">
                                 <a th:href="@{'/kayttajat/' + ${wall.messager.profilename}}"><span th:text="${wall.messager.realname}">kirjailija</span> </a> 
+                                <span>kirjoitti</span>
                                 <span th:text="${#temporals.format(wall.time, 'dd.MM.yyyy HH:mm')}">aika</span> </br>
                                 <span th:text="${wall.message}">Viesti</span> 
                                 <div class="input-group mb-1">  
@@ -86,6 +87,14 @@
                                     <img th:src="@{'/picture/' + ${picture.id}}" class="img-fluid"> </image>
                                     <figcaption th:text="${picture.text}">Kuvaus</figcaption> 
                                 </figure>
+                                <div class="input-group mb-1">  
+                                    <form th:if="${IsFriend} and not ${picture.hasLiked}" th:action="@{'/picture/like/' + ${picture.id} + '/' + ${user.profilename}}"  method="POST">                                                 
+                                        <button  type="submit" value ="LikePicture" name="likepicture" class="btn btn-success btn-sm mr-1 bg-primary">Tykkää</button>
+                                    </form>
+                                    <form>
+                                        <button  th:text="${picture.likes} + ' tykkää tästä'" type="submit" class="btn btn-success btn-sm mr-1"> 3 tykkää</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div> 
