@@ -130,6 +130,7 @@
         
         <section class="container">
             <p th:if="${FindUserError}" th:text="${FindUserError}" class="text-danger"> Virheviesti</p>
-        </section>
+        </section>       
+        <div th:replace="fragments/layout :: pageFooter">Footer</div>        
     </body>
 </html>

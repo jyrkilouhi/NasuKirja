@@ -7,9 +7,11 @@
             <section th:replace="fragments/layout :: pageText(pageText='Tervetuloa NasuKirjaan!')" class="container">
             </section>
             <section class="container"> 
-                Käyttäjiä yhteensä: <span th:text="${numberOfAccounts}"> Users </span>
+                Käyttäjiä yhteensä: <span th:text="${numberOfAccounts}"> Users </span> </br></br>
+                <a th:href="@{/help}">NasuKirjan käyttöohje</a>
             </section>
-        </main>                
+        </main>     
+        <div th:replace="fragments/layout :: pageFooter">Footer</div>
     </body>
 </html>
 

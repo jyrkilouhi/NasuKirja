@@ -1,0 +1,100 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='NasuKirja - Käyttöohjeet')"> Title </head>
+    <body class="font-weight-light">
+        <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
+        <main>
+            <section th:replace="fragments/layout :: pageText(pageText='NasuKirjan lyhyt käyttöohje')" class="container">
+            </section>
+            <section class="container"> 
+                <h4> 1. Johdanto NasuKirjaan</h4>
+                <p>
+                    NasuKirja on tehty HY:n Web-palvelinohjelmointi Javalla kurssin projektityönä keväällä 2019.
+                    NasuKirja toimii kuin vanhan kansan Facebook. Jokaisella Nasukirjan käyttäjällä on kuva-albumi, jonne 
+                    voi lisätä omia kuviaan. Käyttäjällä on myös oma viestiseinä, jonne käyttäjä ja hänen kaverinsa voivat kirjoittaa viestejä. 
+                    Ja mikä parasta NasuKirjasta voi siis myös etsiä muita käyttäjiä kaverikseen.
+                    Kaverit voivat tykätä ja kommentoida toistensa kuvia ja seinä kirjoituksia kuten oikeassa Facebookissa.
+                </p>
+                <h4> 2. Liittyminen NasuKirjaan</h4>
+                <p>
+                    Ennen NasuKirjan käyttämistä sinun on luotava käyttäjätili NasuKirjaan. Löydät sivun oikeasta yläreunasta 
+                    linkin <a href="/accounts">Liity NasuKirjaan</a>, josta aukeavalla sivulla voit luoda itsellesi tilin NasuKirjaan.
+                    Sinun pitää ilmoittaa nimesi (4-50 merkkiä), jonka perusteella kaverisi voivat etsiä sinua NasuKirjasta. Lisäksi sinun pitää valita
+                    itsellesi käyttäjätunnus (4-50 merkkiä) ja salasana (vähintään 8 merkkiä). 
+                    Lisäksi sinun on valittava itsellesi NasuKirjan profiilipolku (ei saa sisältää erikoismerkkejä).
+                    Käyttäjätunnuksen ja profiilipolun on oltava uniikkeja eli et voi valita itsellesi jo ollain muulla käyttäjällä käytössä olevaa tunnusta tai polkua.
+                </p>            
+                <h4> 3. NasuKirjaan sisälle kirjoittautuminen</h4>
+                <p>
+                    Kun olet luonnut itsellesi käyttäjätunnuksen voit kirjoittua sisälle NasuKirjaan sivun oikeassa yläreunassa olevasta linkistä
+                    <a href="/login">Kirjoittaudu sisään</a>. Tässä kohtaa sinun on muistettava käyttäjätunnuksesi sekä salasanasi. 
+                    Huomaa, että kohdan 4 ohjeet toimivat vain kun olet kirjoittaunut sisälle NasuKirjaan.
+                </p>  
+                <h4> 4. NasuKirjan käyttäminen </h4>
+                <p>(Vain kun olet kirjautunut sisälle NasuKirjaan)</p>
+                <p>
+                    Kun olet kirjoittatunut sisälle NasuKirjaan aukeaa sinun oma NasuKirjan sivusi. 
+                    Pääset tälle sivulle myös sivun vasemassa yläreunassa olevasta linkistä <a href="/omasivu">NasuKirja2.0</a>.
+                    Omalla Nasukirjan sivullasi näet oikealla profiilitietosi ja kaverisi sekä mahdolliset kaveripyynnöt. Sivun keskellä on viestiseinäsi.
+                    Ja sivun oikessa reunassa sijaitsee kuva-albumisi. Muiden käyttäjien sekä kaverisesi sivujen rakenne on vastaava.
+                </p>
+                <h5> 4.1 Käyttäjien etsiminen NasuKirjasta</h5>
+                <p>
+                    NasuKirjan sivun yläosan keskeltä löydät linkin <a href="/kayttajat">Haku</a>. Sitä kautta pääset etsimään NasuKirjan muita käyttäjiä heidän
+                    nimensä perusteella. Voit rajoittaa hakua kirjoittamalla sivun yläreunan hakukenttään vaikkapa kaverisi etunimen, jolloin
+                    näet kaikki NasuKirjan käyttäjät joilla on antamasi nimi käyttäjänimessään. Hakutuloksista voit avata haluamasi käyttäjän sivun.
+                </p>
+                <h5> 4.2 Kaveripyynnön tekeminen</h5>
+                <p>
+                    Kun olet lötänyt kaverisi NasuKirjasta edellisen kohdan ohjeiden perusteella voit pyytä häntä kaveriksi myös NasuKirjassa. 
+                    Kun olet avannut löytämäsi käyttäjän oman sivun näet hänen sivun oikeassa reunassa hänen profiilitiedot sekä napin 
+                    <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Pyydä kaveriksi</button>. Painamalla nappia lähetät
+                    käyttäjälle kaveripyynnön. Käyttäjä voi hyväksyä tai hylätä pyyntösi.
+                </p>
+                <h5> 4.2 Kaveripyyntön vastaaminen</h5>
+                <p>
+                    Kun toinen käyttäjä on tehnyt sinulle kaveripyynnön näet oman sivusi oikeassa reunassa ilmoituksen että sinulle on tullut kaveripyyntö.
+                    Voit valita hyväksytkö kaveripyynnön vai hylkäätkö sen kahdesta sivulla näkyvästä napista. 
+                    <button type="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button> 
+                    <button type="submit" class="btn btn-danger btn-sm mr-1">Hylkää</button>
+                </p>
+                <h5> 4.3 Kaverit</h5>
+                <p>
+                    Kun olet hyväksynyt kaveripyynnön näet uudet ja vanhat kaverisi oman sivusi vasemmassa reunassa listattuna. Näet myös
+                    kaikkien muiden NasuKirjan käyttäjien kaverit heidän omilla sivuillaan. Et kuitenkaan näe heille tehtyjä kaveripyyntöjä.
+                </p>
+                <h5> 4.4 Viestiseinä - viestin lähetys</h5>
+                <p>
+                    Kaikkien NasuKirjan käyttäjien sivun keskellä näkyy viestiseinä. Viestiseinän yläreunassa on viestikenttä, johon voit kirjoittaa
+                    uuden viestin. Viesti lähetetään seinälle, kun painat sinistä Lähetä viesti seinälle nappia. 
+                    Voit lähettää viestejä omalle seinällesi ja kaverien seinälle. 
+                    Muiden käyttäjien (muiden kuin kaveriesi) seinän viestejä voit lukea mutta et voi kirjoittaa heidän seinälle. 
+                </p>
+                    <textarea class="form-control"  placeholder="Kirjoita uusi viesti seinälle tähän" rows="3"></textarea>  
+                    <button type="submit"  class="btn btn-success btn-sm mr-1 mt-2 mb-2 bg-primary">Lähetä viesti seinälle</button>  
+                 <h5> 4.5 Viestiseinä - viestistä tykkääminen</h5>
+                 <p>
+                    Voit tykätä oman ja kaverien viestiseinän viesteistä painamalla tykkää nappia
+                    <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>.
+                    Näet seinältä myös montako tykkäystä kukin seinän viesti on kerännyt
+                    <button  type="submit" class="btn btn-info btn-sm ml-1">164 tykkää tästä</button>.
+                 </p>
+                 <h5> 4.6 Viestiseinä - viestien kommentointi</h5>
+                 <p> 
+                    Voit kommentoida sinun ja kaveriesi viestiseinän viestejä seinällä näkyvään kommentti kenttään.
+                    <input type="text" class="form-control mt-1" placeholder="Kommentoi seinän viestiä tähän"/>
+                    Näistä kommenteista näytetään vain 10 uusinta.
+                </p>               
+                <h5> 4.8 Kuva-albumi</h5>
+                <p>
+                    Jokaisen NasuKirjan käyttäjän sivun oikeassa on käyttäjän kuva-albumi. Näet jokaisen käyttäjän kaikki kuvat.
+                    Voit lisätä omaan albumiisi kymmenen kuvaa. Voit myös poistaa kuvia omasta albumista. Voit tykätä ja kommentoida
+                    oman ja kaverien albumin kuvia kuten seinän viestejä. Voit lisäksi asettaa yhden kuvan proiilikuvaksi, joka näkyy
+                    sivullasi vasemmassa yläreunassa. 
+                </p>                
+            </section>
+        </main>     
+        <div th:replace="fragments/layout :: pageFooter">Footer</div>
+    </body>
+</html>
+

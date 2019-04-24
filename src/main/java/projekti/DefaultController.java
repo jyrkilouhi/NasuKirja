@@ -20,6 +20,12 @@ public class DefaultController {
         return "index";
     }
     
+    @GetMapping("/help")
+    public String viewHelpPage(Model model) {
+        model = accountService.addAuthenticationName(model);      
+        return "help";
+    }
+    
     @GetMapping("/omasivu")
     public String viewMyPage(Model model) {
         Account loggedAccount = accountService.loggedInAccount();

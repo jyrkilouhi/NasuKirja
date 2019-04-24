@@ -29,7 +29,8 @@ public class DevelopmentSecurityConfiguration extends WebSecurityConfigurerAdapt
             .antMatchers("/h2-console", "/h2-console/**").permitAll()        
             .antMatchers(HttpMethod.GET, "/accounts").permitAll()
             .antMatchers(HttpMethod.POST, "/accounts").permitAll()
-                .antMatchers(HttpMethod.GET, "/").permitAll()
+            .antMatchers(HttpMethod.GET, "/").permitAll()
+            .antMatchers(HttpMethod.GET, "/help").permitAll()
             .anyRequest().authenticated();
         http.formLogin().permitAll().defaultSuccessUrl("/omasivu");
         http.logout().logoutSuccessUrl("/");
