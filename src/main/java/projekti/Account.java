@@ -3,6 +3,7 @@ package projekti;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,20 +16,17 @@ import org.springframework.data.jpa.domain.AbstractPersistable;
 @AllArgsConstructor
 public class Account extends AbstractPersistable<Long> {
 
-    @NotEmpty
-    @Size(min = 5, max = 50)
+    @Size(min = 4, max = 50, message = "Käyttäjänimen pituus vähintään 4 merkkiä, maksimi 50 merkkiä")
     private String username;
 
-    @NotEmpty
-    @Size(min = 8, max = 150)
+    @Size(min = 8, max = 150, message = "Salasanan pituus vähintään 8 merkkiä, maksimi 150 merkkiä")
     private String password; 
 
-    @NotEmpty
-    @Size(min = 5, max = 50)    
+    @Size(min = 4, max = 50, message = "Nimen pituus vähintään 4 merkkiä, maksimi 50 merkkiä")    
     private String realname;
 
-    @NotEmpty
-    @Size(min = 5, max = 50)    
+    @Pattern(regexp = "([a-z0-9+%-])+", message = "Profiilinimi voi sisältää vain merkkejä a-z, 0-9 tai +%- (ei välilyöntä, ei &?/#! merkkejä)")
+    @Size(min = 4, max = 50, message = "Profiilinimen pituus 4-50 merkkiä")    
     private String profilename;
     
     @OneToOne

@@ -11,7 +11,7 @@ public class PictureView {
     public PictureView(long id, String text, byte[] content, Account owner, long likes, Boolean hasLiked) {
         this.id = id;
         this.text = text;
-        this.content = content;
+        //this.content = content;
         this.owner = owner;
         this.likes = likes;
         this.hasLiked = hasLiked;
@@ -20,7 +20,7 @@ public class PictureView {
     public PictureView(Picture picture, long likes, Boolean hasLiked) {
         this.id = picture.getId();
         this.text = picture.getText();
-        this.content = picture.getContent();
+        //this.content = picture.getContent();
         this.owner = picture.getOwner();
         this.likes = likes;
         this.hasLiked = hasLiked;

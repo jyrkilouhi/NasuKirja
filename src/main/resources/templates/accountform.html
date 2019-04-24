@@ -13,32 +13,32 @@
                 <form action="#" th:action="@{/accounts}" th:object="${account}" method="POST">
                     
                     <div class="form-group">
-                        <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua): </label>
+                        <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua NasuKirjasta. Pituus 4-50 merkkiä): </label>
                         <input type="text" th:field="*{realname}" name="realname" class="form-control"/>
                         <section th:if="${#fields.hasErrors('realname')}" th:errors="*{realname}" class="text-danger">Virheviesti</section>
                     </div>
                     
                     <div class="form-group">
-                        <label for="userName">Käyttäjänimi (Nimi, jolla kirjoittaudut NasuKirjaan): </label>
+                        <label for="userName">Käyttäjänimi (Nimi, jolla kirjoittaudut NasuKirjaan. Pituus 4-50 merkkiä): </label>
                         <input type="text" th:field="*{username}" name="username" class="form-control"/>
                         <section th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger">Virheviesti</section>
                         <section th:if="${UserNameError}" th:text="${UserNameError}" class="text-danger">Virheviesti</section>
                     </div>
                     
                     <div class="form-group">
-                        <label for="password">Salasana (vähintään 8 merkkiä): </label>
+                        <label for="password">Salasana (Vähintään 8 merkkiä): </label>
                         <input type="password" th:field="*{password}" name="password" class="form-control"/>
                         <section th:if="${#fields.hasErrors('password')}" th:errors="*{password}" class="text-danger">Virheviesti</section>
                     </div>
                     
                     <div class="form-group">
-                        <label for="profileName">Profiilinimi (määrittelee polun jonka perusteella seinäsi löytyy): </label>
+                        <label for="profileName">Profiilinimi (Määrittelee profiilisi uniikin polun NasuKirjassa. Pituus 4-50 merkkiä. Saa sisältää vain pieniä kirjamia (a-z) ja numeroita (0-9) sekä +%- merkkejä): </label>
                         <input type="text" th:field="*{profilename}" name="profilename" class="form-control"/>
                         <section th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}" class="text-danger">Virheviesti</section>
                         <section th:if="${ProfileNameError}" th:text="${ProfileNameError}" class="text-danger">Virheviesti</section>
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Submit!</button>
+                    <button type="submit" class="btn btn-primary">Lähetä</button>
                     
                 </form>
             </section>

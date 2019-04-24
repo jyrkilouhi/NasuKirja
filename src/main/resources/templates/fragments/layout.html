@@ -11,10 +11,10 @@
     <body class="font-weight-light">
         <header th:fragment="header">
             <nav class="navbar navbar-expand-md navbar-dark bg-primary">
-                <div th:if="${loggedUser == 'anonymousUser'}" >
+                <div th:if="${loggedUser == 'anonymousUser'} or not ${loggedUser}" >
                     <a class="navbar-brand abs" href="/">NasuKirja2.0</a>
                 </div>
-                <div th:if="${loggedUser != 'anonymousUser'}" >
+                <div th:unless="${loggedUser == 'anonymousUser'} or not ${loggedUser}" >
                     <a class="navbar-brand abs" th:href="@{'/kayttajat/' + ${loggedUser}}">NasuKirja2.0</a>
                 </div>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -22,18 +22,18 @@
                 </button>
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                     
-                <form th:if="${loggedUser != 'anonymousUser'}" th:action="@{/kayttajat}"  method="GET" class="form-inline ml-auto">                    
+                <form th:unless="${loggedUser == 'anonymousUser'} or not ${loggedUser}" th:action="@{/kayttajat}"  method="GET" class="form-inline ml-auto">                    
                     <input name="findname" class="form-control mr-sm-2" type="search" placeholder="Haku"/>                                      
                 </form>
                     
                 <ul class="navbar-nav ml-auto">               
-                    <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
+                    <li th:if="${loggedUser == 'anonymousUser'} or not ${loggedUser}" class="nav-item">
                         <a class="nav-link" th:href="@{/accounts}">Liity NasuKirjaan</a>
                     </li>                                       
-                    <li th:if="${loggedUser == 'anonymousUser'}" class="nav-item">
+                    <li th:if="${loggedUser == 'anonymousUser'} or not ${loggedUser}" class="nav-item">
                         <a class="nav-link" th:href="@{/login}">Kirjoittaudu sisään</a>
                     </li>
-                   <li th:if="${loggedUser != 'anonymousUser'}" class="nav-item">
+                   <li th:unless="${loggedUser == 'anonymousUser'} or not ${loggedUser}" class="nav-item">
                         <a class="nav-link" th:href="@{/logout}" th:text = "'Kirjoittaudu ulos (' +${loggedUser} +')'" >Kirjoittaudu ulos</a>
                     </li>
                 </ul>
