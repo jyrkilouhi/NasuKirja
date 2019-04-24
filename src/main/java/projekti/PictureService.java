@@ -1,6 +1,7 @@
 package projekti;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -136,6 +137,7 @@ public class PictureService {
             newComment.setCommenter(loggedAccount);
             newComment.setContent(commentText);
             newComment.setPicture(picture);
+            newComment.setTime(LocalDateTime.now());
             commentRepository.save(newComment);
         }         
     }

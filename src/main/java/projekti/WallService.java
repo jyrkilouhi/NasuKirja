@@ -53,15 +53,17 @@ public class WallService {
         Account profileAccount = accountRepository.findByProfilename(profilename);
         if(profileAccount == null) return model;
         
-        Pageable pageable = PageRequest.of(0, 25, Sort.by("time").descending());
+        Pageable pageableMessages = PageRequest.of(0, 25, Sort.by("time").descending());
 
         List<WallView> toWall = new ArrayList<>();
-        List<Wall> wallMessages = wallRepository.findByOwner(profileAccount , pageable);
+        List<Wall> wallMessages = wallRepository.findByOwner(profileAccount , pageableMessages);
         for(Wall wallMesssage : wallMessages) {
             long likes = likeRepository.countByWall(wallMesssage);
             Boolean loggedAccountHasLiked = null;
             if(likeRepository.findByLoverAndWall(loggedAccount, wallMesssage).size() > 0 ) loggedAccountHasLiked = true;
-            toWall.add(new WallView(wallMesssage, likes, loggedAccountHasLiked));
+            Pageable pageableComments = PageRequest.of(0, 10, Sort.by("time").descending());
+            List<Comment> comments = commentRepository.findByWall(wallMesssage, pageableComments);
+            toWall.add(new WallView(wallMesssage, likes, loggedAccountHasLiked, comments));
         }
         
         model.addAttribute("WallMessages", toWall);
@@ -98,6 +100,7 @@ public class WallService {
             newComment.setCommenter(loggedAccount);
             newComment.setContent(commentText);
             newComment.setWall(message);
+            newComment.setTime(LocalDateTime.now());
             commentRepository.save(newComment);
         }         
     }

@@ -1,5 +1,6 @@
 package projekti;
 
+import java.time.LocalDateTime;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 import lombok.AllArgsConstructor;
@@ -21,5 +22,5 @@ public class Love extends AbstractPersistable<Long> {
     
     @OneToOne
     private Account lover;
-    
+     
 }

@@ -32,7 +32,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="profileName">Profiilinimi (Määrittelee profiilisi uniikin polun NasuKirjassa. Pituus 4-50 merkkiä. Saa sisältää vain pieniä kirjamia (a-z) ja numeroita (0-9) sekä +%- merkkejä): </label>
+                        <label for="profileName">Profiilinimi (Määrittelee profiilisi uniikin polun NasuKirjassa. Pituus 4-50 merkkiä. Saa sisältää vain pieniä kirjamia (a-z) ja numeroita (0-9) sekä +-_ merkkejä): </label>
                         <input type="text" th:field="*{profilename}" name="profilename" class="form-control"/>
                         <section th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}" class="text-danger">Virheviesti</section>
                         <section th:if="${ProfileNameError}" th:text="${ProfileNameError}" class="text-danger">Virheviesti</section>

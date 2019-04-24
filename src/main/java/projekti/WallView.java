@@ -1,6 +1,7 @@
 package projekti;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 public class WallView {
     private long id;
@@ -10,8 +11,9 @@ public class WallView {
     private LocalDateTime time;
     private long likes;
     private Boolean hasLiked;
+    private List<Comment> comments;
 
-    public WallView(long id, String message, Account owner, Account messager, LocalDateTime time, long likes, Boolean hasLiked) {
+    public WallView(long id, String message, Account owner, Account messager, LocalDateTime time, long likes, Boolean hasLiked, List<Comment> comments) {
         this.id = id;
         this.message = message;
         this.owner = owner;
@@ -19,9 +21,10 @@ public class WallView {
         this.time = time;
         this.likes = likes;
         this.hasLiked = hasLiked;
+        this.comments = comments;
     }
     
-    public WallView(Wall wall, long likes, Boolean hasLiked) {
+    public WallView(Wall wall, long likes, Boolean hasLiked, List<Comment> comments) {
         this.id = wall.getId();
         this.message = wall.getMessage();
         this.owner = wall.getOwner();
@@ -29,6 +32,11 @@ public class WallView {
         this.time = wall.getTime();
         this.likes = likes;
         this.hasLiked = hasLiked;
+        this.comments = comments;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
     }
 
     public long getId() {
