@@ -65,8 +65,7 @@ public class WallView {
 
     public Boolean getHasLiked() {
         return hasLiked;
-    }
-    
+    }   
     
 }
 

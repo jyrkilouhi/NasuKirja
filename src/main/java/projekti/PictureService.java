@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +59,10 @@ public class PictureService {
             for(Love love : loves) {
                 likeRepository.delete(love);
             }
-            // TODO muista lisätä kommentien poisto
+            List<Comment> comments = commentRepository.findByPicture(picture.get());
+            for(Comment comment : comments) {
+                commentRepository.delete(comment);
+            }
             if(loggedAccount.getProfilePicture() != null) {
                 if(loggedAccount.getProfilePicture().getId() == id) {
                     loggedAccount.setProfilePicture(null);
@@ -89,11 +95,12 @@ public class PictureService {
             long likes = likeRepository.countByPicture(picture);
             Boolean loggedAccountHasLiked = null;
             if(likeRepository.findByLoverAndPicture(loggedAccount, picture).size() > 0 ) loggedAccountHasLiked = true;
-            wallPictures.add(new PictureView(picture, likes, loggedAccountHasLiked));
+            Pageable pageableComments = PageRequest.of(0, 10, Sort.by("time").descending());
+            List<Comment> comments = commentRepository.findByPicture(picture, pageableComments);
+            wallPictures.add(new PictureView(picture, likes, loggedAccountHasLiked, comments));
         }
         
-        model.addAttribute("Pictures", wallPictures);
-        
+        model.addAttribute("Pictures", wallPictures);        
         if(pictureRepository.findByOwner(profileAccount).size() < 10) {
             model.addAttribute("canAddPicture", true);
         }
