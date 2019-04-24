@@ -55,10 +55,10 @@
                                 <span th:text="${wall.message}">Viesti</span> 
                                 <div class="input-group mb-1">  
                                     <form th:if="(${IsMyPage} or ${IsFriend}) and not ${wall.hasLiked}" th:action="@{'/kayttajat/wall/like/' + ${wall.id} + '/' + ${user.profilename}}"  method="POST">                                                 
-                                        <button  type="submit" value ="LikeWall" name="likewall" class="btn btn-success btn-sm mr-1 bg-primary">Tykkää</button>
+                                        <button  type="submit" value ="LikeWall" name="likewall" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
                                     </form>
                                     <form>
-                                        <button  th:text="${wall.likes} + ' tykkää tästä'" type="submit" class="btn btn-success btn-sm mr-1"> 3 tykkää</button>
+                                        <button  th:text="${wall.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1"> 3 tykkää</button>
                                     </form>
                                 </div>
                             </div>
@@ -77,10 +77,10 @@
                             <div class="mt-2 border rounded " style="background-color: White">
                                 <div th:if="${IsMyPage}" class="input-group mb-1">  
                                     <form th:action="@{'/picture/setprofile/' + ${picture.id}}"  method="POST">                                                 
-                                        <button  type="submit" value ="Toprofile" name="toprofile" class="btn btn-success btn-sm mr-1">Aseta alla oleva kuva profiili kuvaksi</button>
+                                        <button  type="submit" value ="Toprofile" name="toprofile" class="btn btn-success btn-sm ml-1 mt-1">Aseta alla oleva kuva profiili kuvaksi</button>
                                     </form>
                                     <form th:action="@{'/picture/remove/' + ${picture.id}}"  method="POST">                                                 
-                                        <button  type="submit" value ="Remove" name="remove" class="btn btn-danger btn-sm mr-1">Poista kuva</button>
+                                        <button  type="submit" value ="Remove" name="remove" class="btn btn-danger btn-sm ml-1 mt-1">Poista kuva</button>
                                     </form>
                                 </div>
                                 <figure class="img-fluid">
@@ -89,10 +89,10 @@
                                 </figure>
                                 <div class="input-group mb-1">  
                                     <form th:if="(${IsMyPage} or ${IsFriend}) and not ${picture.hasLiked}" th:action="@{'/picture/like/' + ${picture.id} + '/' + ${user.profilename}}"  method="POST">                                                 
-                                        <button  type="submit" value ="LikePicture" name="likepicture" class="btn btn-success btn-sm mr-1 bg-primary">Tykkää</button>
+                                        <button  type="submit" value ="LikePicture" name="likepicture" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
                                     </form>
                                     <form>
-                                        <button  th:text="${picture.likes} + ' tykkää tästä'" type="submit" class="btn btn-success btn-sm mr-1"> 3 tykkää</button>
+                                        <button  th:text="${picture.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1"> 3 tykkää</button>
                                     </form>
                                 </div>
                             </div>

@@ -27,6 +27,9 @@ public class WallService {
 
     @Autowired
     private LoveRepository likeRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
 
     
     public void newWallMessage(String profilename, String message) {
@@ -84,7 +87,19 @@ public class WallService {
     }
     
     public void commentWallMessage(long id, String commentText) {
-        
+        Wall message = wallRepository.getOne(id);
+        if(message == null) return;
+        Account loggedAccount = accountService.loggedInAccount();
+        Account profileAccount = message.getOwner();
+        if(profileAccount == null || loggedAccount == null) return;
+        if( friendService.areFriends(loggedAccount, profileAccount) || 
+                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
+            Comment newComment = new Comment();
+            newComment.setCommenter(loggedAccount);
+            newComment.setContent(commentText);
+            newComment.setWall(message);
+            commentRepository.save(newComment);
+        }         
     }
     
 }

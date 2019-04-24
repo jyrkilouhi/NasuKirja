@@ -23,6 +23,9 @@ public class PictureService {
     
     @Autowired
     private PictureRepository pictureRepository;
+    
+    @Autowired
+    private CommentRepository commentRepository;
 
     @Autowired
     private LoveRepository likeRepository;
@@ -129,14 +132,12 @@ public class PictureService {
         if(profileAccount == null || loggedAccount == null) return;
         if( friendService.areFriends(loggedAccount, profileAccount) || 
                 loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
-            if(likeRepository.findByLoverAndPicture(loggedAccount, picture).size() == 0) {
-                Love newLike = new Love();
-                newLike.setPicture(picture);
-                newLike.setLover(loggedAccount);
-                likeRepository.save(newLike);
-            }
-        }  
-        
+            Comment newComment = new Comment();
+            newComment.setCommenter(loggedAccount);
+            newComment.setContent(commentText);
+            newComment.setPicture(picture);
+            commentRepository.save(newComment);
+        }         
     }
     
 }
