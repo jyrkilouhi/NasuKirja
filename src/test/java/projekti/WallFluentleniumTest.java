@@ -13,11 +13,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import org.junit.After;
 import org.junit.Before;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
     @org.springframework.boot.web.server.LocalServerPort
@@ -37,19 +38,11 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Before
     public void initTestUsersAndFriends() {
-        createTestUsers(600, 606);
+        createTestUsers(600, 615);
         createFriends(600, 601);
-        createFriends(601, 602);
-    }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        deleteFriends(600, 601);
-        deleteFriends(601, 602);
-        for(int id = 600; id <= 606; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
+        createFriends(602, 603);
+        createFriends(604, 605);
+        createFriends(611, 612);
     }
     
     private void createTestUsers(int alku, int loppu) {
@@ -74,26 +67,19 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
         Account account2 = accountRepository.findByProfilename("test" + id2);
         test.setAskedfrom(account2);
         test.setStatus(true);
+        if(friendRepository.findByAskedbyAndAskedfrom(account1, account2) != null) return;
+        if(friendRepository.findByAskedbyAndAskedfrom(account2, account1) != null) return;
         friendRepository.save(test);
-    }
-    
-        
-    private void deleteFriends(int id1, int id2) {
-        Account account1 = accountRepository.findByProfilename("test" + id1);
-        Account account2 = accountRepository.findByProfilename("test" + id2);
-        Friend test = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
-        if(test != null) friendRepository.delete(test);
-    }
-    
+    }  
     
     @Test
     public void canWriteToOwnWall() {
-        Account account1 = accountRepository.findByProfilename("test601");
+        Account account1 = accountRepository.findByProfilename("test606");
         int messagesBefore = wallRepository.findByOwner(account1).size();
         
-        goTo("http://localhost:" + port + "/kayttajat/test601");
-        enterDetailsAndSubmit("testi601", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test606");
+        enterDetailsAndSubmit("testi606", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test606");
         assertThat(pageSource()).contains("newWallMessage");
         assertThat(pageSource()).contains("sendMessage");
         find(By.name("newWallMessage")).write("Testaan vaan pikkusen.");
@@ -107,12 +93,12 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Test
     public void canWriteToFriendWall() {
-        Account account1 = accountRepository.findByProfilename("test601");
+        Account account1 = accountRepository.findByProfilename("test611");
         int messagesBefore = wallRepository.findByOwner(account1).size();
         
-        goTo("http://localhost:" + port + "/kayttajat/test601");
-        enterDetailsAndSubmit("testi600", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test611");
+        enterDetailsAndSubmit("testi612", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test611");
         assertThat(pageSource()).contains("newWallMessage");
         assertThat(pageSource()).contains("sendMessage");
         find(By.name("newWallMessage")).write("Testaan pikkusen.");
@@ -126,25 +112,25 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Test
     public void cannotWriteToNonFriendWall() {       
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test606");
         enterDetailsAndSubmit("testi605", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test606");
         assertThat(pageSource()).doesNotContain("newWallMessage");
         assertThat(pageSource()).doesNotContain("sendMessage");
     }
     
     @Test
     public void canWriteAndReadOwnWall() {
-        Account account1 = accountRepository.findByProfilename("test603");
+        Account account1 = accountRepository.findByProfilename("test607");
         int messagesBefore = wallRepository.findByOwner(account1).size();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
-        enterDetailsAndSubmit("testi603", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test607");
+        enterDetailsAndSubmit("testi607", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test607");
         find(By.name("newWallMessage")).write("Testaan pikkusen");
         find(By.name("sendMessage")).click();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test607");
         assertThat(pageSource()).contains("Testaan pikkusen");
         
         List <Wall> tests = wallRepository.findByOwner(account1);
@@ -155,24 +141,24 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Test
     public void canWriteAndReadManyMessagesToOwnWall() {
-        Account account1 = accountRepository.findByProfilename("test603");
+        Account account1 = accountRepository.findByProfilename("test608");
         int messagesBefore = wallRepository.findByOwner(account1).size();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
-        enterDetailsAndSubmit("testi603", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test608");
+        enterDetailsAndSubmit("testi608", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test608");
         find(By.name("newWallMessage")).write("Testaan123");
         find(By.name("sendMessage")).click();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test608");
         find(By.name("newWallMessage")).write("Testaan pikkusen");
         find(By.name("sendMessage")).click();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test608");
         find(By.name("newWallMessage")).write("Testaan vielä");
         find(By.name("sendMessage")).click();
         
-        goTo("http://localhost:" + port + "/kayttajat/test603");
+        goTo("http://localhost:" + port + "/kayttajat/test608");
         assertThat(pageSource()).contains("Testaan123");
         assertThat(pageSource()).contains("Testaan pikkusen");
         assertThat(pageSource()).contains("Testaan vielä");
@@ -185,16 +171,16 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Test
     public void canWriteAndReadFriendWall() {
-        Account account1 = accountRepository.findByProfilename("test601");
+        Account account1 = accountRepository.findByProfilename("test603");
         int messagesBefore = wallRepository.findByOwner(account1).size();
         
-        goTo("http://localhost:" + port + "/kayttajat/test601");
-        enterDetailsAndSubmit("testi600", "test12345");
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test603");
+        enterDetailsAndSubmit("testi602", "test12345");
+        goTo("http://localhost:" + port + "/kayttajat/test603");
         find(By.name("newWallMessage")).write("Testaan vielä pikkusen");
         find(By.name("sendMessage")).click();
         
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test603");
         assertThat(pageSource()).contains("Testaan vielä pikkusen");
         
         List <Wall> tests = wallRepository.findByOwner(account1);
@@ -208,13 +194,13 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
         Wall wall = new Wall();
         wall.setTime(LocalDateTime.now());
         wall.setMessage("Pieni testi");
-        Account owner = accountRepository.findByProfilename("test601");
-        Account messager = accountRepository.findByProfilename("test602");
+        Account owner = accountRepository.findByProfilename("test610");
+        Account messager = accountRepository.findByProfilename("test609");
         wall.setMessager(messager);
         wall.setOwner(owner);
         wallRepository.save(wall);
         
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test610");
         enterDetailsAndSubmit("testi605", "test12345");
         assertThat(pageSource()).contains("Pieni testi");
 
@@ -223,7 +209,7 @@ public class WallFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
     
     @Test
     public void cannotOpenKayttajaTest601twithoutAccount() throws Exception {
-        goTo("http://localhost:" + port + "/kayttajat/test601");
+        goTo("http://localhost:" + port + "/kayttajat/test611");
         assertThat(pageSource()).doesNotContain("NasuKirja");
     } 
     

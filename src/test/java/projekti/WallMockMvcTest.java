@@ -14,6 +14,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -24,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class WallMockMvcTest  {
       
@@ -45,19 +46,11 @@ public class WallMockMvcTest  {
     
     @Before
     public void initTestUsersAndFriends() {
-        createTestUsers(500, 505);
+        createTestUsers(500, 520);
         createFriends(500, 501);
-        createFriends(501, 502);
-    }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        deleteFriends(500, 501);
-        deleteFriends(501, 502);
-        for(int id = 500; id <= 505; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
+        createFriends(502, 503);
+        createFriends(504, 505);
+        createFriends(506, 507);
     }
     
     private void createTestUsers(int alku, int loppu) {
@@ -82,25 +75,19 @@ public class WallMockMvcTest  {
         Account account2 = accountRepository.findByProfilename("test" + id2);
         test.setAskedfrom(account2);
         test.setStatus(true);
+        if(friendRepository.findByAskedbyAndAskedfrom(account1, account2) != null) return;
+        if(friendRepository.findByAskedbyAndAskedfrom(account2, account1) != null) return;
         friendRepository.save(test);
     }
     
-        
-    private void deleteFriends(int id1, int id2) {
-        Account account1 = accountRepository.findByProfilename("test" + id1);
-        Account account2 = accountRepository.findByProfilename("test" + id2);
-        Friend test = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
-        if(test != null) friendRepository.delete(test);
-    }
-    
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi510")
     public void canWriteToOwnWall() throws Exception {
-        Account account1 = accountRepository.findByProfilename("test501");
+        Account account1 = accountRepository.findByProfilename("test510");
         int messagesBefore = wallRepository.findByOwner(account1).size();
-        mockMvc.perform(get("/kayttajat/test501")).andExpect(status().isOk());
-        mockMvc.perform(post("/kayttajat/wall/test501").param("newWallMessage", "testi viesti testi vain"))
-              .andExpect(redirectedUrl("/kayttajat/test501"));
+        mockMvc.perform(get("/kayttajat/test510")).andExpect(status().isOk());
+        mockMvc.perform(post("/kayttajat/wall/test510").param("newWallMessage", "testi viesti testi vain"))
+              .andExpect(redirectedUrl("/kayttajat/test510"));
         List <Wall> tests = wallRepository.findByOwner(account1);
         assertTrue("Wall message written to repository" , tests.size() == messagesBefore + 1);
         for(Wall test : tests) {
@@ -124,13 +111,13 @@ public class WallMockMvcTest  {
     } 
     
     @Test
-    @WithMockUser(username = "testi505")
+    @WithMockUser(username = "testi511")
     public void cannotWriteToNonFriendWall() throws Exception {
-        Account account1 = accountRepository.findByProfilename("test500");
+        Account account1 = accountRepository.findByProfilename("test512");
         int messagesBefore = wallRepository.findByOwner(account1).size();
-        mockMvc.perform(get("/kayttajat/test500")).andExpect(status().isOk());
-        mockMvc.perform(post("/kayttajat/wall/test500").param("newWallMessage", "testi viesti testi vain"))
-              .andExpect(redirectedUrl("/kayttajat/test500"));
+        mockMvc.perform(get("/kayttajat/test512")).andExpect(status().isOk());
+        mockMvc.perform(post("/kayttajat/wall/test512").param("newWallMessage", "testi viesti testi vain"))
+              .andExpect(redirectedUrl("/kayttajat/test512"));
         List <Wall> tests = wallRepository.findByOwner(account1);
         assertTrue("Wall message not written to repository" , tests.size() == messagesBefore);
         for(Wall test : tests) {
@@ -139,15 +126,15 @@ public class WallMockMvcTest  {
     } 
     
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi513")
     public void canSeeMessageOnOwnWall() throws Exception {
-        mockMvc.perform(post("/kayttajat/wall/test501").param("newWallMessage", "testiviesti testi vain"))
-              .andExpect(redirectedUrl("/kayttajat/test501"));
-        MvcResult result = mockMvc.perform(get("/kayttajat/test501")).andReturn();
+        mockMvc.perform(post("/kayttajat/wall/test513").param("newWallMessage", "testiviesti testi vain"))
+              .andExpect(redirectedUrl("/kayttajat/test513"));
+        MvcResult result = mockMvc.perform(get("/kayttajat/test513")).andReturn();
         List<Wall> messages = (List)result.getModelAndView().getModel().get("WallMessages");
         assertTrue("Message visible at wall ", messages.size() == 1); 
 
-        Account account1 = accountRepository.findByProfilename("test501");
+        Account account1 = accountRepository.findByProfilename("test513");
         List <Wall> tests = wallRepository.findByOwner(account1);
         for(Wall test : tests) {
             wallRepository.delete(test);
@@ -155,19 +142,19 @@ public class WallMockMvcTest  {
     } 
     
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi514")
     public void canSeeManyMessageOnOwnWall() throws Exception {
-        mockMvc.perform(post("/kayttajat/wall/test501").param("newWallMessage", "testiviesti"))
-              .andExpect(redirectedUrl("/kayttajat/test501"));
-        mockMvc.perform(post("/kayttajat/wall/test501").param("newWallMessage", "testi vain"))
-              .andExpect(redirectedUrl("/kayttajat/test501"));
-        mockMvc.perform(post("/kayttajat/wall/test501").param("newWallMessage", "testiviesti vain"))
-              .andExpect(redirectedUrl("/kayttajat/test501"));
-        MvcResult result = mockMvc.perform(get("/kayttajat/test501")).andReturn();
+        mockMvc.perform(post("/kayttajat/wall/test514").param("newWallMessage", "testiviesti"))
+              .andExpect(redirectedUrl("/kayttajat/test514"));
+        mockMvc.perform(post("/kayttajat/wall/test514").param("newWallMessage", "testi vain"))
+              .andExpect(redirectedUrl("/kayttajat/test514"));
+        mockMvc.perform(post("/kayttajat/wall/test514").param("newWallMessage", "testiviesti vain"))
+              .andExpect(redirectedUrl("/kayttajat/test514"));
+        MvcResult result = mockMvc.perform(get("/kayttajat/test514")).andReturn();
         List<Wall> messages = (List)result.getModelAndView().getModel().get("WallMessages");
         assertTrue("Messages visible at wall ", messages.size() == 3); 
 
-        Account account1 = accountRepository.findByProfilename("test501");
+        Account account1 = accountRepository.findByProfilename("test514");
         List <Wall> tests = wallRepository.findByOwner(account1);
         for(Wall test : tests) {
             wallRepository.delete(test);
@@ -175,15 +162,15 @@ public class WallMockMvcTest  {
     } 
 
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi502")
     public void canSeeMessageOnFriendWall() throws Exception {
-        mockMvc.perform(post("/kayttajat/wall/test502").param("newWallMessage", "testiviesti testi vain"))
-              .andExpect(redirectedUrl("/kayttajat/test502"));
-        MvcResult result = mockMvc.perform(get("/kayttajat/test502")).andReturn();
+        mockMvc.perform(post("/kayttajat/wall/test503").param("newWallMessage", "testiviesti testi vain"))
+              .andExpect(redirectedUrl("/kayttajat/test503"));
+        MvcResult result = mockMvc.perform(get("/kayttajat/test503")).andReturn();
         List<Wall> messages = (List)result.getModelAndView().getModel().get("WallMessages");
         assertTrue("Message visible on wall ", messages.size() == 1); 
 
-        Account account1 = accountRepository.findByProfilename("test502");
+        Account account1 = accountRepository.findByProfilename("test503");
         List <Wall> tests = wallRepository.findByOwner(account1);
         for(Wall test : tests) {
             wallRepository.delete(test);
@@ -191,22 +178,22 @@ public class WallMockMvcTest  {
     } 
     
     @Test
-    @WithMockUser(username = "testi505")
+    @WithMockUser(username = "testi515")
     public void canSeeMessageOnNonFriendWall() throws Exception {
         Wall wall = new Wall();
         wall.setTime(LocalDateTime.now());
         wall.setMessage("Pieni testti");
-        Account owner = accountRepository.findByProfilename("test502");
-        Account messager = accountRepository.findByProfilename("test501");
+        Account owner = accountRepository.findByProfilename("test516");
+        Account messager = accountRepository.findByProfilename("test517");
         wall.setMessager(messager);
         wall.setOwner(owner);
         wallRepository.save(wall);
         
-        MvcResult result = mockMvc.perform(get("/kayttajat/test502")).andReturn();
+        MvcResult result = mockMvc.perform(get("/kayttajat/test516")).andReturn();
         List<Wall> messages = (List)result.getModelAndView().getModel().get("WallMessages");
         assertTrue("Message visible on wall ", messages.size() == 1); 
 
-        Account account1 = accountRepository.findByProfilename("test502");
+        Account account1 = accountRepository.findByProfilename("test516");
         List <Wall> tests = wallRepository.findByOwner(account1);
         for(Wall test : tests) {
             wallRepository.delete(test);
@@ -214,13 +201,13 @@ public class WallMockMvcTest  {
     } 
     
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi517")
     public void cannotWriteEmptyMessageToWall() throws Exception {
-        Account account1 = accountRepository.findByProfilename("test500");
+        Account account1 = accountRepository.findByProfilename("test517");
         int messagesBefore = wallRepository.findByOwner(account1).size();
-        mockMvc.perform(get("/kayttajat/test500")).andExpect(status().isOk());
-        mockMvc.perform(post("/kayttajat/wall/test500").param("newWallMessage", " "))
-              .andExpect(redirectedUrl("/kayttajat/test500"));
+        mockMvc.perform(get("/kayttajat/test517")).andExpect(status().isOk());
+        mockMvc.perform(post("/kayttajat/wall/test517").param("newWallMessage", " "))
+              .andExpect(redirectedUrl("/kayttajat/test517"));
         List <Wall> tests = wallRepository.findByOwner(account1);
         assertTrue("Wall message not written to repository" , tests.size() == messagesBefore);
         for(Wall test : tests) {
@@ -229,7 +216,7 @@ public class WallMockMvcTest  {
     } 
            
     @Test
-    @WithMockUser(username = "testi501")
+    @WithMockUser(username = "testi509")
     public void cannotWriteWallOfNonUser() throws Exception {
         int messagesBefore = wallRepository.findAll().size();
         mockMvc.perform(get("/kayttajat/test5555")).andExpect(status().isOk());
@@ -242,10 +229,10 @@ public class WallMockMvcTest  {
     
     @Test
     public void anonymousCannotWriteToWall() throws Exception {
-        mockMvc.perform(post("/kayttajat/wall/test505").param("newWallMessage","ERRORCODE12345"))
+        mockMvc.perform(post("/kayttajat/wall/test508").param("newWallMessage","ERRORCODE12345"))
               .andExpect(redirectedUrl("http://localhost/login"));
         
-        Account account1 = accountRepository.findByProfilename("test505");
+        Account account1 = accountRepository.findByProfilename("test508");
         List <Wall> requests = wallRepository.findByOwner(account1);
         assertTrue("Anonymous Not able to write to wall" , requests.size() == 0);
         for(Wall wall: requests) {
@@ -255,7 +242,7 @@ public class WallMockMvcTest  {
     
     @Test
     public void anonymousCannotReadWall() throws Exception {
-        mockMvc.perform(get("/kayttajat/wall/test505"))
+        mockMvc.perform(get("/kayttajat/wall/test507"))
               .andExpect(redirectedUrl("http://localhost/login"));
     }
     

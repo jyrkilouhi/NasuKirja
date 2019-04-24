@@ -14,9 +14,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
 import org.junit.After;
 import org.junit.Before;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
     @org.springframework.boot.web.server.LocalServerPort
@@ -40,15 +42,7 @@ public class FriendFluentleniumTest extends org.fluentlenium.adapter.junit.Fluen
             }
         }
     }  
-    
-    @After
-    public void undo() {       
-        for(int id = 301 ; id <= 305; id++ ) {
-            Account test = accountRepository.findByProfilename("test" + id);
-            accountRepository.delete(test);
-        }
-    }  
-    
+       
     @Test
     public void cannotOpenKayttajaTest301twithoutAccount() throws Exception {
         goTo("http://localhost:" + port + "/kayttajat/test301");

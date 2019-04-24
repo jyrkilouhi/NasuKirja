@@ -1,6 +1,5 @@
 package projekti;
 
-import static org.assertj.core.api.Java6Assertions.assertThat;
 import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,10 +9,11 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import org.junit.After;
 import org.junit.Before;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
+@ActiveProfiles("test")
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
@@ -37,16 +37,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
         while(accountRepository.findByProfilename("test" + idForNextTestUser) != null) {
             idForNextTestUser++;
         }
-    }
-    
-    @After
-    public void undo() {            
-        Account test = accountRepository.findByProfilename("test201");
-        if( test != null) {
-            accountRepository.delete(test);
-        }
-    }
-    
+    }   
     
     @Test
     public void anyoneCanOpenAccounts() throws Exception {

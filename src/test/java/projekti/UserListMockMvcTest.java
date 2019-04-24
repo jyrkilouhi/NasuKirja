@@ -1,10 +1,6 @@
 package projekti;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.List;
-import org.junit.After;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,16 +10,17 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.redirectedUrl;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class UserListMockMvcTest  {
       
@@ -39,19 +36,11 @@ public class UserListMockMvcTest  {
     
     @Before
     public void initTestUsers() {
-        for(int id = 0; id <= 10; id++) {
+        for(int id = 10; id <= 20; id++) {
             if(accountRepository.findByProfilename("test" + (id + 201)) == null) {
                 Account test = createTestUser(id + 201);
                 accountRepository.save(test);
             }
-        }
-    }
-    
-    @After
-    public void removeTestUsers() {
-        for(int id = 0; id <= 10; id++) {
-            Account test = accountRepository.findByProfilename("test" + (id + 201));
-            accountRepository.delete(test);
         }
     }
     
@@ -71,7 +60,7 @@ public class UserListMockMvcTest  {
     public void loggedUserCanFindTestUsers() throws Exception {
         MvcResult result = mockMvc.perform(get("/kayttajat").param("findname","Userlist MockMvc Testaaja")).andReturn();
         List<Account> users = (List)result.getModelAndView().getModel().get("userlist");
-        assertTrue("Test users visible on userlist", users.size() == 11); 
+        assertTrue("Test users visible on userlist", users.size() >= 11); 
     } 
     
     @Test

@@ -1,10 +1,6 @@
 package projekti;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,10 +8,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class PictureUnitTest  {
       
     @Autowired
@@ -31,14 +29,6 @@ public class PictureUnitTest  {
     public void initTestUsersAndFriends() {
         createTestUsers(800, 805);
 
-    }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        for(int id = 800; id <= 805; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
     }
     
     private void createTestUsers(int alku, int loppu) {

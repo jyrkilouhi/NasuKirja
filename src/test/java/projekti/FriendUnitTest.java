@@ -2,21 +2,20 @@ package projekti;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class FriendUnitTest  {
       
    
@@ -44,15 +43,7 @@ public class FriendUnitTest  {
             testUsersId[id] = id+101;
         }
     }
-    
-    @After
-    public void removeTestUsers() {
-        for(int id = 0; id <= 5; id++) {
-            Account test = accountRepository.findByProfilename("test" + (id + 101));
-            accountRepository.delete(test);
-        }
-    }
-    
+
     private Account createTestUser(int id) {
         Account test = new Account();
         test.setRealname("Friend Unit Testaaja (test" + id + ")");

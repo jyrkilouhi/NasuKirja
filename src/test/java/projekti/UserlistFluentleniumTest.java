@@ -8,11 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import org.junit.After;
 import org.junit.Before;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class UserlistFluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
     @org.springframework.boot.web.server.LocalServerPort
@@ -28,15 +29,7 @@ public class UserlistFluentleniumTest extends org.fluentlenium.adapter.junit.Flu
     public void initTestUsersAndFriends() {
         createTestUsers(700, 705);
     }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        for(int id = 700; id <= 705; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            if(test != null) accountRepository.delete(test);
-        }
-    }
-    
+
     private void createTestUsers(int alku, int loppu) {
         for(int id = alku; id <= loppu; id++) {
             if(accountRepository.findByProfilename("test" + id) == null) {

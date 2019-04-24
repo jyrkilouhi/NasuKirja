@@ -1,7 +1,6 @@
 package projekti;
 
 import java.util.List;
-import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,6 +10,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -21,6 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
+@ActiveProfiles("test")
 public class AccountMockMvcTest  {
       
     @Autowired
@@ -37,14 +38,6 @@ public class AccountMockMvcTest  {
         if(accountRepository.findByProfilename("test1") == null) {
             Account test = createTestUser(1);
             accountRepository.save(test);
-        }
-    }
-    
-    @After
-    public void undo() {            
-        Account test = accountRepository.findByProfilename("test1");
-        if( test != null) {
-            accountRepository.delete(test);
         }
     }
     

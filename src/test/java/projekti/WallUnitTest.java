@@ -12,10 +12,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class WallUnitTest  {
       
     @Autowired
@@ -39,16 +41,7 @@ public class WallUnitTest  {
         createFriends(400, 401);
         createFriends(401, 402);
     }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        deleteFriends(400, 401);
-        deleteFriends(401, 402);
-        for(int id = 400; id <= 405; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
-    }
+
     
     private void createTestUsers(int alku, int loppu) {
         for(int id = alku; id <= loppu; id++) {
@@ -75,13 +68,6 @@ public class WallUnitTest  {
         friendRepository.save(test);
     }
     
-        
-    private void deleteFriends(int id1, int id2) {
-        Account account1 = accountRepository.findByProfilename("test" + id1);
-        Account account2 = accountRepository.findByProfilename("test" + id2);
-        Friend test = friendRepository.findByAskedbyAndAskedfrom(account1, account2);
-        if(test != null) friendRepository.delete(test);
-    }
     
     private Wall createWall(String message, int ownerId, int messagerId) {
         Wall wall = new Wall();

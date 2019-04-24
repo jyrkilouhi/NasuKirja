@@ -1,6 +1,5 @@
 package projekti;
 
-import org.junit.After;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
@@ -9,10 +8,12 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@ActiveProfiles("test")
 public class AccountUnitTest  {
        
     @Autowired
@@ -38,15 +39,6 @@ public class AccountUnitTest  {
         while(accountRepository.findByProfilename("test" + idForNextTestUser) != null) {
             idForNextTestUser++;
         }
-    }
-    
-    @After
-    public void undo() {            
-        Account test = accountRepository.findByProfilename("test1");
-        if( test != null) {
-            accountRepository.delete(test);
-        }
-        assertTrue("Number of Accounts illegal", accountRepository.findAll().size() == accountsBeforeTest);
     }
     
     private Account createTestUser(int id) {

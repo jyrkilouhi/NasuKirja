@@ -1,10 +1,5 @@
 package projekti;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.util.List;
-import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.openqa.selenium.By;
@@ -13,11 +8,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
-import org.junit.After;
 import org.junit.Before;
+import org.springframework.test.context.ActiveProfiles;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@ActiveProfiles("test")
 public class PictureFluentleniumTest extends org.fluentlenium.adapter.junit.FluentTest {
     
     @org.springframework.boot.web.server.LocalServerPort
@@ -36,14 +32,6 @@ public class PictureFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     public void initTestUsersAndFriends() {
         createTestUsers(1000, 1010);
 
-    }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        for(int id = 1000; id <= 1010; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
     }
     
     private void createTestUsers(int alku, int loppu) {

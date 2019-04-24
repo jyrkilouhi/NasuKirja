@@ -1,10 +1,6 @@
 package projekti;
 
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.List;
-import org.junit.After;
 import static org.junit.Assert.assertTrue;
 import org.junit.Before;
 import org.junit.Test;
@@ -15,6 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -26,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-
+@ActiveProfiles("test")
 @AutoConfigureMockMvc
 public class PictureMockMvcTest  {
       
@@ -49,14 +46,6 @@ public class PictureMockMvcTest  {
     public void initTestUsersAndFriends() {
         createTestUsers(900, 915);
 
-    }
-    
-    @After
-    public void removeTestUsersAndFriends() {
-        for(int id = 900; id <= 915; id++) {
-            Account test = accountRepository.findByProfilename("test" + id );
-            accountRepository.delete(test);
-        }
     }
     
     private void createTestUsers(int alku, int loppu) {
