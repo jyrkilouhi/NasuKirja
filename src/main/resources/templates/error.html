@@ -1,0 +1,15 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="fragments/layout :: head(title='NasuKirja - Virhe')"> Title </head>
+    <body class="font-weight-light">
+        <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
+        <main>
+            <section th:replace="fragments/layout :: pageText(pageText='NasuKirja - Virhe')" class="container"> </section>
+            <section class="container"> 
+                    <p class="text-danger" > Virheellinen toiminto. Olemme pahoilamme.</p>
+            </section>
+        </main>     
+        <div th:replace="fragments/layout :: pageFooter">Footer</div>
+    </body>
+</html>
+

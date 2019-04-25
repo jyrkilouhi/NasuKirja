@@ -20,13 +20,13 @@ public class DefaultController {
         return "index";
     }
     
-//    @GetMapping
-//    public String handlingNonDefinedPathsToErrorPage(HttpServletRequest request, Model model) {
-//        model = accountService.addAuthenticationName(model);  
-//        model.addAttribute("numberOfAccounts", accountService.numberOfAccounts());
-//        model.addAttribute("errorURl", request.getRequestURI());
-//        return "error";
-//    }
+    @GetMapping
+    public String handlingNonDefinedPathsToErrorPage(HttpServletRequest request, Model model) {
+        model = accountService.addAuthenticationName(model);  
+        model.addAttribute("numberOfAccounts", accountService.numberOfAccounts());
+        model.addAttribute("errorURl", request.getRequestURI());
+        return "terror";
+    }
     
     @GetMapping("/help")
     public String viewHelpPage(Model model) {
