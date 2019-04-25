@@ -24,6 +24,7 @@ public class AccountController {
         if(bindingResult.hasErrors()) {
             return "accountform";
         }
+        account.setProfilename(account.getProfilename().toLowerCase());
         if(!accountService.accountIsOkToBeAdded(account)) {
             model = accountService.accountError(model, account);
             return "accountform";               
