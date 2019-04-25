@@ -49,7 +49,7 @@ public class PictureService {
         pictureRepository.save(newPicture);      
     }
     
-    public void deletePicture(long id) {
+    public void deletePicture(Long id) {
         Optional<Picture> picture = pictureRepository.findById(id);
         if( ! picture.isPresent() ) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -73,7 +73,7 @@ public class PictureService {
         }
     }
         
-    public void setProfilePicture(long id) {
+    public void setProfilePicture(Long id) {
         Optional<Picture> picture = pictureRepository.findById(id);
         if( ! picture.isPresent() ) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -108,14 +108,14 @@ public class PictureService {
         return model;
     }
     
-    public byte[] getOnePicture(long id) {
+    public byte[] getOnePicture(Long id) {
         if(pictureRepository.existsById(id)) {
             return pictureRepository.findById(id).get().getContent();
         }
         return "Error".getBytes();
     }
     
-    public void likePicture(long id) {
+    public void likePicture(Long id) {
         Picture picture = pictureRepository.getOne(id);
         if(picture == null) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -132,7 +132,7 @@ public class PictureService {
         }        
     }
     
-    public void commentPicture(long id, String commentText) {
+    public void commentPicture(Long id, String commentText) {
         Picture picture = pictureRepository.getOne(id);
         if(picture == null) return;
         Account loggedAccount = accountService.loggedInAccount();

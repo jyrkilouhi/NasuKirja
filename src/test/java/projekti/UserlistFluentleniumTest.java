@@ -49,7 +49,7 @@ public class UserlistFluentleniumTest extends org.fluentlenium.adapter.junit.Flu
         enterDetailsAndSubmit("testi701", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test701");
         assertThat(pageSource()).contains("findname");
-        find(By.name("findname")).write("").submit();
+        find(By.name("findname")).write("Userlist").submit();
         assertThat(pageSource()).contains("Userlist Fluentlenium Testaaja (test700)");
         assertThat(pageSource()).contains("Userlist Fluentlenium Testaaja (test701)");
         assertThat(pageSource()).contains("Userlist Fluentlenium Testaaja (test702)");

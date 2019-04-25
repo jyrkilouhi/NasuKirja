@@ -48,7 +48,7 @@ public class AccountService {
         if(foundUsers.isEmpty()) {
             model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " ei löydy yhtään käyttäjää");             
         }
-        if(foundUsers.size() > 50) {
+        if(foundUsers.size() > 100) {
             model.addAttribute("FindUserError", "Antamallasi hakuehdolla " + findname + " löytyi " + foundUsers.size() + " käyttäjää. Tarkenna hakua.");              
         } else {       
             model.addAttribute("userlist", foundUsers);

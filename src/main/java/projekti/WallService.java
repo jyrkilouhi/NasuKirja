@@ -71,7 +71,7 @@ public class WallService {
         return model;
     }
     
-    public void likeWallMessage(long id) {
+    public void likeWallMessage(Long id) {
         Wall message = wallRepository.getOne(id);
         if(message == null) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -79,7 +79,7 @@ public class WallService {
         if(profileAccount == null || loggedAccount == null) return;
         if( friendService.areFriends(loggedAccount, profileAccount) || 
                 loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
-            if(likeRepository.findByLoverAndWall(loggedAccount, message).size() == 0) {
+            if(likeRepository.findByLoverAndWall(loggedAccount, message).isEmpty()) {
                 Love newLike = new Love();
                 newLike.setWall(message);
                 newLike.setLover(loggedAccount);
@@ -88,7 +88,7 @@ public class WallService {
         }
     }
     
-    public void commentWallMessage(long id, String commentText) {
+    public void commentWallMessage(Long id, String commentText) {
         Wall message = wallRepository.getOne(id);
         if(message == null) return;
         Account loggedAccount = accountService.loggedInAccount();
