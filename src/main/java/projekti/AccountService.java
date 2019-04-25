@@ -1,5 +1,7 @@
 package projekti;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -15,7 +17,7 @@ public class AccountService {
     private AccountRepository accountRepository;
     
     @Autowired
-    private FriendService friendService;
+    private FriendsRepository friendRepository;
     
     @Autowired
     PasswordEncoder passwordEncoder;
@@ -96,8 +98,18 @@ public class AccountService {
     }
     
     public void saveNewAccount(Account account) {
+        Account helpdesk = accountRepository.findByProfilename("helpdesk");
         String textPassword = account.getPassword();
         account.setPassword(passwordEncoder.encode(textPassword));
         accountRepository.save(account);   
+        if(helpdesk != null) {
+            Friend friendRequest = new Friend();
+            friendRequest.setAskedby(helpdesk);
+            friendRequest.setAskedfrom(account);
+            friendRequest.setStatus(false);
+            friendRequest.setAsktime(LocalTime.now());
+            friendRequest.setAskdate(LocalDate.now());
+            friendRepository.save(friendRequest);
+        }
     }
 }

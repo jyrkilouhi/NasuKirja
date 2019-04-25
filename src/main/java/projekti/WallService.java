@@ -95,7 +95,8 @@ public class WallService {
         Account profileAccount = message.getOwner();
         if(profileAccount == null || loggedAccount == null) return;
         if( friendService.areFriends(loggedAccount, profileAccount) || 
-                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
+                loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) { 
+            System.out.println("SERVICE ADDING COMMENT : ");
             Comment newComment = new Comment();
             newComment.setCommenter(loggedAccount);
             newComment.setContent(commentText);

@@ -65,6 +65,7 @@ public class UserPageController {
     
     @PostMapping("/kayttajat/wall/comment/{id}/{profilename}")
     public String commentWall(Model model, @PathVariable String profilename, @PathVariable Long id, @RequestParam String newWallComment) {
+        System.out.println("CONTROLLER : " + id + " / " + profilename);
         wallService.commentWallMessage(id, newWallComment);
         return "redirect:/kayttajat/" + profilename;
     }

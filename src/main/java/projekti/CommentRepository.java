@@ -11,4 +11,5 @@ public interface CommentRepository extends JpaRepository<Comment, Long> {
         List<Comment> findByPicture(Picture picture, Pageable pageable);    
         List<Comment> findByWall(Wall wall);    
         List<Comment> findByWall(Wall wall, Pageable pageable);  
+        Long countByWall(Wall wall);
 }
