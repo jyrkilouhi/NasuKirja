@@ -7,7 +7,6 @@
             <section th:replace="fragments/layout :: pageText(pageText='NasuKirjan lyhyt käyttöohjeet')" class="container">
             </section>
             <section class="container"> 
-
                 <h4> 1. Johdanto NasuKirjaan</h4>
                 <p>
                     NasuKirja on tehty HY:n Web-palvelinohjelmointi Javalla kurssin projektityönä keväällä 2019.
@@ -60,11 +59,11 @@
                       <h5 class="form-signin-heading mt-1">Please sign in</h5>
                       <p>
                         <label for="username" class="sr-only">Username</label>
-                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" >
                       </p>
                       <p>
                         <label for="password" class="sr-only">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
                       </p>
                       <button class="btn btn-primary btn-block mb-1" type="submit">Sign in</button>
                     </form>
@@ -73,12 +72,101 @@
                 <h4> 4. NasuKirjan käyttäminen </h4>
                 <p>(Vain kun olet kirjautunut sisälle NasuKirjaan)</p>
                 <p>
-                    Kun olet kirjoittatunut sisälle NasuKirjaan aukeaa sinun ikioma NasuKirjan sivusi. 
+                    Kun olet kirjoittatunut sisälle NasuKirjaan aukeaa sinun ikioma NasuKirjan sivusi, 
+                    joka on alla olevan esimerkin mukainen. 
                     Pääset tälle sivulle aina myös sivun vasemassa yläreunassa olevasta linkistä <a href="/omasivu">NasuKirja2.0</a>.
                     Omalla Nasukirjan sivullasi näet oikealla profiilitietosi ja kaverisi sekä mahdolliset kaveripyynnöt. Sivun keskellä on viestiseinäsi.
                     Ja sivun oikessa reunassa sijaitsee kuva-albumisi. Muiden käyttäjien sekä kaverisesi sivujen rakenne on vastaava.
                 </p>
+            </section>
 
+            <section class="container mb-4"> 
+                <div class="row mx-1">
+                    <div class="col-md-3 mt-2 mb-2 bg-primary" style="color : white">   
+                        <h5 class="mt-2"> <b> NasuKirja2.0 </b> <small> Käyttöohjeet </small> 
+                    </div>
+                    <div class="col-md-5 mt-2 mb-2 bg-primary" style="color : white">   
+                        <input class="mt-2 mb-2 float-center" size="20" type="text" placeholder="Haku"/> 
+                    </div>
+                    <div class="col-md-4 mt-2 mb-2 bg-primary " style="color : white">   
+                        <h5 class="mt-2 float-right"> <b> <small> Kirjoittaudu ulos (Kari Kettunen) </small> 
+                    </div>
+                </div>
+                <div class="row mx-1">
+                    <div class="col-md-3 border rounded" style="background-color: AliceBlue" >
+                        <h5 class="mt-2"> Kari Kettunen </h5>
+                        <img src="https://cdn.pixabay.com/photo/2018/03/11/20/42/mammals-3218028__340.jpg" class="img-fluid mb-2"></img>
+                        <div>
+                            <h6 class="mt-1">Kaveripyynnöt</h6>
+                            <a href="#matti">Matti Mallikas</a> 
+                            <span>03.05.2019</span>
+                            <span class="input-group mb-2">
+                                <button type="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button> 
+                                <button type="submit" class="btn btn-danger btn-sm mr-1">Hylkää</button>
+                            </span>
+                        </div>
+                        <div>
+                            <h6 class="mt-1">Kaverit</h6>
+                            <ul>
+                                <li> <a href="#maija" >Maija Mallikas</a></li>
+                                <li> <a href="#tiina" >Tiina Testaaja</a></li>
+                                <li> <a href="#matti" >Matti Malli</a></li>
+                            </ul> 
+                        </div>                        
+                    </div>
+                    <div class="col-md-5" >
+                        <h5 class="mt-2">Viestiseinä</h5>
+                        <div>
+                            <textarea class="form-control mt-1"  placeholder="Kirjoita viesti (max 250 merkkiä)" rows="2"></textarea>  
+                            <button type="submit"  class="btn btn-success btn-sm mr-1 mt-2 mb-2 bg-primary">Lähetä viesti seinälle</button>  
+                        </div>
+                        <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue">
+                           <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
+                           <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
+                           <button  type="submit" class="btn btn-success btn-sm mb-1 ml-1 bg-primary">Tykkää</button>
+                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">164 tykkää tästä</button>
+                           <input type="text" class="form-control mt-1 mb-1" placeholder="Kommentoi viestiä (max 250 merkkiä)"/>
+                           <a href="#maija">Maija Mallikas </a> <span>kommentoi</span> 12.05.2019 14:10 </br>
+                           <span>Hyvää lomaa :) </span> 
+                        </div>                        
+                        <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue">
+                           <a href="#matti">Kari Kettunen</a> kirjoitti 10.05.2019 10:40 </br>
+                           <span>Se olisi loma pian. </span> </br>
+                           <button  type="submit" class="btn btn-success btn-sm mb-1 ml-1 bg-primary">Tykkää</button>
+                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">65 tykkää tästä</button>
+                           <input type="text" class="form-control mt-1 mb-1" placeholder="Kommentoi viestiä (max 250 merkkiä)"/>
+                        </div>
+                    </div>
+                    <div class="col-md-4 border rounded" style="background-color: AliceBlue" >
+                        <h5 class="mt-2"> Kuva-albumi </h5>
+                        <div>
+                            <div class="form-group"> 
+                            <input type="file" name="file" accept="image/*"/>
+                            <input type="text"  class="form-control" placeholder="Kuvaus (max 250 merkkiä)" maxlength="250" required/>
+                            <button type="submit"  class="btn btn-success btn-sm mr-1 mt-1 bg-primary">Lähetä uusi kuva</button>  
+                            </div>
+                        </div>
+                        <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue">
+                        <div class="input-group mb-1">  
+                            <button  type="submit" class="btn btn-success btn-sm ml-1 mb-2 mt-1">Aseta profiili kuvaksi</button>                                              
+                            <button  type="submit" class="btn btn-danger btn-sm ml-1 mb-2 mt-1">Poista kuva</button>
+                        </div>
+                        <img style="width : 95%" src="https://cdn.pixabay.com/photo/2018/03/11/20/42/mammals-3218028__340.jpg">
+                            Söpö kuva pixabaystä.
+                        <div class="input-group mt-1 mb-1">                 
+                            <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
+                            <button  type="submit" class="btn btn-info btn-sm ml-1">103 tykkää tästä</button>
+                        </div>
+                            <input type="text" class="form-control mt-1" placeholder="Kommentoi kuvaa (max 250 merkkiä)"/>
+
+                        <a href="#maija">Maija Mallikas </a> <span>kommentoi</span> 12.05.2019 14:15 </br>
+                            <span>Ihana kuva </span> 
+                        </div>                        
+                    </div>
+                </div>
+            </section>         
+            
+            <section class="container"> 
                 <h5> 4.1 Käyttäjien etsiminen NasuKirjasta</h5>
                 <p>
                     NasuKirjan sivun yläosan keskeltä löydät hakukentän <input size="20" type="text" placeholder="Haku"/> . 
