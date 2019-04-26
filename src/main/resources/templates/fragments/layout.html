@@ -24,14 +24,12 @@
                 <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav mr-auto">               
                     <li class="nav-item">
-                        <a class="nav-link" th:href="@{/help}">Käyttöohje</a>
+                        <a class="nav-link" th:href="@{/help}">Käyttöohjeet</a>
                     </li>                                       
-                </ul>   
-                    
+                </ul>                       
                 <form th:unless="${loggedUser == 'anonymousUser'} or not ${loggedUser}" th:action="@{/kayttajat}"  method="GET" class="form-inline ml-auto">                    
                     <input name="findname" class="form-control mr-sm-2" type="search" placeholder="Haku"/>                                      
                 </form>
-                    
                 <ul class="navbar-nav ml-auto">               
                     <li th:if="${loggedUser == 'anonymousUser'} or not ${loggedUser}" class="nav-item">
                         <a class="nav-link" th:href="@{/accounts}">Liity NasuKirjaan</a>

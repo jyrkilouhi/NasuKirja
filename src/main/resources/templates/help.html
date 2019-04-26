@@ -4,9 +4,10 @@
     <body class="font-weight-light">
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
         <main>
-            <section th:replace="fragments/layout :: pageText(pageText='NasuKirjan lyhyt käyttöohje')" class="container">
+            <section th:replace="fragments/layout :: pageText(pageText='NasuKirjan lyhyt käyttöohjeet')" class="container">
             </section>
             <section class="container"> 
+
                 <h4> 1. Johdanto NasuKirjaan</h4>
                 <p>
                     NasuKirja on tehty HY:n Web-palvelinohjelmointi Javalla kurssin projektityönä keväällä 2019.
@@ -15,22 +16,60 @@
                     Ja mikä parasta NasuKirjasta voi siis myös etsiä muita käyttäjiä kaverikseen.
                     Kaverit voivat tykätä ja kommentoida toistensa kuvia ja viestiseinä kirjoituksia kuten oikeassa Facebookissa.
                 </p>
+ 
                 <h4> 2. Liittyminen NasuKirjaan</h4>
                 <p>
                     Ennen NasuKirjan käyttämistä sinun on luotava käyttäjätili NasuKirjaan. Sivun oikeasta yläreunasta löydät
                     linkin <a href="/accounts">Liity NasuKirjaan</a>, josta aukeavalla sivulla voit luoda itsellesi tilin.
-                    Sinun pitää ilmoittaa nimesi (4-50 merkkiä), jonka perusteella kaverisi voivat etsiä sinua NasuKirjasta. Lisäksi sinun pitää valita
-                    itsellesi käyttäjätunnus (4-50 merkkiä) ja salasana (vähintään 8 merkkiä). 
-                    Lisäksi sinun on valittava itsellesi NasuKirjan profiilipolku (ei saa sisältää erikoismerkkejä, eikä suuria kirjaimia).
+                    Sinun pitää ilmoittaa nimesi, jonka perusteella kaverisi voivat etsiä sinua NasuKirjasta. Lisäksi sinun pitää valita
+                    itsellesi käyttäjätunnus ja salasana. 
+                    Lisäksi sinun on valittava itsellesi NasuKirjan profiilipolku.
                     Käyttäjätunnuksen ja profiilipolun on oltava uniikkeja eli et voi valita itsellesi jo jollain muulla käyttäjällä käytössä olevaa tunnusta tai polkua.
-                    Älä huolestu NasuKirjan palvelin kyllä kertoo sinulle, jos yrität käyttöösi jo olemassa olevan tunnuksen.
-                </p>            
+                    Älä huolestu NasuKirjan palvelin kyllä kertoo sinulle, jos yrität saada käyttöösi jo olemassa olevan tunnuksen.
+                </p>  
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 75%">
+                    <form action="#" method="POST">                   
+                        <div class="form-group ml-1">
+                            <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua NasuKirjasta. Pituus 4-50 merkkiä): </label>
+                            <input type="text" name="realname" class="form-control" maxlength="50" required />
+                        </div>                   
+                        <div class="form-group ml-1">
+                            <label for="userName">Käyttäjänimi (Nimi, jolla kirjoittaudut NasuKirjaan. Pituus 4-50 merkkiä): </label>
+                            <input type="text" name="username" class="form-control" maxlength="50" required />
+                        </div>                   
+                        <div class="form-group ml-1">
+                            <label for="password">Salasana (Vähintään 8 merkkiä): </label>
+                            <input type="password" name="password" class="form-control" required maxlength="150" />
+                        </div>                   
+                        <div class="form-group ml-1">
+                            <label for="profileName">Profiilinimi (Määrittelee profiilisi uniikin polun NasuKirjassa. Pituus 4-50 merkkiä. Saa sisältää vain pieniä kirjamia (a-z) ja numeroita (0-9) sekä +-_ merkkejä): </label>
+                            <input type="text" name="profilename" class="form-control" maxlength="50" required onkeyup="this.value = this.value.toLowerCase();"/>
+                        </div>                    
+                        <button type="submit" class="btn btn-primary ml-1 mb-1">Lähetä</button>                 
+                    </form>  
+                </div>
+                
                 <h4> 3. NasuKirjaan sisälle kirjoittautuminen</h4>
                 <p>
                     Kun olet luonnut itsellesi käyttäjätunnuksen voit kirjoittua sisälle NasuKirjaan sivun oikeassa yläreunassa olevasta linkistä
                     <a href="/login">Kirjoittaudu sisään</a>. Tässä kohtaa sinun on muistettava käyttäjätunnuksesi sekä salasanasi. 
                     Tässä Nasukirjan versiossa salasanaa ei voi resetoida eikä unohdettua käyttäjätunnusta voi etsiä mistään.
                 </p>  
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                    <form class="form-signin" method="post" action="#">
+                      <h5 class="form-signin-heading mt-1">Please sign in</h5>
+                      <p>
+                        <label for="username" class="sr-only">Username</label>
+                        <input type="text" id="username" name="username" class="form-control" placeholder="Username" required autofocus>
+                      </p>
+                      <p>
+                        <label for="password" class="sr-only">Password</label>
+                        <input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+                      </p>
+                      <button class="btn btn-primary btn-block mb-1" type="submit">Sign in</button>
+                    </form>
+                </div>
+
                 <h4> 4. NasuKirjan käyttäminen </h4>
                 <p>(Vain kun olet kirjautunut sisälle NasuKirjaan)</p>
                 <p>
@@ -39,6 +78,7 @@
                     Omalla Nasukirjan sivullasi näet oikealla profiilitietosi ja kaverisi sekä mahdolliset kaveripyynnöt. Sivun keskellä on viestiseinäsi.
                     Ja sivun oikessa reunassa sijaitsee kuva-albumisi. Muiden käyttäjien sekä kaverisesi sivujen rakenne on vastaava.
                 </p>
+
                 <h5> 4.1 Käyttäjien etsiminen NasuKirjasta</h5>
                 <p>
                     NasuKirjan sivun yläosan keskeltä löydät hakukentän <input size="20" type="text" placeholder="Haku"/> . 
@@ -46,10 +86,13 @@
                     nimen perusteella. Voit rajoittaa hakua kirjoittamalla sivun yläreunan hakukenttään vaikkapa kaverisi etunimen, jolloin
                     näet kaikki NasuKirjan käyttäjät joilla on antamasi nimi nimessään. Hakutuloksista voit avata haluamasi käyttäjän sivun.
                 </p>
-                <ul>
-                    <li> <a href="#matti" >Matti Malli</a></li>
-                    <li> <a href="#teppo" >Teppo Testaaja</a></li>
-                </ul> 
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                    <ul>
+                        <li> <a href="#matti" >Matti Malli</a></li>
+                        <li> <a href="#teppo" >Teppo Testaaja</a></li>
+                    </ul> 
+                </div>
+
                 <h5> 4.2 Kaveripyynnön tekeminen</h5>
                 <p>
                     Kun olet löytänyt kaverisi NasuKirjasta edellisen kohdan ohjeiden perusteella voit pyytä häntä kaveriksi NasuKirjassa. 
@@ -57,31 +100,35 @@
                     <button  type="submit" class="btn btn-success btn-sm bg-primary">Pyydä kaveriksi</button>. Painamalla nappia lähetät
                     käyttäjälle kaveripyynnön. Käyttäjä voi hyväksyä tai hylätä pyyntösi.
                 </p>
+  
                 <h5> 4.2 Kaveripyyntön vastaaminen</h5>
                 <p>
                     Kun toinen käyttäjä on tehnyt sinulle kaveripyynnön näet oman sivusi oikeassa reunassa ilmoituksen, että sinulle on tullut kaveripyyntö.
-                    Voit valita hyväksytkö kaveripyynnön vai hylkäätkö sen käyttäen sivulla näkyviä nappeja. 
+                    Voit valita hyväksytkö kaveripyynnön vai hylkäätkö sen käyttäen sivulla näkyviä Hyväksy ja Hylkää nappeja. 
                 </p>
-
-                <h6>Kaveripyynnöt</h6>
-                <a href="#matti">Matti Mallikas</a> 
-                <span>18:01:54</span>
-                <span>03.05.2019</span>
-                <span class="input-group mb-4">
-                    <button type="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button> 
-                    <button type="submit" class="btn btn-danger btn-sm mr-1">Hylkää</button>
-                </span>
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                    <h6 class="mt-1">Kaveripyynnöt</h6>
+                    <a href="#matti">Matti Mallikas</a> 
+                    <span>18:01:54</span>
+                    <span>03.05.2019</span>
+                    <span class="input-group mb-2">
+                        <button type="submit" class="btn btn-success btn-sm mr-1">Hyväksy</button> 
+                        <button type="submit" class="btn btn-danger btn-sm mr-1">Hylkää</button>
+                    </span>
+                </div>
                     
                 <h5> 4.3 Kaverit</h5>
                 <p>
                     Kun olet hyväksynyt kaveripyynnön näet uudet ja vanhat kaverisi oman sivusi vasemmassa reunassa listattuna. Näet myös
                     kaikkien muiden NasuKirjan käyttäjien kaverit heidän omilla sivuillaan. Et kuitenkaan näe heille tehtyjä kaveripyyntöjä.
                 </p>
-                <h6>Kaverit</h6>
-                <ul class="mb-4">
-                    <li> <a href="#maija" >Maija Mallikas</a></li>
-                    <li> <a href="#tiina" >Tiina Testaaja</a></li>
-                </ul> 
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                    <h6 class="mt-1">Kaverit</h6>
+                    <ul>
+                        <li> <a href="#maija" >Maija Mallikas</a></li>
+                        <li> <a href="#tiina" >Tiina Testaaja</a></li>
+                    </ul> 
+                </div>
                 
                 <h5> 4.4 Viestiseinä - viestin lähetys</h5>
                 <p>
@@ -90,14 +137,17 @@
                     Voit lähettää viestejä omalle seinällesi ja kaverien seinälle. 
                     Muiden käyttäjien (muiden kuin kaveriesi) seinän viestejä voit lukea mutta et voi kirjoittaa heidän seinälle. 
                 </p>
-                    <textarea class="form-control"  placeholder="Kirjoita viesti (max 250 merkkiä)" rows="2"></textarea>  
-                    <button type="submit"  class="btn btn-success btn-sm mr-1 mt-2 mb-4 bg-primary">Lähetä viesti seinälle</button>  
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                    <textarea class="form-control mt-1"  placeholder="Kirjoita viesti (max 250 merkkiä)" rows="2"></textarea>  
+                    <button type="submit"  class="btn btn-success btn-sm mr-1 mt-2 mb-2 bg-primary">Lähetä viesti seinälle</button>  
+                </div>
+                    
                 <h5> 4.5 Viestiseinä - viestistä tykkääminen</h5>
                 <p>
-                    Voit tykätä oman ja kaverien viestiseinän viesteistä painamalla tykkää nappia
-                    Näet seinältä myös montako tykkäystä kukin seinän viesti on kerännyt.
+                    Voit tykätä oman ja kaverien viestiseinän viesteistä painamalla tykkää nappia. Yhdestä viestistä voi tykätä vain kerran.
+                    Jo tehtyä tykkäystä ei voi poistaa. Näet seinältä myös montako tykkäystä kukin seinän viesti on kerännyt.
                 </p>
-                <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue">
+                <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue; width: 50%">
                     <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
                     <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
                     <button  type="submit" class="btn btn-success btn-sm mb-1 bg-primary">Tykkää</button>
@@ -106,11 +156,11 @@
                 
                 <h5> 4.6 Viestiseinä - viestien kommentointi</h5>
                 <p> 
-                    Voit kommentoida sinun ja kaveriesi viestiseinän viestejä seinällä näkyvään kommentti kenttään (maksimi 250 merkkiä).
+                    Voit kommentoida sinun ja kaveriesi viestiseinän viestejä seinällä viestin alla näkyvään kommentti kenttään (maksimi 250 merkkiä).
                     Näistä kommenteista näytetään vain 10 uusinta.
 
                 </p>               
-                 <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue">
+                 <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue; width: 50%">
                     <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
                     <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
                     <button  type="submit" class="btn btn-success btn-sm mb-1 bg-primary">Tykkää</button>
@@ -125,7 +175,7 @@
                     NasuKirjan sivun oikeassa reunassa on käyttäjän kuva-albumi. Näet jokaisen käyttäjän kaikki kuvat.
                     Voit lisätä omaan albumiisi kymmenen kuvaa. 
                 </p>  
-                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue">
+                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
                     <div class="form-group"> 
                     <input type="file" name="file" accept="image/*"/>
                     <input type="text"  class="form-control" placeholder="Kuvaus (max 250 merkkiä)" maxlength="250" required/>
@@ -137,12 +187,12 @@
                     sivullasi vasemmassa yläreunassa (vihreä nappi kuvan yläpuolella). Voit tykätä ja kommentoida
                     oman ja kaverien albumin kuvia kuten viestiseinän viestejä. 
                 </p>  
-                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue">
+                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
                 <div class="input-group mb-1">  
                     <button  type="submit" class="btn btn-success btn-sm ml-1 mb-2 mt-1">Aseta alla oleva kuva profiili kuvaksi</button>                                              
                     <button  type="submit" class="btn btn-danger btn-sm ml-1 mb-2 mt-1">Poista kuva</button>
                 </div>
-                    <img src="https://cdn.pixabay.com/photo/2018/03/11/20/42/mammals-3218028__340.jpg">
+                <img style="width : 90%" src="https://cdn.pixabay.com/photo/2018/03/11/20/42/mammals-3218028__340.jpg">
                 <div class="input-group mt-1 mb-1">                 
                     <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
                     <button  type="submit" class="btn btn-info btn-sm ml-1">103 tykkää tästä</button>
