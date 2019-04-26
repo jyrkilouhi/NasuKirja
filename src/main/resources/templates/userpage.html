@@ -79,7 +79,7 @@
                         <h4 class=" mt-2 mb-0">Kuva-albumi</h4>
                         <form th:if="${IsMyPage} and ${canAddPicture}" th:action="@{/picture/sendpicture/}"  method="POST" enctype="multipart/form-data">    
                             <div class="form-group"> 
-                                <input type="file" name="file"/>
+                                <input type="file" name="file" accept="image/*"/>
                                 <input type="text" name="newPictureMessage" class="form-control" placeholder="Kuvaus"/>
                                 <button type="submit" value ="Submit" name="sendPicture" class="btn btn-success btn-sm mr-1 mt-2 bg-primary">Lähetä uusi kuva</button>  
                             </div>

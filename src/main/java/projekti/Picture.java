@@ -19,7 +19,7 @@ public class Picture extends AbstractPersistable<Long> {
     private String text; 
     
     // TODO - Miten pitäisi tehdä herokuun??
-    //@Lob
+    @Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
     
