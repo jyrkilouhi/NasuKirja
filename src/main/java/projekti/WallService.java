@@ -34,6 +34,7 @@ public class WallService {
     
     public void newWallMessage(String profilename, String message) {
         if(message.trim().isEmpty()) return;
+        if(message.length() > 250) message = message.substring(0, 250) + "...";
         Account loggedAccount = accountService.loggedInAccount();
         Account profileAccount = accountRepository.findByProfilename(profilename);
         if(profileAccount == null || loggedAccount == null) return;
@@ -89,6 +90,8 @@ public class WallService {
     }
     
     public void commentWallMessage(Long id, String commentText) {
+        if(commentText.trim().isEmpty()) return;
+        if(commentText.length() > 250) commentText = commentText.substring(0, 250) + "...";
         Wall message = wallRepository.getOne(id);
         if(message == null) return;
         Account loggedAccount = accountService.loggedInAccount();

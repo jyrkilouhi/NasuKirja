@@ -123,7 +123,7 @@ public class PictureService {
         if(profileAccount == null || loggedAccount == null) return;
         if( friendService.areFriends(loggedAccount, profileAccount) || 
                 loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) {  
-            if(likeRepository.findByLoverAndPicture(loggedAccount, picture).size() == 0) {
+            if(likeRepository.findByLoverAndPicture(loggedAccount, picture).isEmpty()) {
                 Love newLike = new Love();
                 newLike.setPicture(picture);
                 newLike.setLover(loggedAccount);
@@ -133,6 +133,8 @@ public class PictureService {
     }
     
     public void commentPicture(Long id, String commentText) {
+        if(commentText.trim().isEmpty()) return;
+        if(commentText.length() > 250) commentText = commentText.substring(0, 250) + "...";
         Picture picture = pictureRepository.getOne(id);
         if(picture == null) return;
         Account loggedAccount = accountService.loggedInAccount();
