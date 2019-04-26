@@ -33,7 +33,7 @@
                     
                     <div class="form-group">
                         <label for="profileName">Profiilinimi (Määrittelee profiilisi uniikin polun NasuKirjassa. Pituus 4-50 merkkiä. Saa sisältää vain pieniä kirjamia (a-z) ja numeroita (0-9) sekä +-_ merkkejä): </label>
-                        <input type="text" th:field="*{profilename}" name="profilename" class="form-control" maxlength="50" onkeyup="this.value = this.value.toLowerCase();"/>
+                        <input type="text" th:field="*{profilename}" name="profilename" class="form-control" maxlength="50" required onkeyup="this.value = this.value.toLowerCase();"/>
                         <section th:if="${#fields.hasErrors('profilename')}" th:errors="*{profilename}" class="text-danger">Virheviesti</section>
                         <section th:if="${ProfileNameError}" th:text="${ProfileNameError}" class="text-danger">Virheviesti</section>
                     </div>
