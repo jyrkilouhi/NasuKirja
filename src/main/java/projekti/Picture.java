@@ -18,8 +18,8 @@ public class Picture extends AbstractPersistable<Long> {
     
     private String text; 
     
-    // TODO - Miten pitäisi tehdä herokuun??
-    @Lob
+    // TODO - Miten pitäisi tehdä ratkaisu jossa H2 ympäristössä on @Lob ja Herokussa ei
+    // Lob
     @Basic(fetch = FetchType.LAZY)
     private byte[] content;
     
