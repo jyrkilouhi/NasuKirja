@@ -79,7 +79,7 @@
                         <h4 class=" mt-2 mb-0">Kuva-albumi</h4>
                         <form th:if="${IsMyPage} and ${canAddPicture}" th:action="@{/picture/sendpicture/}"  method="POST" enctype="multipart/form-data">    
                             <div class="form-group"> 
-                                <input type="file" name="file" accept="image/*"/>
+                                <input type="file" name="file" id="pictureFile" accept="image/*"/>
                                 <input type="text" name="newPictureMessage" class="form-control" placeholder="Kuvaus (max 250 merkkiä)" maxlength="250" required/>
                                 <button type="submit" value ="Submit" name="sendPicture" class="btn btn-success btn-sm mr-1 mt-2 bg-primary">Lähetä uusi kuva</button>  
                             </div>
@@ -131,6 +131,18 @@
         <section class="container">
             <p th:if="${FindUserError}" th:text="${FindUserError}" class="text-danger"> Virheviesti</p>
         </section>       
-        <div th:replace="fragments/layout :: pageFooter">Footer</div>        
+        <div th:replace="fragments/layout :: pageFooter">Footer</div>   
+        
+        <script>
+            var uploadField = document.getElementById("pictureFile");
+
+            uploadField.onchange = function() {
+                if(this.files[0].size > 1000000){
+                    alert("Kuva on liian iso (maksimi koko on 1Mt)");
+                    this.value = "";
+                };
+            };           
+        </script>
+        
     </body>
 </html>

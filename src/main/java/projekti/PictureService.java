@@ -37,6 +37,7 @@ public class PictureService {
     
     public void newPicture(String message, MultipartFile file) throws IOException {
         if (file.getSize() == 0) return;
+        if (file.getSize() > 1000000) return;
         Account loggedAccount = accountService.loggedInAccount();
         if(loggedAccount == null) return;
         if(pictureRepository.findByOwner(loggedAccount).size() >= 10) return;
