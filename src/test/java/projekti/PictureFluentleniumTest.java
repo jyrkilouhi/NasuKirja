@@ -73,7 +73,6 @@ public class PictureFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
         goTo("http://localhost:" + port + "/kayttajat/test1001");
         enterDetailsAndSubmit("testi1000", "test12345");
         goTo("http://localhost:" + port + "/kayttajat/test1001");
-        assertThat(pageSource()).doesNotContain("file");
         assertThat(pageSource()).doesNotContain("newPictureMessage");
         assertThat(pageSource()).doesNotContain("sendPicture");
     }

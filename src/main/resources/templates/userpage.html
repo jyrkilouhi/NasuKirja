@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/layout :: head(title='NasuKirja - ' + ${user.realname})"> Title </head>
-    <body class="small">
+    <body class="small" style="word-wrap: break-word">
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
         <p></p>        
         <main th:unless="${FindUserError}">
@@ -58,7 +58,7 @@
                                         <button  type="submit" value ="LikeWall" name="likewall" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
                                     </form>
                                     <form>
-                                        <button  th:text="${wall.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1"> 3 tykkää</button>
+                                        <button  th:text="${wall.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1" disabled> 3 tykkää</button>
                                     </form>
                                 </div>
                                 <div class="form-group mb-1">     
@@ -85,7 +85,7 @@
                             </div>
                         </form>
                         <form th:if="${IsMyPage} and not ${canAddPicture}">
-                            <button  type="submit" class="btn btn-info btn-sm ml-1">Albumissa on 10 kuvaa. Poista kuva niin voit lisätä uuden.</button>
+                            <button  type="submit" class="btn btn-info btn-sm ml-1" disabled>Albumissa on 10 kuvaa. Poista kuva niin voit lisätä uuden.</button>
                         </form>
                         <div th:each="picture : ${Pictures}">
                             <div class="mt-2 border rounded " style="background-color: White">
@@ -106,7 +106,7 @@
                                         <button  type="submit" value ="LikePicture" name="likepicture" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
                                     </form>
                                     <form>
-                                        <button  th:text="${picture.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1"> 3 tykkää</button>
+                                        <button  th:text="${picture.likes} + ' tykkää tästä'" type="submit" class="btn btn-info btn-sm ml-1" disabled> 3 tykkää</button>
                                     </form>
                                 </div>
                                 <div class="form-group mb-1">     

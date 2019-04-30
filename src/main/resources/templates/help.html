@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
     <head th:replace="fragments/layout :: head(title='NasuKirja - Käyttöohjeet')"> Title </head>
-    <body class="font-weight-light">
+    <body class="font-weight-light" style = "word-wrap: break-word">
         <header th:replace="fragments/layout :: header"> <p> menu </p> </header>
         <main>
             <section th:replace="fragments/layout :: pageText(pageText='NasuKirjan lyhyt käyttöohjeet')" class="container">
@@ -26,8 +26,8 @@
                     Käyttäjätunnuksen ja profiilipolun on oltava uniikkeja eli et voi valita itsellesi jo jollain muulla käyttäjällä käytössä olevaa tunnusta tai polkua.
                     Älä huolestu NasuKirjan palvelin kyllä kertoo sinulle, jos yrität saada käyttöösi jo olemassa olevan tunnuksen.
                 </p>  
-                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 75%">
-                    <form action="#" method="POST">                   
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 80%">
+                    <form action="#join" method="GET">                   
                         <div class="form-group ml-1">
                             <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua NasuKirjasta. Pituus 4-50 merkkiä): </label>
                             <input type="text" name="realname" class="form-control" maxlength="50" required />
@@ -55,7 +55,7 @@
                     Tässä Nasukirjan versiossa salasanaa ei voi resetoida eikä unohdettua käyttäjätunnusta voi etsiä mistään.
                 </p>  
                 <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
-                    <form class="form-signin" method="post" action="#">
+                    <form class="form-signin" method="GET" action="#sign">
                       <h5 class="form-signin-heading mt-1">Please sign in</h5>
                       <p>
                         <label for="username" class="sr-only">Username</label>
@@ -124,7 +124,7 @@
                            <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
                            <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
                            <button  type="submit" class="btn btn-success btn-sm mb-1 ml-1 bg-primary">Tykkää</button>
-                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">164 tykkää tästä</button>
+                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1" disabled>164 tykkää tästä</button>
                            <input type="text" class="form-control mt-1 mb-1" placeholder="Kommentoi viestiä (max 250 merkkiä)"/>
                            <a href="#maija">Maija Mallikas </a> <span>kommentoi</span> 12.05.2019 14:10 </br>
                            <span>Hyvää lomaa :) </span> 
@@ -133,7 +133,7 @@
                            <a href="#matti">Kari Kettunen</a> kirjoitti 10.05.2019 10:40 </br>
                            <span>Se olisi loma pian. </span> </br>
                            <button  type="submit" class="btn btn-success btn-sm mb-1 ml-1 bg-primary">Tykkää</button>
-                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">65 tykkää tästä</button>
+                           <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1" disabled>65 tykkää tästä</button>
                            <input type="text" class="form-control mt-1 mb-1" placeholder="Kommentoi viestiä (max 250 merkkiä)"/>
                         </div>
                     </div>
@@ -155,7 +155,7 @@
                             Söpö kuva pixabaystä.
                         <div class="input-group mt-1 mb-1">                 
                             <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
-                            <button  type="submit" class="btn btn-info btn-sm ml-1">103 tykkää tästä</button>
+                            <button  type="submit" class="btn btn-info btn-sm ml-1" disabled>103 tykkää tästä</button>
                         </div>
                             <input type="text" class="form-control mt-1" placeholder="Kommentoi kuvaa (max 250 merkkiä)"/>
 
@@ -174,10 +174,13 @@
                     nimen perusteella. Voit rajoittaa hakua kirjoittamalla sivun yläreunan hakukenttään vaikkapa kaverisi etunimen, jolloin
                     näet kaikki NasuKirjan käyttäjät joilla on antamasi nimi nimessään. Hakutuloksista voit avata haluamasi käyttäjän sivun.
                 </p>
-                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
+                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
                     <ul>
                         <li> <a href="#matti" >Matti Malli</a></li>
                         <li> <a href="#teppo" >Teppo Testaaja</a></li>
+                        <li> <a href="#tiina" >Tiina Testaaja</a></li>
+                        <li> <a href="#kari" >Kari Kettunen</a></li>
+                        <li> <a href="#matti2" >Matti Mallikas</a></li>
                     </ul> 
                 </div>
 
@@ -215,6 +218,7 @@
                     <ul>
                         <li> <a href="#maija" >Maija Mallikas</a></li>
                         <li> <a href="#tiina" >Tiina Testaaja</a></li>
+                        <li> <a href="#matti" >Matti Malli</a></li>
                     </ul> 
                 </div>
                 
@@ -239,7 +243,7 @@
                     <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
                     <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
                     <button  type="submit" class="btn btn-success btn-sm mb-1 bg-primary">Tykkää</button>
-                    <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">164 tykkää tästä</button>
+                    <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1" disabled>164 tykkää tästä</button>
                 </div>
                 
                 <h5> 4.6 Viestiseinä - viestien kommentointi</h5>
@@ -252,7 +256,7 @@
                     <a href="#matti">Matti Malli</a> kirjoitti 12.05.2019 12:00 </br>
                     <span>Pääsen lomalle huomenna. Nähdään Silloin. </span> </br>
                     <button  type="submit" class="btn btn-success btn-sm mb-1 bg-primary">Tykkää</button>
-                    <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1">164 tykkää tästä</button>
+                    <button  type="submit" class="btn btn-info btn-sm ml-1 mb-1" disabled>164 tykkää tästä</button>
                     <input type="text" class="form-control mt-1 mb-1" placeholder="Kommentoi viestiä (max 250 merkkiä)"/>
                     <a href="#maija">Maija Mallikas </a> <span>kommentoi</span> 12.05.2019 14:10 </br>
                     <span>Hyvää lomaa :) </span> 
@@ -262,7 +266,8 @@
                 <p>
                     NasuKirjan sivun oikeassa reunassa on käyttäjän kuva-albumi. 
                     Voit lisätä omaan albumiisi kymmenen kuvaa. Yhden kuvan maksimi koko on 1Mt.
-                    Näet jokaisen käyttäjän kaikki kuvat.
+                    Näet jokaisen käyttäjän kaikki kuvat. Huom. IE-selaimelle jpg kuvat eivät valitettavasti toimi.
+                    Käytä uudempia selaimia IE:n sijana NasuKirjan kanssa.
                 </p>  
                 <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
                     <div class="form-group"> 
@@ -276,7 +281,7 @@
                     sivullasi vasemmassa yläreunassa (vihreä nappi kuvan yläpuolella). Voit tykätä ja kommentoida
                     oman ja kaverien albumin kuvia kuten viestiseinän viestejä. 
                 </p>  
-                <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
                 <div class="input-group mb-1">  
                     <button  type="submit" class="btn btn-success btn-sm ml-1 mb-2 mt-1">Aseta alla oleva kuva profiili kuvaksi</button>                                              
                     <button  type="submit" class="btn btn-danger btn-sm ml-1 mb-2 mt-1">Poista kuva</button>
@@ -284,13 +289,28 @@
                 <img style="width : 90%" src="https://cdn.pixabay.com/photo/2018/03/11/20/42/mammals-3218028__340.jpg">
                 <div class="input-group mt-1 mb-1">                 
                     <button  type="submit" class="btn btn-success btn-sm ml-1 bg-primary">Tykkää</button>
-                    <button  type="submit" class="btn btn-info btn-sm ml-1">103 tykkää tästä</button>
+                    <button  type="submit" class="btn btn-info btn-sm ml-1" disabled>103 tykkää tästä</button>
                 </div>
-                    <input type="text" class="form-control mt-1" placeholder="Kommentoi kuvaa (max 250 merkkiä)"/>
+                <input type="text" class="form-control mt-1" placeholder="Kommentoi kuvaa (max 250 merkkiä)"/>
 
                 <a href="#maija">Maija Mallikas </a> <span>kommentoi</span> 12.05.2019 14:15 </br>
                     <span>Ihana kuva </span> 
                 </div>
+                
+                <h5> 5. Tunnetut NasuKirjan rajoitukset</h5>
+                <p>
+                    NasuKirjan käyttäjätunnusta ei voi poistaa.
+                    Unohdettua NasuKirjan käyttäjätunnusta ei voi mitenkään saada selville.
+                    Salasanaa ei voi vaihtaa eikä resetoida.
+                </p> 
+                <p>
+                    IE-selaimen kanssa jpeg/jpg kuvat ei näy selaimessa. Käytä jotain toista selainta.
+                    Tällä hetkellä kuvien maksimi koko 1Mt.
+                </p>
+                <p>
+                    Viestien, kommenttien, kaverilistan ja kuvien yms yksityisyys asetuksia ei voi muuttaa,
+                    vaan kaikki kuvasi, viestisi, kommentit ja kaverilistasi näkyy kaikille NasuKirjan käyttäjille.
+                </p> 
             </section>
         </main>     
         <div th:replace="fragments/layout :: pageFooter">Footer</div>
