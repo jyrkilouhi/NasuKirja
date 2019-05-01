@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface CommentRepository extends JpaRepository<Comment, Long> {
         List<Comment> findByCommenterAndPicture(Account account, Picture picture);
         List<Comment> findByCommenterAndWall(Account account, Wall wall);
+        List<Comment> findByCommenter(Account account);
         List<Comment> findByPicture(Picture picture);   
         List<Comment> findByPicture(Picture picture, Pageable pageable);    
         List<Comment> findByWall(Wall wall);    

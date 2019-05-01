@@ -117,6 +117,7 @@ public class PictureService {
     }
     
     public void likePicture(Long id) {
+        if(! pictureRepository.existsById(id)) return;
         Picture picture = pictureRepository.getOne(id);
         if(picture == null) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -136,6 +137,7 @@ public class PictureService {
     public void commentPicture(Long id, String commentText) {
         if(commentText.trim().isEmpty()) return;
         if(commentText.length() > 250) commentText = commentText.substring(0, 250) + "...";
+        if(! pictureRepository.existsById(id)) return;
         Picture picture = pictureRepository.getOne(id);
         if(picture == null) return;
         Account loggedAccount = accountService.loggedInAccount();

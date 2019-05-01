@@ -73,6 +73,7 @@ public class WallService {
     }
     
     public void likeWallMessage(Long id) {
+        if(! wallRepository.existsById(id)) return;
         Wall message = wallRepository.getOne(id);
         if(message == null) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -92,6 +93,7 @@ public class WallService {
     public void commentWallMessage(Long id, String commentText) {
         if(commentText.trim().isEmpty()) return;
         if(commentText.length() > 250) commentText = commentText.substring(0, 250) + "...";
+        if(! wallRepository.existsById(id)) return;
         Wall message = wallRepository.getOne(id);
         if(message == null) return;
         Account loggedAccount = accountService.loggedInAccount();
@@ -99,7 +101,6 @@ public class WallService {
         if(profileAccount == null || loggedAccount == null) return;
         if( friendService.areFriends(loggedAccount, profileAccount) || 
                 loggedAccount.getProfilename().contentEquals(profileAccount.getProfilename())) { 
-            System.out.println("SERVICE ADDING COMMENT : ");
             Comment newComment = new Comment();
             newComment.setCommenter(loggedAccount);
             newComment.setContent(commentText);
