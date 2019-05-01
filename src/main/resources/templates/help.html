@@ -19,15 +19,16 @@
                 <h4> 2. Liittyminen NasuKirjaan</h4>
                 <p>
                     Ennen NasuKirjan käyttämistä sinun on luotava käyttäjätili NasuKirjaan. Sivun oikeasta yläreunasta löydät
-                    linkin <a href="/accounts">Liity NasuKirjaan</a>, josta aukeavalla sivulla voit luoda itsellesi tilin.
-                    Sinun pitää ilmoittaa nimesi, jonka perusteella kaverisi voivat etsiä sinua NasuKirjasta. Lisäksi sinun pitää valita
+                    linkin <a href="/accounts">Liity NasuKirjaan</a>, josta aukeavalla sivulla voit luoda itsellesi tilin. 
+                    Linkin takaa aukeava sivu näyttää alla olevan lomakkeen kaltaiselta. Alla olevalla lomakkeella ei kuitenkaan voi
+                    luoda tiliä NasuKirjaan vaan tilin luomista varten on siirryttävä aikaisemmin mainitulle sivulle.
+                    Kun luot tilin Nasukirjaan, sinun pitää ilmoittaa nimesi, jonka perusteella kaverisi voivat etsiä sinua NasuKirjasta. Lisäksi sinun pitää valita
                     itsellesi käyttäjätunnus ja salasana. 
                     Lisäksi sinun on valittava itsellesi NasuKirjan profiilipolku.
                     Käyttäjätunnuksen ja profiilipolun on oltava uniikkeja eli et voi valita itsellesi jo jollain muulla käyttäjällä käytössä olevaa tunnusta tai polkua.
                     Älä huolestu NasuKirjan palvelin kyllä kertoo sinulle, jos yrität saada käyttöösi jo olemassa olevan tunnuksen.
                 </p>  
-                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 80%">
-                    <form action="#join" method="GET">                   
+                <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 90%">                
                         <div class="form-group ml-1">
                             <label for="realName">Nimi (Oikea nimesi, jonka perusteella muut käyttäjät voivat etsiä sinua NasuKirjasta. Pituus 4-50 merkkiä): </label>
                             <input type="text" name="realname" class="form-control" maxlength="50" required />
@@ -45,17 +46,16 @@
                             <input type="text" name="profilename" class="form-control" maxlength="50" required onkeyup="this.value = this.value.toLowerCase();"/>
                         </div>                    
                         <button type="submit" class="btn btn-primary ml-1 mb-1">Lähetä</button>                 
-                    </form>  
                 </div>
                 
                 <h4> 3. NasuKirjaan sisälle kirjoittautuminen</h4>
                 <p>
                     Kun olet luonnut itsellesi käyttäjätunnuksen voit kirjoittua sisälle NasuKirjaan sivun oikeassa yläreunassa olevasta linkistä
-                    <a href="/login">Kirjoittaudu sisään</a>. Tässä kohtaa sinun on muistettava käyttäjätunnuksesi sekä salasanasi. 
+                    <a href="/login">Kirjoittaudu sisään</a>, joka johtaa sivulle jossa sijaitsee alla olevan kuvan mukainen sisäänkirjaus lomake.
+                    Kun kirjaudut sisälle NasuKirjaan sinun on muistettava käyttäjätunnuksesi sekä salasanasi. 
                     Tässä Nasukirjan versiossa salasanaa ei voi resetoida eikä unohdettua käyttäjätunnusta voi etsiä mistään.
                 </p>  
                 <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
-                    <form class="form-signin" method="GET" action="#sign">
                       <h5 class="form-signin-heading mt-1">Please sign in</h5>
                       <p>
                         <label for="username" class="sr-only">Username</label>
@@ -66,7 +66,6 @@
                         <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
                       </p>
                       <button class="btn btn-primary btn-block mb-1" type="submit">Sign in</button>
-                    </form>
                 </div>
 
                 <h4> 4. NasuKirjan käyttäminen </h4>
@@ -172,15 +171,15 @@
                     NasuKirjan sivun yläosan keskeltä löydät hakukentän <input size="20" type="text" placeholder="Haku"/> . 
                     Sitä kautta pääset etsimään NasuKirjan muita käyttäjiä heidän
                     nimen perusteella. Voit rajoittaa hakua kirjoittamalla sivun yläreunan hakukenttään vaikkapa kaverisi etunimen, jolloin
-                    näet kaikki NasuKirjan käyttäjät joilla on antamasi nimi nimessään. Hakutuloksista voit avata haluamasi käyttäjän sivun.
+                    näet kaikki NasuKirjan käyttäjät joilla on antamasi nimi nimessään kuten alla olevassa kuvassa. 
+                    Hakutuloksista voit avata haluamasi käyttäjän sivun.
                 </p>
                 <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
                     <ul>
-                        <li> <a href="#matti" >Matti Malli</a></li>
                         <li> <a href="#teppo" >Teppo Testaaja</a></li>
                         <li> <a href="#tiina" >Tiina Testaaja</a></li>
-                        <li> <a href="#kari" >Kari Kettunen</a></li>
-                        <li> <a href="#matti2" >Matti Mallikas</a></li>
+                        <li> <a href="#taina" >Taina Testaaja</a></li>
+                        <li> <a href="#taavi" >Taavi Testaaja</a></li>
                     </ul> 
                 </div>
 
@@ -194,7 +193,8 @@
   
                 <h5> 4.2 Kaveripyyntön vastaaminen</h5>
                 <p>
-                    Kun toinen käyttäjä on tehnyt sinulle kaveripyynnön näet oman sivusi oikeassa reunassa ilmoituksen, että sinulle on tullut kaveripyyntö.
+                    Kun toinen käyttäjä on tehnyt sinulle kaveripyynnön näet oman sivusi oikeassa reunassa ilmoituksen, 
+                    että sinulle on tullut kaveripyyntö kuten alla olevassa kuvassa.
                     Voit valita hyväksytkö kaveripyynnön vai hylkäätkö sen käyttäen sivulla näkyviä Hyväksy ja Hylkää nappeja. 
                 </p>
                 <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
@@ -210,7 +210,8 @@
                     
                 <h5> 4.3 Kaverit</h5>
                 <p>
-                    Kun olet hyväksynyt kaveripyynnön näet uudet ja vanhat kaverisi oman sivusi vasemmassa reunassa listattuna. Näet myös
+                    Kun olet hyväksynyt kaveripyynnön näet uudet ja vanhat kaverisi oman sivusi vasemmassa reunassa listattuna 
+                    kuten alla olevassa kuvassa. Näet myös
                     kaikkien muiden NasuKirjan käyttäjien kaverit heidän omilla sivuillaan. Et kuitenkaan näe heille tehtyjä kaveripyyntöjä.
                 </p>
                 <div class="mt-1 border rounded mb-4" style="background-color: AliceBlue; width: 50%">
@@ -224,7 +225,8 @@
                 
                 <h5> 4.4 Viestiseinä - viestin lähetys</h5>
                 <p>
-                    Kaikkien NasuKirjan käyttäjien sivun keskellä näkyy viestiseinä. Viestiseinän yläreunassa on viestikenttä, johon voit kirjoittaa
+                    Kaikkien NasuKirjan käyttäjien sivun keskellä näkyy viestiseinä. 
+                    Kuten alla olevassa kuvassa niin viestiseinän yläreunassa on viestikenttä, johon voit kirjoittaa
                     uuden viestin (maksimi 250 merkkiä). Viesti lähetetään seinälle, kun painat sinistä Lähetä viesti seinälle nappia. 
                     Voit lähettää viestejä omalle seinällesi ja kaverien seinälle. 
                     Muiden käyttäjien (muiden kuin kaveriesi) seinän viestejä voit lukea mutta et voi kirjoittaa heidän seinälle. 
@@ -236,7 +238,8 @@
                     
                 <h5> 4.5 Viestiseinä - viestistä tykkääminen</h5>
                 <p>
-                    Voit tykätä oman ja kaverien viestiseinän viesteistä painamalla tykkää nappia. Yhdestä viestistä voi tykätä vain kerran.
+                    Voit tykätä oman ja kaverien viestiseinän viesteistä painamalla tykkää nappia kuten alla olevassa kuvassa. 
+                    Yhdestä viestistä voi tykätä vain kerran.
                     Jo tehtyä tykkäystä ei voi poistaa. Näet seinältä myös montako tykkäystä kukin seinän viesti on kerännyt.
                 </p>
                 <div class="mt-1 border rounded mb-3" style="background-color: AliceBlue; width: 50%">
@@ -264,9 +267,9 @@
                 
                 <h5> 4.7 Kuva-albumi</h5>
                 <p>
-                    NasuKirjan sivun oikeassa reunassa on käyttäjän kuva-albumi. 
-                    Voit lisätä omaan albumiisi kymmenen kuvaa. Yhden kuvan maksimi koko on 1Mt.
-                    Näet jokaisen käyttäjän kaikki kuvat. Huom. IE-selaimelle jpg kuvat eivät valitettavasti toimi.
+                    NasuKirjan sivun oikeassa reunassa on käyttäjän kuva-albumi kuten alla olevassa kuvassa.
+                    Voit lisätä omaan albumiisi kymmenen kuvaa. Yhden kuvan maksimi koko on 1Mt (yksi megatavu).
+                    Näet jokaisen NasuKirjan käyttäjän kaikki kuvat. Huom. IE-selaimelle jpg kuvat eivät valitettavasti toimi.
                     Käytä uudempia selaimia IE:n sijana NasuKirjan kanssa.
                 </p>  
                 <div class="mt-1 border rounded mb-2" style="background-color: AliceBlue; width: 50%">
@@ -297,10 +300,10 @@
                     <span>Ihana kuva </span> 
                 </div>
                 
-                <h5> 5. Tunnetut NasuKirjan rajoitukset</h5>
+                <h4> 5. Tunnetut NasuKirjan rajoitukset</h4>
                 <p>
                     NasuKirjan käyttäjätunnusta ei voi poistaa.
-                    Unohdettua NasuKirjan käyttäjätunnusta ei voi mitenkään saada selville.
+                    Unohdettua NasuKirjan käyttäjätunnusta ei voi mitenkään selvittää.
                     Salasanaa ei voi vaihtaa eikä resetoida.
                 </p> 
                 <p>
