@@ -78,7 +78,7 @@ public class UserListMockMvcTest  {
     }
     
     @Test
-    public void anonymousUserCannotSeeFriendList() throws Exception {
+    public void anonymousUserCannotSeeUserlist() throws Exception {
         mockMvc.perform(get("/kayttajat")).andExpect(redirectedUrl("http://localhost/login"));
     } 
     

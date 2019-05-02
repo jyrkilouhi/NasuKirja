@@ -24,5 +24,10 @@ public class RootMockMvcTest  {
     @Test
     public void statusOkforRootPage() throws Exception {
         mockMvc.perform(get("/")).andExpect(status().isOk());
-    }    
+    }   
+    
+    @Test
+    public void statusOkforHelpPage() throws Exception {
+        mockMvc.perform(get("/help")).andExpect(status().isOk());
+    } 
 }

@@ -9,6 +9,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.assertj.core.api.Java6Assertions.assertThat;
+import static org.junit.Assert.assertFalse;
 import org.junit.Before;
 import org.springframework.test.context.ActiveProfiles;
 
@@ -117,6 +118,31 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     }
     
     @Test
+    public void cannotCreateAccountWithWrongCharacterAtProfilename() {
+        assertTrue(testAccountWithWrongProfilename(3001, "?????"));
+        assertTrue(testAccountWithWrongProfilename(3002, "!!!!!"));
+        assertTrue(testAccountWithWrongProfilename(3003, "#####"));
+        assertTrue(testAccountWithWrongProfilename(3004, "€€€€€"));
+        assertTrue(testAccountWithWrongProfilename(3005, "%%%%%%"));
+        assertTrue(testAccountWithWrongProfilename(3006, "&&&&&&"));
+        assertTrue(testAccountWithWrongProfilename(3007, "//////"));
+        assertTrue(testAccountWithWrongProfilename(3008, "(((((("));
+        assertTrue(testAccountWithWrongProfilename(3009, "))))))"));
+        assertTrue(testAccountWithWrongProfilename(3011, "======"));
+        assertTrue(testAccountWithWrongProfilename(3011, "......"));
+        assertTrue(testAccountWithWrongProfilename(3012, ",,,,,,"));
+        assertTrue(testAccountWithWrongProfilename(3013, ":::::::"));
+        assertTrue(testAccountWithWrongProfilename(3014, "******"));
+        assertTrue(testAccountWithWrongProfilename(3015, "aa aaa"));
+        assertTrue(testAccountWithWrongProfilename(3016, "§§§§§§"));        
+        assertTrue(testAccountWithWrongProfilename(3017, "\\\\\\"));  
+        assertTrue(testAccountWithWrongProfilename(3018, "{{{{{{"));  
+        assertTrue(testAccountWithWrongProfilename(3019, "}}}}}}"));  
+        assertFalse(testAccountWithWrongProfilename(3020, "abcde"));       
+    }
+    
+
+    @Test
     public void cannotCreateAccountWithSameUsername() {
         int accountsBefore = accountRepository.findAll().size();
         goTo("http://localhost:" + port + "/accounts");
@@ -147,7 +173,7 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
     }
     
     @Test
-    public void cannotCreateAccountWitShortPassword() {
+    public void cannotCreateAccountWithShortPassword() {
         int accountsBefore = accountRepository.findAll().size();
         goTo("http://localhost:" + port + "/accounts");
         Account testAccount = testUser(idForNextTestUser);
@@ -178,6 +204,16 @@ public class AccountFluentleniumTest extends org.fluentlenium.adapter.junit.Flue
         test.setPassword(passwordEncoder.encode("test12345")); 
         
         return test;
+    }
+    
+
+    public boolean testAccountWithWrongProfilename(int id, String profilename) {
+        int accountsBefore = accountRepository.findAll().size();
+        goTo("http://localhost:" + port + "/accounts");
+        Account testAccount = testUser(id);
+        testAccount.setProfilename(profilename);
+        enterAccountDetailsAndSubmit(testAccount, "test12345");
+        return (accountRepository.findAll().size() == accountsBefore );
     }
     
 }

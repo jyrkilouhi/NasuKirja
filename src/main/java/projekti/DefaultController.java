@@ -23,7 +23,6 @@ public class DefaultController {
     @GetMapping
     public String handlingNonDefinedPathsToErrorPage(HttpServletRequest request, Model model) {
         model = accountService.addAuthenticationName(model);  
-        model.addAttribute("numberOfAccounts", accountService.numberOfAccounts());
         model.addAttribute("errorURl", request.getRequestURI());
         return "terror";
     }

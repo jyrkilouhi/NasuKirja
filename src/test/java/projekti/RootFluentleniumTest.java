@@ -47,6 +47,12 @@ public class RootFluentleniumTest extends org.fluentlenium.adapter.junit.FluentT
         assertThat(pageSource()).contains("NasuKirja");
     }
     
+    @Test
+    public void anyoneCanOpenHelp() throws Exception {
+        goTo("http://localhost:" + port + "/help");
+        assertThat(pageSource()).contains("NasuKirja");
+    }  
+    
     private void enterDetailsAndSubmit(String username, String password) {
         find(By.name("username")).fill().with(username);
         find(By.name("password")).fill().with(password);
